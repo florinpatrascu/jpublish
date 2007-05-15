@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="JPublish" default="jar" basedir=".">
+
+    <property file="build.properties"/>
+
+
+    <!-- Setup module paths -->
+    <property name="module.dir" value="${root.dir}/modules"/>
+
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- ==================================================== -->
+    <!-- Initialize Ant                                       -->
+    <!-- ==================================================== -->
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <!-- Compiler resources -->
+    <patternset id="compiler.resources">
+        <include name="**/?*.properties"/>
+        <include name="**/?*.xml"/>
+        <include name="**/?*.vm"/>
+    </patternset>
+
+
+    <!-- ====================================================================== -->
+    <!-- Compile the source code.                                               -->
+    <!-- ====================================================================== -->
+
+    <target name="compile" depends="init">
+
+        <mkdir dir="${build.classes}"/>
+
+        <javac
+                srcdir="${src.dir}"
+                destdir="${build.classes}"
+                classpathref="build.classpath"
+                debug="${javac.debug}"
+                deprecation="${javac.deprecation}"
+                optimize="${javac.optimize}">
+            <include name="**/*.java"/>
+        </javac>
+
+        <copy todir="${build.classes}">
+            <fileset dir="${src.dir}">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+
+
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Create the JAR archive.                                                -->
+    <!-- ====================================================================== -->
+
+    <target name="jar" depends="compile">
+        <jar jarfile="${dist.dir}/${Name}-${version}.jar" basedir="${build.classes}">
+            <include name="**/*.class"/>
+            <include name="**/?*.properties"/>
+            <include name="**/?*.xml"/>
+            <include name="**/?*.vm"/>
+        </jar>
+        <copy file="LICENSE.txt" tofile="${dist.dir}/${Name}-${version}.license.txt"/>
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Create the demo web apps archive.                                                -->
+    <!-- ====================================================================== -->
+
+    <target name="samples" depends="jar">
+        <echo message="Building the JPublish web demo applications:"/>
+        <echo message="... hello.war"/>
+
+        <copy todir="${build.samples}/hello.war">
+           <fileset dir="${samples.dir}/hello.war" includes="**/*.*"/>
+        </copy>
+        <copy todir="${build.samples}/hello.war/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Generate the API documentation.                                        -->
+    <!-- ====================================================================== -->
+
+    <target name="javadocs" depends="init">
+        <mkdir dir="${build.javadocs}"/>
+        <javadoc
+                packagenames="${packages}"
+                sourcepath="${src.dir}"
+                destdir="${build.javadocs}"
+                classpathref="build.classpath"
+                author="${javadoc.author}"
+                version="${javadoc.version}"
+                windowtitle="${vName} API"
+                doctitle="${vName}"
+                bottom="${copyright}"/>
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Execute the JUnit tests                                                -->
+    <!-- ====================================================================== -->
+
+
+    <!-- ====================================================================== -->
+    <!-- Clean up generated stuff                                               -->
+    <!-- ====================================================================== -->
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+</project>
