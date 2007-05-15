@@ -1,0 +1,4 @@
+JPublish change log:
+
+Version 4.0 (2007.05.14)
+ - Initial release

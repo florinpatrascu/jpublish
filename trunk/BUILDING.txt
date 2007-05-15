@@ -1,0 +1,3 @@
+To build JPublish you will first need to check out the source code from
+the SVN.  Install the most recent version of Ant on your system.  Once
+Ant is installed, change into the jpublish root directory and type ant.
