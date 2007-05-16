@@ -1,0 +1,222 @@
+EdenLib change log:
+
+Version 1.5.3 - PostEden (December 20, 2006)-Florin
+ - added Piccolo library for fast XML parsing
+ - testing the XML includes functionality
+ - added new methods to improve the quality of the Configuration support
+ - miscellaneous code optimization and cleaning.
+ 
+
+Version 1.5.2 - PostEden (July 29, 2006)    -Florin
+ - Bugfixing the UNICODE support for XML
+ - taking out the UI lib
+ - added SAX support from edenlib 2.0.1b - correcting the UNICODE
+ - using commons-logging API instead of the old AE one
+ - streamlining the library and taking out most of the support for db and SWING.
+
+
+Version 1.5 (August 7, 2003)
+
+ - Added ByteUtilities class.
+ - Added finally blocks to close IO streams in resource loader implementations.
+ - Fixed JavaDoc warnings.
+
+Version 1.4 (May 14, 2003)
+
+ - Added IOUtilities.getStringFromReader().
+ - Added getParent() to Configuration interface and all implementations.
+
+Version 1.3 (March 15, 2003)
+
+ - Most EdenLib classes now rely on a Virtual File System from Apache
+   Commons for file-based activities.
+ - Changed all ClassLoaders to use ClassUtilities methods which attempt
+   to load from the thread context class loader first and then from the
+   ClassLoader of the requesting object.
+ - Upgraded to ORO 2.0.6.
+ - Upgraded to Log4j 1.2.7.
+ - Changed build.xml to use build.properties.
+
+Version 1.2.1 (March 5, 2003)
+
+ - Fixed bug in ChainedException constructor.
+
+Version 1.2 (January 10, 2003)
+
+ - Changed logging to Apache Jakarta Commons logging.
+ - Deprecated com.anthonyeden.lib.log package.
+ - Cleaned up code to more closely follow Sun standards.
+ - Added attribute map to com.anthonyeden.lib.Application.
+ - Added loadConfiguration() method to Cache interface.
+ - Added setTTL() method to Cache interface which takes a String.
+ - Added DEFAULT_TTL to AbstractCache.
+ - Added removeChild() to MutableConfiguration and its implementations.
+ - Added split() methods to TextUtilities and deprecated splitString()
+   methods.
+ - WizardComponent.hideWizardComponent() now returns boolean:true if
+   there are no errors in the current wizard component.
+ - StatusPanel label and text field access level is now set to protected
+   so that the StatusPanel class can be overridden.
+ - Upgraded to Velocity 1.3.
+ - Changed library license naming.
+
+Version 1.1 (May 31, 2002)
+
+ - Added MutableConfiguration.addElement(Configuration child) method for
+   combining configurations.
+ - Added MutableConfiguration.clearChildren() method.
+ - Fixed NPE bug in JTextAreaWriter.
+ - Fixed character casting bug in JTextAreaWriter.
+ - Improved null argument handling in MethodUtilities.
+ - Moved LookAndFeelListCellRenderer to its own class file.
+ - Added ResourceMonitor interface.
+ - AbstractResourceLoader now maintains a list of ResourceMonitors and
+   provides a method for starting and stopping all ResourceMonitors.
+ - Added cache package which includes a standard cache interface and a
+   simple in-memory cache implementation.
+
+Version 1.0 (May 13, 2002)
+
+ - Changed monitor threads to daemon threads.
+ - Fixed bug in XTreeMap.
+ - Finished adding JavaDoc comments.
+ - Added stack trace to ThrowableDialog if writing the throwable's
+   stack trace to the text area fails.
+ - Added Stopwatch class.
+ - Added Configurable interface.
+ - Added StatusListener and StatusEvent.
+ - StatusPanel now implements StatusListener.
+ - Added readData() and writeData() methods to IOUtilities.
+ - Added CustomClassLoader
+
+Version 1.0b5 (March 17, 2002)
+
+ - Fixed runaway thread in FileResourceLoader.
+ - Added isAscii() and isExtendedAscii() methods.
+
+Version 1.0b4 (February 27, 2002)
+
+ - Added DOMConfiguration implementation.
+ - XMLConfiguration now uses DOMConfiguration.
+ - XArrayList can now listen for PropertyChangeEvents on objects which
+   have an addPropertyChangeListener() method.  When these events occur
+   XArrayList will fire a ListDataEvent to all ListDataListeners
+   contentsChanged() methods.
+ - Fixed NPE in MethodUtilities when using null args.
+ - Added more methods to SQLUtilities (courtesy of Kalman).
+ - Changed copyright date to 2000-2002.
+
+Version 1.0b3 (February 2, 2002)
+
+ - Added MutableConfiguration interface.
+ - Added Dom4jConfiguration implementation.
+ - XMLConfiguration now uses Dom4jConfiguration.
+ - Preferences now uses EdenLib config package for reading and writing
+   preferences.
+ - Added ClassPathResourceLoader.
+ - Moved loadResource(path, handler) method to AbstractResourceLoader.
+   and provide a default implementation which calls the
+   loadResource(path, handler, monitor) method with monitor set to true.
+
+Version 1.0b2 (December 31, 2001)
+
+ - Added join() methods to TextUtilities.
+ - Added overloaded printStackTrace() method which accepts a PrintWriter 
+   to the ChainedException class.
+ - Changed TextUtilities package declaration to com.anthonyeden.lib.util.
+ - XTreeMap now implements ListModel so it can be used in JLists
+ - Added debugging to MethodUtilities.
+ - Added more JavaDoc.
+ - TableSorter can now compare objects which implement the Comparable
+   interface.
+
+Version 1.0b1 (December 14, 2001)
+
+ - Added config package with Configuration interface to provide a 
+   data-independant method of dealing with a configuration tree.
+ - Created JDOMConfiguration and XMLConfiguration classes.
+ - JavaDoc added to almost all public methods (and many protected and 
+   private methods as well).
+ - Added String message to CommEvent.
+ - LockManager now supports a user-defined retry limit and delay.
+
+Version 0.9 (November 12, 2001)
+
+ - Added logging to LockManager.
+ - Changed LockManager's timestamps to long values.
+ - Switched values 1 and 2 in LockManager delete statement.
+ - Added SplashScreen class.
+ - Added some JavaDoc documentation.
+
+Version 0.8.1 (November 7, 2001)
+
+ - Status field background now the same color as the containing JPanel.
+ - Added sql directory with several SQL scripts.
+
+Version 0.8 (November 2, 2001)
+
+ - Added NULL_WRITER constant to NullWriter class which is a shared 
+   NullWriter
+ - Added ErrorEvent.getError() and deprecated ErrorEvent.getThrowable()
+ - Fixed NPE in Wizard when a Wizard contains no WizardPanel objects
+ - Added VelocityTool.parseInputStream() methods which pass the 
+   InputStream data to Velocity and then return a String
+
+Version 0.7 (October 19, 2001)
+
+ - Added VelocityTool to the util package
+ - Changed the LockManager SQL field names so as not to conflict with
+   reserved words
+ - LockManager now uses SQL Timestamp for storing the lock aquire time
+ - Added createIdType() method to UniqueIDGenerator to insert an initial 
+   entry into the database for the given ID type
+
+Version 0.6 (October 19, 2001)
+
+ - Added db package which includes a LockManager and a UniqueIDGenerator.
+
+Version 0.5.1 (October 16, 2001)
+
+ - Added reloadInsert and reloadChanged methods to the FSTreeModel to 
+   refresh only particular children of a parent node
+
+Version 0.5 (October 15, 2001)
+
+ - Added FSTree component for browsing the file system starting from a 
+   given root File
+
+Version 0.4.1 (October 4, 2001)
+
+ - Missing static configure() methods added to SystemErrorLogger 
+
+Version 0.4 (October 3, 2001)
+
+ - Added com.anthonyeden.lib.resource package which can be used to load 
+   resources from the file system, an DBMS, servers, etc.
+ - Added ChainedException which is a base class for Exceptions which 
+   can have other nested Exceptions
+ - Added package listing to documentation
+
+Version 0.3.1 (October 2, 2001)
+
+ - Added load and save methods, which accept a JDOM element as an 
+   argument, to Preferences which can be overridden to load and store 
+   custom preferences
+ - Added invoke methods to MethodUtilities which include a Class object 
+   as an argument (useful for invoking static methods)
+
+Version 0.3 (September 27, 2001)
+
+ - Added generic logging package (com.anthonyeden.lib.log)
+ - Converted all logging to use generic logging package
+ - Added invokeDeclared and getDeclaredMethod methods to MethodUtilities
+
+Version 0.2 (September 16, 2001)
+
+ - EdenLib.jar is now located in the root build directory
+ - Added com.anthonyeden.lib.util.MethodUtilities
+ - Added com.anthonyeden.lib.util LogUtilities
+
+Version 0.1 (September 3, 2001)
+
+ - Initial release

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="PostEdenLib" default="jar" basedir=".">
+
+    <property file="build.properties"/>
+
+    <property name="vName" value="${Name}-${version}"/>
+    <property name="vname" value="${name}-${version}"/>
+
+    <property name="build.classes" value="${build.dir}/classes"/>
+    <property name="build.src" value="${build.dir}/src"/>
+    <property name="build.docs" value="${build.dir}/docs"/>
+    <property name="build.lib" value="${build.dir}/lib"/>
+    <property name="build.javadocs" value="${build.docs}/api"/>
+
+
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+
+    <!-- ==================================================== -->
+    <!-- Initialize Ant                                       -->
+    <!-- ==================================================== -->
+
+    <target name="init">
+        <tstamp/>
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Compile the source code.                                               -->
+    <!-- ====================================================================== -->
+
+    <target name="compile" depends="init">
+        <copy todir="${build.src}" filtering="true">
+            <fileset dir="${src.dir}"/>
+        </copy>
+
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.classes}"/>
+        <javac
+                srcdir="${build.src}"
+                destdir="${build.classes}"
+                classpathref="build.classpath"
+                debug="${javac.debug}"
+                deprecation="${javac.deprecation}"
+                optimize="${javac.optimize}">
+            <include name="**/*.java"/>
+        </javac>
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Create the JAR archive.                                                -->
+    <!-- ====================================================================== -->
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${build.lib}"/>
+        <copy todir="${build.classes}/com/anthonyeden/lib/">
+            <fileset file="${src.dir}/com/anthonyeden/lib/*.properties"/>
+        </copy>
+        <jar
+                jarfile="${build.dir}/${Name}-${version}.jar"
+                basedir="${build.classes}">
+            <include name="**/*"/>
+        </jar>
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Generate the API documentation.                                        -->
+    <!-- ====================================================================== -->
+
+    <target name="javadocs" depends="init">
+        <mkdir dir="${build.javadocs}"/>
+        <javadoc
+                packagenames="${packages}"
+                sourcepath="${src.dir}"
+                destdir="${build.javadocs}"
+                classpathref="classpath"
+                author="${javadoc.author}"
+                version="${javadoc.version}"
+                windowtitle="${vName} API"
+                doctitle="${vName}"
+                bottom="${copyright}"/>
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Clean up generated stuff                                               -->
+    <!-- ====================================================================== -->
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+</project>
