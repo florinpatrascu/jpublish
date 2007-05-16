@@ -71,7 +71,7 @@
             <include name="**/?*.xml"/>
             <include name="**/?*.vm"/>
         </jar>
-        <copy file="LICENSE.txt" tofile="${dist.dir}/${Name}-${version}.license.txt"/>
+        <copy file="license.txt" tofile="${dist.dir}/${Name}-${version}.license.txt"/>
     </target>
 
     <!-- ====================================================================== -->
