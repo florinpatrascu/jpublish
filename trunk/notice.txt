@@ -10,7 +10,7 @@
    must include the following acknowledgment:
 
      "This product includes software developed by the JPublish Framework
-      Project (http://www.assembla.com/space/jpublish)."
+      Project (http://code.google.com/p/jpublish/)."
 
    Alternatively, this acknowledgment may appear in the software itself,
    if and wherever such third-party acknowledgments normally appear.
