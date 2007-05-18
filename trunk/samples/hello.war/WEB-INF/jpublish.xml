@@ -12,12 +12,16 @@
     <page-manager classname="org.jpublish.page.filesystem.FileSystemPageManagerWithDefault"/>
     <default-template>basic</default-template>
 
+    <!--Velocity renderer-->
     <view-renderer classname="org.jpublish.view.velocity.VelocityViewRenderer">
         <velocity-properties relative-paths="true">WEB-INF/velocity.properties</velocity-properties>
         <resource-cache-enabled>true</resource-cache-enabled>
         <!--seconds-->
         <resource-cache-interval>15</resource-cache-interval>
     </view-renderer>
+
+    <!--Comment the Velocity renderer above and un-comment the line below if you need to enable the FreeMarker-->
+    <!--<view-renderer classname="org.jpublish.view.freemarker.FreeMarkerViewRenderer"/>-->
 
     <repository name="fs_repository" classname="org.jpublish.repository.filesystem.FileSystemRepository">
         <root>content</root>
