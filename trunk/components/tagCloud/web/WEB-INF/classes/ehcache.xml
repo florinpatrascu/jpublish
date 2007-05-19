@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright (c) 2007, Florin T.PATRASCU.
+  ~ All Rights Reserved.
+  -->
+
+<ehcache>
+    <!-- Florin; 2006-06-25 -->
+    <diskStore path="java.io.tmpdir"/>
+
+    <!-- Sample cache named defaultCache
+        This cache contains a maximum in memory of 10000 elements, and will expire
+        an element if it is idle for more than 5 minutes and lives for more than
+        10 minutes. Exxample:
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
+
+        If there are more than 10000 elements it will overflow to the
+        disk cache, which in this configuration will go to wherever java.io.tmp is
+        defined on your system. On a standard Linux system this will be /tmp"
+        -->
+    <defaultCache
+        maxElementsInMemory="10000"
+        eternal="false"
+        overflowToDisk="true"
+        timeToIdleSeconds="10"
+        timeToLiveSeconds="20"
+        />
+</ehcache>
+

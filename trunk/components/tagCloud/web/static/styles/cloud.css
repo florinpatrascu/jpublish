@@ -1,0 +1,66 @@
+/*
+ * Copyright (c) 2007, Florin T.PATRASCU.
+ * All Rights Reserved.
+ */
+
+a:link, a:visited, a:active {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: arial, "lucida console", sans-serif
+}
+
+.tagCloudBody {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left:16px;
+    padding-right:16px;
+    line-height: 1.5;
+    background-color:azure;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.tagCloud {
+    line-height: 45px;
+}
+
+.tagCloud1 {
+    font-size: 7px;
+}
+
+.tagCloud2 {
+    font-size: 12px;
+}
+
+.tagCloud3 {
+    font-size: 16px;
+}
+
+.tagCloud4 {
+    font-size: 18px;
+}
+
+.tagCloud5 {
+    font-size: 21px;
+}
+
+.tagCloud6 {
+    font-size: 24px;
+}
+
+.tagCloud7 {
+    font-size: 27px;
+}
+
+.tagCloud8 {
+    font-size: 32px;
+}
+
+.tagCloud9 {
+    font-size: 36px;
+}
+
+.tagCloud10 {
+    font-size: 42px;
+}

@@ -1,0 +1,10 @@
+JPTags Component, CHANGELOG.
+
+Saturday; May 19, 2007
+ - created a simple test
+ - restructuring the demo web folder
+ - re-factored the build script to depend on the main framework (JPublish)
+ - reduced the lib dependencies
+ 
+
+20-Aug, 2006 initial version

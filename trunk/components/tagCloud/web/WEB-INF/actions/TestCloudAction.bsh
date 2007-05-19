@@ -1,0 +1,48 @@
+/*
+ * Copyright (c) 2007, Florin T.PATRASCU.
+ * All Rights Reserved.
+ */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+/**
+ * This Action only demonstrates how one can pass a list with keywords to the TagCloud component.
+ *
+ * I am defining here a String array containing some keywords and their attributes, comma delimited. These keywords
+ * were used to define a document of type Image; irrelvant for our example here.
+ *
+ * You can add as many keywords as you want to a tagCloud but please in mind the view aesthetics when you display
+ * too many and how relevant are these to the user.
+ *
+ * To compute the Cloud you need to pass a list with keyowords and their attributes comma delimited. The most important
+ * attributes of the keywords are:
+ * - the keyword name, the popularity.
+ *
+ * In the list below you'll see that other values can follow the popularity but this will be discussed in the
+ * final version of this component ;)
+ *
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
+ */
+
+String[] tags = {"woman,29,12.47664925", "women,23,10.39720771",
+            "jump,19,7.624618986", "fun,24,4.852030264", "fashion,18,4.852030264", "hip,11,4.158883083",
+            "white,6,3.465735903", "young,8,2.079441542", "jumping,6,1.386294361",  "people,73,38.81624211", 
+            "woman jumping,2,1.386294361", "people having fun,2,1.386294361",
+            "fashion AND women's fashion,2,1.386294361", "shoes,26,0.693147181", "shoe,3,0.693147181",
+            "young adult,2,0.693147181", "woman portrait,2,0.693147181", "young people,2,0.693147181",
+            "trendy,2,0.693147181", "open arms,2,0.693147181", "angry young woman,22,0.693147181",
+            "18-19 year old,1,0.693147181", "adult,1,0.693147181", "angry woman,1,0.693147181",
+            "attitude,1,0.693147181", "backgrounds,1,0.693147181", "boot,1,0.693147181",
+            "funky  teenager,1,0.693147181", "high,1,0.693147181", "HIGH FASHION,10,0.693147181",
+            "people jump,1,0.693147181", "pose,1,0.693147181", "teen fashion,1,0.693147181",
+            "woman fun,23,0.693147181", "woman in boots,11,0.693147181", "woman with high boots,1,0.693147181",
+            "women in white,11,0.693147181", "style,6,0"};
+
+Map articleProperties = new HashMap();
+List tagList = new ArrayList(Arrays.asList(tags));
+
+articleProperties.put("tags", tagList);
+context.put("articleId", "id123420292");
+context.put("id123420292", articleProperties);
+//syslog.info( context.get("articleId"));

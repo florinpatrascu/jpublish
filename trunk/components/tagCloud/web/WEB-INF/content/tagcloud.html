@@ -1,0 +1,19 @@
+<!--
+  ~ Copyright (c) 2007, Florin T.PATRASCU.
+  ~ All Rights Reserved.
+  -->
+
+<br/>
+${article.NumberOfTags} tag(s) for Article: $article.Id<br/>
+
+<div class="tagCloudBody" align="center">
+  #if( $article && $article.HasTags)
+    #foreach( $tag in $article.Tags)
+        <span class="tagCloud${tag.Rank}"><a
+                href="$request.ContextPath/search.html?queryString=${tag.EncodedName}"
+                title=" ${tag.getName()} [${tag.Rank} - ${tag.Popularity}]"> ${tag.getName( 20)}</a></span>&nbsp;&nbsp;
+    #end
+  #else
+    tagCloud data not available
+  #end
+</div>
