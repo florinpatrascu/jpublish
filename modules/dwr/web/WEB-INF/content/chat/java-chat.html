@@ -1,0 +1,22 @@
+<script src='$request.ContextPath/dwr/interface/JavaChat.js'></script>
+<div>[ <a href="$request.ContextPath/index.html">Top Level</a> ]</div>
+<script type="text/javascript">
+    function sendMessage() {
+        JavaChat.addMessage(DWRUtil.getValue("text"));
+    }
+</script>
+
+
+<h1>Java Chat (JPublishDWR version)</h1>
+
+<p>This is a very simple chat demo.</p>
+
+<p>
+    Your Message:
+    <input id="text" onkeypress="DWRUtil.onReturn(event, sendMessage)"/>
+    <input type="button" value="Send" onclick="sendMessage()"/>
+</p>
+
+<p>Messages:</p>
+<ul id="chatlog" style="list-style-type:none;">
+</ul>
