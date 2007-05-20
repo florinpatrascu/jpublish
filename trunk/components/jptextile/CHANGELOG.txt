@@ -1,0 +1,4 @@
+JPublish Textile Component, CHANGELOG.
+
+Sunday; May 20, 2007
+ - initial version
