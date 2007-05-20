@@ -1,4 +1,9 @@
-JPublish change log:
+JPublish 4 change log:
+
+[2007.05.20]
+ - improving the JPublishComponent API in order to support
+   the need for rendering a Text parameter or a View from a given path. Useful if
+   you need to implement more complex Components but not as complex as a ViewRenderer.
 
 Version 4.0 (2007.05.14)
  - Initial release

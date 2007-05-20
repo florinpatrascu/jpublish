@@ -19,50 +19,89 @@ package org.jpublish.component;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.jpublish.Page;
-import org.jpublish.JPublishContext;
 import org.jpublish.JPublishComponent;
+import org.jpublish.JPublishContext;
+import org.jpublish.Page;
 
-/** Runtime wrapper for a component.
+/**
+ * Runtime wrapper for a component.
+ *
+ * @author Anthony Eden
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
+ * @since 2.0
+ */
 
-    @author Anthony Eden
-    @since 2.0
-*/
+public class ComponentWrapper {
 
-public class ComponentWrapper{
-    
     private static final Log log = LogFactory.getLog(ComponentWrapper.class);
-    
+    private static final String EMPTY_STRING = "";
+
     private JPublishComponent component;
     private JPublishContext context;
-    
-    /** Construct a new ComponentWrapper.
-    
-        @param component The wrapped component
-        @param context The context
-    */
-    
-    public ComponentWrapper(JPublishComponent component, 
-    JPublishContext context){
+
+    /**
+     * Construct a new ComponentWrapper.
+     *
+     * @param component The wrapped component
+     * @param context   The context
+     */
+
+    public ComponentWrapper(JPublishComponent component, JPublishContext context) {
         this.component = component;
         this.context = context;
     }
-    
-    /** Return the rendered component.
-    
-        @return The renderered component string
-    */
-    
-    public String toString(){
-        try{
-            Page page = (Page)context.get(JPublishContext.JPUBLISH_PAGE);
+
+    /**
+     * Return the rendered component.
+     *
+     * @return The renderered component string
+     * @deprecated use renderText or renderPath instead
+     */
+
+    public String toString() {
+        try {
+            Page page = (Page) context.get(JPublishContext.JPUBLISH_PAGE);
             return component.render(page.getPath(), context);
-        } catch(Exception e){
+        } catch (Exception e) {
             log.error("Error rendering component " + component.getName());
             e.printStackTrace();
-            return "";
+            return EMPTY_STRING;
         }
     }
-    
+
+    /**
+     * Process the text parameter and Render the component
+     *
+     * @param text the string to process
+     * @return The rendered component
+     */
+    public String renderText(String text) {
+        try {
+            return component.renderText(text, context);
+        } catch (Exception e) {
+            log.error("Error rendering the text:\n=====================\n" +
+                    text +
+                    "\n=====================\n, for the component " + component.getName());
+            e.printStackTrace();
+            return EMPTY_STRING;
+        }
+    }
+
+    /**
+     * Process the View from at the given path and Render the component
+     *
+     * @param path the View to process
+     * @return The rendered component
+     */
+    public String renderPath(String path) {
+        try {
+            return component.renderPath(path, context);
+        } catch (Exception e) {
+            log.error("Error rendering the path: " + path + ", for the component "
+                    + component.getName());
+            e.printStackTrace();
+            return EMPTY_STRING;
+        }
+    }
+
 }

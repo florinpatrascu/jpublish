@@ -52,5 +52,29 @@ public class ContentComponent extends AbstractComponent{
     public String render(String path, JPublishContext context) throws Exception{
         return renderView(getViewRepository().get(path), path, context);
     }
-    
+
+    /**
+     * Process the text parameter and Render the component
+     *
+     * @param text    the string to process
+     * @param context The context
+     * @return The rendered component
+     * @throws Exception any Exception
+     */
+    public String renderText(String text, JPublishContext context) throws Exception {
+        return null;
+    }
+
+    /**
+     * Process the View from at the given path and Render the component
+     *
+     * @param path    the View to process
+     * @param context The context
+     * @return The rendered component
+     * @throws Exception any Exception
+     */
+    public String renderPath(String path, JPublishContext context) throws Exception {
+        return null;
+    }
+
 }
