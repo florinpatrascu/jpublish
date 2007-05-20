@@ -1,0 +1,55 @@
+* one
+* two
+* three
+
+* four
+* five
+
+h2(fred). This is a title
+
+h3. This is a subhead
+
+This is some text of dubious character. Isn't the use of "quotes" just lazy writing -- and theft of 'intellectual property' besides? I think the time has come to see a block quote.
+
+bq. This is a block quote. I'll admit it's not the most exciting block quote ever devised.
+
+bq(http://diveintomark.org/archives/2003/07/01/leave_rss_alone.html). This is a block quote. I'll admit it's not the most exciting block quote ever devised.
+
+Well, that went well. How about we insert an <a href="/" title="watch out">old-fashioned hypertext link</a>? Will the quote marks in the tags get messed up? No!
+
+"This is a link (optional title)":http://www.textism.com
+
+An image:
+
+!/common/textist.gif(optional alt text)!
+
+# Librarians rule
+# Yes they do
+# But you knew that
+
+Some more text of dubious character. Here is a noisome string of CAPITAL letters. Here is something we want to _emphasize_. 
+That was a linebreak. And something to indicate *strength*. Of course I could use <em>my own HTML tags</em> if I <strong>felt</strong> like it.
+
+h3. Coding
+
+This <code>is some code, "isn't it"</code>. Watch those quote marks! Now for some preformatted text:
+
+*arse*<pre>
+<code>
+	$text = str_replace("<p>%::%</p>","",$text);
+	$text = str_replace("%::%</p>","",$text);
+	$text = str_replace("%::%","",$text);
+
+</code>
+</pre>
+
+This isn't code.
+
+
+So you see, my friends:
+
+* The time is now
+* The time is not later
+* The time is not yesterday
+* We must act
+
