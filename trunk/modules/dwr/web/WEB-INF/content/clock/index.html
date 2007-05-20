@@ -1,0 +1,14 @@
+<script type='text/javascript' src='$request.ContextPath/dwr/interface/Clock.js'> </script>
+<div>[ <a href="$request.ContextPath/index.html">Top Level</a> ]</div>
+        
+<h1>Server Side Reverse Ajax Clock with JPublish</h1>
+
+<p>Creating a clock in a web page is easy, but what about a clock controlled by
+the server? This demo shows how use use a separate server side thread to control
+a number of browsers.</p>
+
+<input type="button" value="Start / Stop" onclick="Clock.toggle();"/>
+
+<div style="font-size:200%;" id="clockDisplay"></div>
+
+<div id="dwr-debug">-</div>

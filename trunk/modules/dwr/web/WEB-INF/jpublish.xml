@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2007, Florin T.PATRASCU
+  ~ All Rights Reserved.
+  -->
+
+<jpublish>
+    <name>JPublishDWR test application</name>
+    <static-root>public</static-root>
+    <action-root>WEB-INF/actions</action-root>
+    <template-root>WEB-INF/templates</template-root>
+    <page-root>WEB-INF/pages</page-root>
+
+    <module classname="ca.flop.jpublish.dwr.DWRModule">
+        <dwr-config-file>/WEB-INF/dwr-test.xml</dwr-config-file>
+        <dwr-path-prefix>/dwr</dwr-path-prefix>
+
+        <dwr-servlet-parameters>
+            <!--Sometimes you may wish to configure DWR to use polling only and not Comet.
+                For that you need the following
+                <org.directwebremoting.extend.ServerLoadMonitor>org.directwebremoting.impl.PollingServerLoadMonitor</org.directwebremoting.extend.ServerLoadMonitor>
+                -->
+            <activeReverseAjaxEnabled>true</activeReverseAjaxEnabled>
+            <!-- Set to true to enable polling and comet. This can increase the load on your server
+                 although DWR does have mechanisms to prevent server overload.
+                 Was called pollAndCometEnabled before RC3
+
+            <pollAndCometEnabled>true</pollAndCometEnabled>
+            -->
+            <debug>true</debug>
+        </dwr-servlet-parameters>
+    </module>
+
+
+    <view-renderer classname="org.jpublish.view.velocity.VelocityViewRenderer">
+        <velocity-properties relative-paths="true">WEB-INF/velocity.properties</velocity-properties>
+        <resource-cache-enabled>true</resource-cache-enabled>
+        <resource-cache-interval>15</resource-cache-interval>
+    </view-renderer>
+
+    <repository name="content" classname="org.jpublish.repository.filesystem.FileSystemRepository">
+        <root>WEB-INF/content</root>
+        <cache>default</cache>
+    </repository>
+
+    <default-template>default</default-template>
+    <page-manager classname="org.jpublish.page.filesystem.FileSystemPageManagerWithDefault"/>
+
+    <cache-manager>
+        <jpublish.cache.provider>
+            <implementation name="default" class="org.jpublish.util.JPublishCacheImpl"/>
+            <!-- <flushInterval minutes="5"/> -->
+        </jpublish.cache.provider>
+    </cache-manager>
+
+    <character-encoding-map path="*">
+        <page-encoding>UTF-8</page-encoding>
+        <template-encoding>UTF-8</template-encoding>
+        <request-encoding>UTF-8</request-encoding>
+        <response-encoding>UTF-8</response-encoding>
+    </character-encoding-map>
+
+    <debug>false</debug>
+</jpublish>
