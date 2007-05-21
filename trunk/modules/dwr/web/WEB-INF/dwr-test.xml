@@ -8,14 +8,11 @@
 
 <dwr>
 
-  <init>
-    <converter id="testbean" class="uk.ltd.getahead.dwrdemo.test.TestBean2Converter"/>
-  </init>
-
   <allow>
 
     <!--
-    <filter class="uk.ltd.getahead.dwrdemo.filter.ExtraLatencyAjaxFilter">
+    <filter class="org.getahead.dwrdemo.monitor.MonitoringAjaxFilter"/>
+    <filter class="org.directwebremoting.filter.ExtraLatencyAjaxFilter">
       <param name="delay" value="200"/>
     </filter>
     -->

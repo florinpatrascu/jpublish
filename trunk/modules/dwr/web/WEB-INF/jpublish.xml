@@ -27,6 +27,8 @@
 
             <pollAndCometEnabled>true</pollAndCometEnabled>
             -->
+            <initApplicationScopeCreatorsAtStartup>true</initApplicationScopeCreatorsAtStartup>
+            <maxWaitAfterWrite>500</maxWaitAfterWrite>
             <debug>true</debug>
         </dwr-servlet-parameters>
     </module>
