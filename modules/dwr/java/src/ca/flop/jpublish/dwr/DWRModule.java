@@ -78,7 +78,8 @@ public class DWRModule implements JPublishModule {
      */
 
     public void init(SiteContext site, Configuration configuration) throws Exception {
-        log.info(NAME + " starting.");
+        log.info(NAME + " starting for: " + site.getServletContext().getServletContextName());
+
         this.site = site;
         String dwrConfigFile = configuration.getChildValue("dwr-config-file", "WEB-INF/dwr.xml");
         dwrPathPrefix = configuration.getChildValue("dwr-path-prefix", DWR_DEFAULT_PREFIX);
@@ -107,8 +108,14 @@ public class DWRModule implements JPublishModule {
         for (int i = 0; i < dwrUrls.length; i++) {
             String dwrUrl = dwrUrls[i];
             pathActions.add(
-                    new ActionWrapper(new PathAction(dwrUrl, dwrAction), configuration));
+                    new ActionWrapper(
+                            new PathAction(dwrUrl, dwrAction), configuration));
         }
+
+        //adding a hook for the DWR shutdown event:
+        site.getActionManager().getShutdownActions().add(
+                new ActionWrapper(new DWRShutdownAction(this), configuration));
+
         log.info(NAME + " started.");
 
     }

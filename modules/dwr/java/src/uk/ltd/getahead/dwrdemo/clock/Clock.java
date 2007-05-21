@@ -1,5 +1,4 @@
-/*
- *
+package uk.ltd.getahead.dwrdemo.clock;/*
  * Copyright 2005 Joe Walker
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,20 +12,19 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
-package uk.ltd.getahead.dwrdemo.clock;
+
 
 import java.util.Collection;
 import java.util.Date;
 
 import javax.servlet.ServletContext;
 
-import org.directwebremoting.proxy.dwr.Util;
+import org.directwebremoting.ServerContext;
 import org.directwebremoting.ServerContextFactory;
 import org.directwebremoting.WebContextFactory;
-import org.directwebremoting.ServerContext;
-import org.apache.log4j.Logger;
+import org.directwebremoting.proxy.dwr.Util;
+import org.directwebremoting.util.Logger;
 
 /**
  * @author Joe Walker [joe at getahead dot ltd dot uk]
@@ -34,7 +32,7 @@ import org.apache.log4j.Logger;
 public class Clock implements Runnable
 {
     /**
-     * 
+     *
      */
     public Clock()
     {
@@ -43,7 +41,7 @@ public class Clock implements Runnable
     }
 
     /**
-     * 
+     *
      */
     public synchronized void toggle()
     {
@@ -66,7 +64,7 @@ public class Clock implements Runnable
 
             while (active)
             {
-                Collection sessions = sctx.getScriptSessionsByPage("/clock");
+                Collection sessions = sctx.getScriptSessionsByPage("/jpublishdwr/clock");
                 Util pages = new Util(sessions);
                 pages.setValue("clockDisplay", new Date().toString());
 
@@ -74,7 +72,7 @@ public class Clock implements Runnable
                 Thread.sleep(1000);
             }
 
-            Collection sessions = sctx.getScriptSessionsByPage("/clock");
+            Collection sessions = sctx.getScriptSessionsByPage("/jpublishdwr/clock");
             Util pages = new Util(sessions);
             pages.setValue("clockDisplay", "");
 
@@ -84,7 +82,7 @@ public class Clock implements Runnable
         {
             ex.printStackTrace();
         }
-    }        
+    }
 
     /**
      * Our key to get hold of ServerContexts
@@ -94,7 +92,7 @@ public class Clock implements Runnable
     /**
      * Are we updating the clocks on all the pages?
      */
-    private boolean active = false;
+    private transient boolean active = false;
 
     /**
      * The log stream

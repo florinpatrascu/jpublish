@@ -20,6 +20,7 @@ package ca.flop.jpublish.dwr;
 
 import com.anthonyeden.lib.config.Configuration;
 import org.directwebremoting.WebContextFactory;
+import org.directwebremoting.extend.ServerLoadMonitor;
 import org.directwebremoting.impl.ContainerUtil;
 import org.directwebremoting.impl.DefaultContainer;
 import org.directwebremoting.impl.StartupUtil;
@@ -154,6 +155,20 @@ public class DWRProcessor {
             webContextBuilder.unset();
             ServletLoggingOutput.unsetExecutionContext();
         }
+    }
+
+    /**
+     * Kill all comet polls.
+     * <p>Technically a servlet engine ought to call this only when all the
+     * threads are already removed, however at least Tomcat doesn't do this
+     * properly (it waits for a while and then calls destroy anyway).
+     * <p>It would be good if we could get destroy() to call this
+     * method however destroy() is only called once all threads are done so it's
+     * too late.
+     */
+    public void shutdown() {
+        ServerLoadMonitor monitor = (ServerLoadMonitor) container.getBean(ServerLoadMonitor.class.getName());
+        monitor.shutdown();
     }
 
 
