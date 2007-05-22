@@ -1,0 +1,8 @@
+CHANGELOG
+
+[2007.05.21]
+ - rolled back DWR to 2.0 due to a problem I discovered with the reverse Ajax and this module.
+   I am debugging it right now, check this file for further updates.
+ - a better shutdown procedure, the cometd poll is clean properly now when the Servlet shuts down.
+ - added a jetty script that can be used to start Jetty 5.1.x
+ 

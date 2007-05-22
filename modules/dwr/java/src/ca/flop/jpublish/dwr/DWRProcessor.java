@@ -113,6 +113,9 @@ public class DWRProcessor {
                             site.getServletContext(), container);
 
             StartupUtil.initServerContext(fakeServletConfig, site.getServletContext(), container);
+            ContainerUtil.prepareForWebContextFilter(
+                    site.getServletContext(), fakeServletConfig,
+                    container, webContextBuilder, site.getJPublishServlet());
 
             ContainerUtil.configureContainerFully(container, fakeServletConfig);
             ContainerUtil.publishContainer(container, fakeServletConfig);

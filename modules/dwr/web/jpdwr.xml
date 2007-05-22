@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~
+  ~ Copyright 2007 Florin T.PATRASCU
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure 1.2//EN"
+        "http://jetty.mortbay.org/configure_1_2.dtd">
+
+<Configure class="org.mortbay.jetty.Server">
+    <Call name="addListener">
+        <Arg>
+            <New class="org.mortbay.http.SocketListener">
+                <Set name="port">8080</Set>
+            </New>
+        </Arg>
+    </Call>
+
+    <Call name="addWebApplication">
+        <Arg>/</Arg>
+        <Arg>.</Arg>
+        <Set name="virtualHosts">
+            <Array type="java.lang.String">
+                <Item/>
+                <Item>localhost</Item>
+            </Array>
+        </Set>
+    </Call>
+
+    <!-- =============================================================== -->
+    <!-- Configure the Request Log                                       -->
+    <!-- =============================================================== -->
+    <Set name="RequestLog">
+        <New class="org.mortbay.http.NCSARequestLog">
+            <Arg>
+                <SystemProperty name="jetty.home" default="."/>/logs/jp2dwr.yyyy_mm_dd.request.log</Arg>
+            <Set name="retainDays">90</Set>
+            <Set name="append">true</Set>
+            <Set name="extended">true</Set>
+            <Set name="buffered">false</Set>
+            <Set name="LogTimeZone">GMT-5</Set>
+        </New>
+    </Set>
+
+</Configure>
