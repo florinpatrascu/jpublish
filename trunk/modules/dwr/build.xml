@@ -87,6 +87,7 @@
         <!--you may need to rename the folder jpublishdwr to jpublishdwr.war-->
         <copy todir="${dist.dir}/jpublishdwr">
             <fileset dir="${web.dir}" includes="**/*.*"/>
+            <fileset dir="${web.dir}" includes="**/*"/>
         </copy>
 
         <copy todir="${dist.dir}/jpublishdwr/WEB-INF/lib">
