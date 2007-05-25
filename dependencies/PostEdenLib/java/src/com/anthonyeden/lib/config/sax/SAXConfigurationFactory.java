@@ -59,6 +59,7 @@ import org.apache.commons.logging.LogFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.*;
 import java.util.Properties;
@@ -75,15 +76,16 @@ import java.util.Properties;
  */
 
 public class SAXConfigurationFactory implements ConfigurationFactory {
-    public static final String CONFIG_FILE="edenlib-config.properties";
-    public static final String DEFAULT_CONFIG_FILE="/edenlib-default-config.properties";
+    public static final String CONFIG_FILE = "edenlib-config.properties";
+    public static final String DEFAULT_CONFIG_FILE = "/edenlib-default-config.properties";
 
     private static final Log log = LogFactory.getLog(SAXConfigurationFactory.class);
     private static final SAXConfigurationFactory INSTANCE = new SAXConfigurationFactory();
     public static final String PKG = "com.anthonyeden.lib";
     public static final int BUFFER_SIZE = 4096;
-    private static String parserClassName;
+    private static String className;
     private static boolean ns = false;
+    private static boolean fallback = false;
 
     private SAXConfigurationFactory() {
         Properties properties = new Properties();
@@ -98,8 +100,38 @@ public class SAXConfigurationFactory implements ConfigurationFactory {
 
         try {
             properties.load(in);
-            parserClassName = properties.getProperty("org.xml.sax.parser");
+            className = properties.getProperty("org.xml.sax.parser");
             ns = properties.getProperty("namespaces").equalsIgnoreCase("on");
+
+            //todo: should I move the entire parser initialization here?
+            try {
+                XMLReader xr = null;
+
+                if (!fallback) {
+                    try {
+                        xr = (XMLReader) ClassUtilities.loadClass(className).newInstance();
+                    } catch (Exception e) {
+                        fallback = true;
+                    }
+                }
+
+                if (fallback) {
+                    xr = XMLReaderFactory.createXMLReader();
+                }
+
+                if (xr != null) {
+                    log.info("XML Parser used: " + xr.getClass().getName());
+                }
+
+                if (xr == null)
+                    throw new ConfigurationException("No XML parsers available in the System???");
+
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (ConfigurationException e) {
+                e.printStackTrace();
+            }
+
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -169,8 +201,22 @@ public class SAXConfigurationFactory implements ConfigurationFactory {
     public Configuration getConfiguration(String id, InputStream in) throws ConfigurationException {
         SAXConfigurationHandler handler = new SAXConfigurationHandler(this, id);
 
+        XMLReader xr = null; //XMLReaderFactory.createXMLReader();
         try {
-            XMLReader xr = (XMLReader) ClassUtilities.loadClass(parserClassName).newInstance(); //XMLReaderFactory.createXMLReader();
+            if (!fallback) {
+                try {
+                    xr = (XMLReader) ClassUtilities.loadClass(className).newInstance();
+                } catch (Exception e) {
+                    fallback = true;
+                }
+            }
+
+            if (fallback) {
+                xr = XMLReaderFactory.createXMLReader();
+            }
+
+            if (xr == null)
+                throw new ConfigurationException("No XML parsers available in the System???");
 
             xr.setErrorHandler(handler);
             xr.setContentHandler(handler);
@@ -192,6 +238,7 @@ public class SAXConfigurationFactory implements ConfigurationFactory {
 
             xr.parse(new InputSource(in));
             return handler.getConfiguration();
+
         } catch (SAXException e) {
             Object[] args = {id, e.getMessage()};
             throw new ConfigurationException(MessageUtilities.getMessage(
@@ -200,12 +247,6 @@ public class SAXConfigurationFactory implements ConfigurationFactory {
             Object[] args = {id, e.getMessage()};
             throw new ConfigurationException(MessageUtilities.getMessage(
                     getClass(), PKG, "parseIOError", args));
-        } catch (IllegalAccessException e) {
-            throw new ConfigurationException("illegal access to: " + parserClassName, e);
-        } catch (ClassNotFoundException e) {
-            throw new ConfigurationException("class: " + parserClassName + ", not found", e);
-        } catch (InstantiationException e) {
-            throw new ConfigurationException("cannot instantiate: " + parserClassName, e);
         }
     }
 

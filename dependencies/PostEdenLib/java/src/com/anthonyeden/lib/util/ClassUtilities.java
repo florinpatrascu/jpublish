@@ -59,6 +59,7 @@ import java.util.List;
  * Useful class management utilities.
  *
  * @author Anthony Eden
+ * @author Florin PATRASCU
  */
 
 public class ClassUtilities {
@@ -124,12 +125,11 @@ public class ClassUtilities {
         try {
             return cl.loadClass(className);
         } catch (ClassNotFoundException e) {
-            log.info(className +
-                    "; ClassNotFoundException using thread context class loader");
+            log.warn(className + "; ClassNotFoundException using thread context class loader");
             cl = requestor.getClass().getClassLoader();
             return cl.loadClass(className);
         } catch (SecurityException e) {
-            log.info(className + "; SecurityException using thread context class loader");
+            log.warn(className + "; SecurityException using thread context class loader");
             cl = requestor.getClass().getClassLoader();
             return cl.loadClass(className);
         }
@@ -184,7 +184,7 @@ public class ClassUtilities {
      */
 
     public static URL getResource(String name, Class requestor) {
-        URL resource = null;
+        URL resource;
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         resource = cl.getResource(name);
         if (resource == null) {

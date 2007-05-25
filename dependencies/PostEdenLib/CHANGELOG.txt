@@ -1,5 +1,31 @@
 EdenLib change log:
 
+2007.05.25
+ - XML parsers can be specified in an external properties file. 
+   The file named: edenlib-config.properties, has to be in the classpath of
+   your web application and can contain:
+
+	org.xml.sax.parser=com.bluecast.xml.Piccolo
+	namespaces=off
+
+   , where org.xml.sax.parser can be any valid xml parsing library available in the
+   classpath. And where the namespaces can be turned on or off
+   You can substitute the XML parser easily by adding the path to this properties
+   file. Example of a PostEdenLib configured to use Xerces:
+
+    #org.xml.sax.parser=com.bluecast.xml.Piccolo
+	org.xml.sax.parser=org.apache.xerces.parsers.SAXParser
+	namespaces=off
+   
+   More than, that, if the user does not specify any parsing preferences, PostEdenLib will
+   default to the fast Piccolo parser. If Piccolo is not in the path or the user is making 
+   a config mistake, PostEdenLib will default to the XML parser supported by the system.
+
+ - we need to refactor a bit the SAXConfigurationFactory.java class so we'll have a nicer
+   initialization strategy.
+ - making provisions for PostEdenLib 1.5.4
+
+
 Version 1.5.3 - PostEden (December 20, 2006)-Florin
  - added Piccolo library for fast XML parsing
  - testing the XML includes functionality
