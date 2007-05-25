@@ -7,6 +7,8 @@ import com.anthonyeden.lib.config.MutableConfiguration;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.helpers.DefaultHandler;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.LinkedList;
 
@@ -14,10 +16,12 @@ import java.util.LinkedList;
  * Handler implementation
  *
  * @author Anthony Eden
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
  * @since 2.0
  */
 
 class SAXConfigurationHandler extends DefaultHandler {
+    protected static final Log log = LogFactory.getLog( SAXConfigurationHandler.class);
     private SAXConfigurationFactory factory;
     private String id;
 
@@ -36,6 +40,8 @@ class SAXConfigurationHandler extends DefaultHandler {
      * Construct a new SAXConfigurationHandler with the given root configuration
      * object.
      *
+     * @param factory
+     * @param id
      */
 
     SAXConfigurationHandler(SAXConfigurationFactory factory, String id) {

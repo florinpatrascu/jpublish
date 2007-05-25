@@ -110,7 +110,6 @@ public class FileResourceLoader extends AbstractResourceLoader{
                 fileMonitor.startMonitor();
             }
         } catch(Exception e){
-            e.printStackTrace();
             throw new ResourceException(e);
         } finally {
             IOUtilities.close(in);
