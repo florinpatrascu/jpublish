@@ -60,6 +60,9 @@
         <copy todir="${build.classes}/com/anthonyeden/lib/">
             <fileset file="${src.dir}/com/anthonyeden/lib/*.properties"/>
         </copy>
+        <copy todir="${build.classes}/">
+            <fileset file="${src.dir}/*.properties"/>
+        </copy>
         <jar
                 jarfile="${build.dir}/${Name}-${version}.jar"
                 basedir="${build.classes}">
