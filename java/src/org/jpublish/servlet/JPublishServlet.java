@@ -453,8 +453,9 @@ public class JPublishServlet extends HttpServlet {
      * Configure the classpath for use by scripting languages.  This will
      * add the WEB-INF/classes directory and all JAR and ZIP files in the
      * WEB-INF/lib directory to the classpath.
+     *
+     * @param classPath
      */
-
     protected void configureClasspath(String classPath) {
         AccessController.doPrivileged(new SetClassPathAction(classPath));
         //System.setProperty("java.class.path", classPath.toString());
@@ -474,15 +475,18 @@ public class JPublishServlet extends HttpServlet {
         }
 
         // add WEB-INF/lib files to the classpath
-        File[] files = webLibPath.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].getName().toLowerCase().endsWith(".jar") ||
-                    files[i].getName().toLowerCase().endsWith(".zip")) {
-                classPath.append(System.getProperty("path.separator"));
-                classPath.append(files[i]);
+        if (webLibPath.exists()) {
+            File[] files = webLibPath.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].getName().toLowerCase().endsWith(".jar") ||
+                        files[i].getName().toLowerCase().endsWith(".zip")) {
+                    classPath.append(System.getProperty("path.separator"));
+                    classPath.append(files[i]);
+                }
             }
         }
-
+        if (log.isDebugEnabled())
+            log.debug("Classpath used: " + classPath.toString());
         return classPath.toString();
     }
 
@@ -664,8 +668,8 @@ public class JPublishServlet extends HttpServlet {
      * @param redirect The redirect path
      * @param path     The request path
      * @param response The HTTP response object
-     * @throws IOException
      * @return
+     * @throws IOException
      */
 
     private boolean optionalRedirect(String redirect, String path,
