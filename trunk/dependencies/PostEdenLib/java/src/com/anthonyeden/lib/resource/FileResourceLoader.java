@@ -47,73 +47,79 @@
 
 package com.anthonyeden.lib.resource;
 
+import com.anthonyeden.lib.util.IOUtilities;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+/**
+ * Implementation of the ResourceLoader interface which loads data from
+ * a file.
+ *
+ * @author Anthony Eden
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
+ */
 
-import com.anthonyeden.lib.util.IOUtilities;
+public class FileResourceLoader extends AbstractResourceLoader {
 
-/** Implementation of the ResourceLoader interface which loads data from
-    a file.
-    
-    @author Anthony Eden
-*/
-
-public class FileResourceLoader extends AbstractResourceLoader{
-    
     private static final Log log = LogFactory.getLog(FileResourceLoader.class);
 
-    /** Load the resource specified by the given path.  Calling this method will
-        cause the resource to be loaded and monitored.
-    
-        @param path The path
-        @param handler The ResourceReceipient callback
-        @throws ResourceException
-    */
-    
-    public void loadResource(String path, ResourceRecipient handler) throws 
-    ResourceException{
+    /**
+     * Load the resource specified by the given path.  Calling this method will
+     * cause the resource to be loaded and monitored.
+     *
+     * @param path    The path
+     * @param handler The ResourceReceipient callback
+     * @throws ResourceException
+     */
+
+    public void loadResource(String path, ResourceRecipient handler) throws
+            ResourceException {
         loadResource(path, handler, true);
     }
-    
-    /** Load the resource specified by the given path.  If monitor is true then
-        the ResourceLoader implementation will monitor the resource and call the
-        ResourceRecipient each time the resource is modified.
-        
-        @param path The path
-        @param handler The ResourceRecipient callback
-        @param monitor True to monitor the resource
-        @throws ResourceException
-    */
 
-    public void loadResource(String path, ResourceRecipient handler, 
-    boolean monitor) throws ResourceException{
+    /**
+     * Load the resource specified by the given path.  If monitor is true then
+     * the ResourceLoader implementation will monitor the resource and call the
+     * ResourceRecipient each time the resource is modified.
+     *
+     * @param path    The path
+     * @param handler The ResourceRecipient callback
+     * @param monitor True to monitor the resource
+     * @throws ResourceException
+     */
+
+    public void loadResource(String path, ResourceRecipient handler, boolean monitor)
+            throws ResourceException {
+
         InputStream in = null;
-        try{
-            log.debug("Resource path: " + path);
+        try {
+            if (log.isDebugEnabled())
+                log.debug("Resource path: " + path);
+
             File file = new File(path);
-            if(!file.exists()){
+            if (!file.exists()) {
                 throw new FileNotFoundException("File not found: " + file);
             }
-            
+
             in = new FileInputStream(file);
             handler.load(in);
-            
-            if(monitor){
-                ResourceFileMonitor fileMonitor = new ResourceFileMonitor(
-                    file, getDelay(), handler);
+
+            if (monitor) {
+                ResourceFileMonitor fileMonitor = new ResourceFileMonitor(file, getDelay(), handler);
                 getMonitors().add(fileMonitor);
                 fileMonitor.startMonitor();
             }
-        } catch(Exception e){
+        } catch (Exception e) {
+            log.error(e.getMessage());
             throw new ResourceException(e);
         } finally {
             IOUtilities.close(in);
         }
     }
-    
+
 }
