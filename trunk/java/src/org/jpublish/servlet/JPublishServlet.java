@@ -427,6 +427,11 @@ public class JPublishServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
             }
         } catch (Exception e) {
+            // Allow Jetty RequestRetry exception to propogate to container!
+            if ("org.mortbay.jetty.RetryRequest".equals(e.getClass().getName())) {
+                throw (RuntimeException) e;
+            }
+
             JPublishError error = new JPublishError(e, context);
             Iterator errorHandlers = siteContext.getErrorHandlers(path).iterator();
             while (errorHandlers.hasNext()) {
