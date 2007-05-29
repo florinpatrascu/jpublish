@@ -1,5 +1,15 @@
 JPublish 4 change log:
 
+[2007.05.28]
+- WEB-INF/lib folder is not anymore required when JPublish is instantiated
+  from an application different than a standard Servlet container.
+- JPublish understands now how Jetty plays with the Continuations ;)
+- latest PostEdenLib is now available in the lib folder
+- added the latest bsh version
+- DWR library is updated now and Reverse AJAX finally works with no problems.
+- JP4+DWR is running successfully with the following servers: Jetty 5/6.1.3,
+  Tomcat 5/6.0.13 and JBoss 4.0.2/4.0.5GA
+
 [2007.05.20]
  - improving the JPublishComponent API in order to support
    the need for rendering a Text parameter or a View from a given path. Useful if
