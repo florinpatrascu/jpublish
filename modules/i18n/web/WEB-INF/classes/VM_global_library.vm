@@ -1,0 +1,9 @@
+#**
+ * JPublish i18n Velocity macro support
+ *
+ * Convenient macro to translate a message code into a message.
+ * Florin [2007.05.29]
+ *#
+#macro( i18n $code )$i18n.getMessage($code,"")#end
+#macro( i18nX $code $args)$i18n.getMessage( $code, $args.toArray(), "")#end
+

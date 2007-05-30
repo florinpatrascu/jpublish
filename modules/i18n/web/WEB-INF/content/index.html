@@ -1,0 +1,18 @@
+<h3>JPublish Internationalization (I18N)</h3>
+
+<p>"Many publishing environments need to support multiple languages. In many cases, the requirement to support multiple languages surfaces in later stages of a product development or publishing solution, which can cause major design changes, driving up costs. Internationalization (I18N) is the approach to design systems which can adapt to different locales. Localization (L10N) is the activity to identify, define, and encode locales, based on internationalized software." - <a href="http://dret.net/lectures/publishing-spring07/">Web-Based Publishing</a> </p>
+
+<p>This is a small demo of how i18n support is handled in a JPublish application.</p>
+<h2>#i18n( "hello.world")</h2>
+
+<table border="0" cellspacing="1" cellpadding="1">
+	<tr><td>Hello World in:</td><td><a href="$request.ContextPath/index.html?lang=fr">French</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="$request.ContextPath/index.html?lang=gr">Greek</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="$request.ContextPath/index.html?lang=ro">Romanian</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="$request.ContextPath/index.html?lang=es">Spanish</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="$request.ContextPath/index.html?lang=de">German</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="$request.ContextPath/index.html?lang=zh_CN">Chinese (Simplified)</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="$request.ContextPath/index.html?lang=en">English</a></td></tr>
+</table><br>
+        
+JPublish is <a href="http://en.wikipedia.org/wiki/UTF8">UTF-8</a> enabled and the current locale is: $page.locale
