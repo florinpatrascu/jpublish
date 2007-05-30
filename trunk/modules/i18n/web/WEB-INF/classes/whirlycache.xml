@@ -1,0 +1,25 @@
+<!--
+  ~ Copyright (c)2007, Florin T.PATRASCU.
+  ~ All Rights Reserved.
+  -->
+
+<whirlycache>
+
+
+	<default-cache>default</default-cache>
+
+	<cache name="default">
+		<backend>com.whirlycott.cache.impl.ConcurrentHashMapImpl</backend>
+		<tuner-sleeptime>54000</tuner-sleeptime>
+		
+		<!-- evicts oldest items when pruning -->
+		<!-- <policy>com.whirlycott.cache.policy.FIFOMaintenancePolicy</policy> -->
+		<!-- evicts least recently used items when pruning -->
+		<policy>com.whirlycott.cache.policy.LRUMaintenancePolicy</policy>
+		<!-- evicts least frequently used items when pruning -->
+		<!-- <policy>com.whirlycott.cache.policy.LFUMaintenancePolicy</policy> -->
+		
+		<maxsize>50000</maxsize>
+	</cache>
+
+</whirlycache>
