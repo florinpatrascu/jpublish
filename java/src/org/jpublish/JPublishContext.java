@@ -36,6 +36,7 @@ import javax.servlet.http.HttpSession;
  * standard variables.
  *
  * @author Anthony Eden
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
  */
 
 public class JPublishContext extends VelocityContext {
@@ -113,6 +114,16 @@ public class JPublishContext extends VelocityContext {
     public String getStopProcessing() {
         return (String) get(JPUBLISH_STOP_PROCESSING);
     }
+
+    /**
+     * Get the SiteContext.
+     *
+     * @return The SiteContext or null if not available
+     */
+    public SiteContext getSiteContext() {
+        return (SiteContext) get(JPUBLISH_SITE);
+    }
+
 
     /**
      * Set the stop-processing flag.  Any non-null String value will be considered "true" indicating that processing

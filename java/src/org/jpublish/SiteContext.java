@@ -21,8 +21,8 @@ import com.anthonyeden.lib.config.Configuration;
 import com.anthonyeden.lib.config.ConfigurationException;
 import com.anthonyeden.lib.config.XMLConfiguration;
 import com.anthonyeden.lib.resource.FileResourceLoader;
-import com.anthonyeden.lib.resource.ResourceRecipient;
 import com.anthonyeden.lib.resource.ResourceException;
+import com.anthonyeden.lib.resource.ResourceRecipient;
 import com.anthonyeden.lib.util.ClassUtilities;
 import com.anthonyeden.lib.util.IOUtilities;
 import org.apache.commons.logging.Log;
@@ -126,7 +126,8 @@ public class SiteContext implements ResourceRecipient {
      * context's configuration.
      *
      * @param contextRoot Get the application context root
-     * @throws Exception
+     * @param configPath  JPublish configuration file path
+     * @throws Exception an Exception is thrown if anything goes wrong
      */
 
     public SiteContext(File contextRoot, String configPath) throws Exception {
