@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jpublish>
+
+    <name>JPublish: empty web application</name>
+
+    <static-root>public</static-root>
+    <action-root>actions</action-root>
+    <template-root>templates</template-root>
+    <page-root>pages</page-root>
+
+    <page-manager classname="org.jpublish.page.filesystem.FileSystemPageManagerWithDefault"/>
+    <default-template>basic</default-template>
+
+    <!--Velocity renderer-->
+    <view-renderer classname="org.jpublish.view.velocity.VelocityViewRenderer">
+        <velocity-properties relative-paths="true">WEB-INF/velocity.properties</velocity-properties>
+        <resource-cache-enabled>true</resource-cache-enabled>
+        <!--seconds-->
+        <resource-cache-interval>15</resource-cache-interval>
+    </view-renderer>
+
+    <!--Comment the Velocity renderer above and un-comment the line below if you need to
+        enable the FreeMarker-->
+    <!--<view-renderer classname="org.jpublish.view.freemarker.FreeMarkerViewRenderer"/>-->
+
+    <repository name="fs_repository" classname="org.jpublish.repository.filesystem.FileSystemRepository">
+        <root>content</root>
+        <cache>default</cache>
+    </repository>
+
+    <cache-manager>
+        <jpublish.cache.provider>
+            <!--<implementation name="default" class="org.jpublish.util.JPublishSimpleCacheImpl"/>-->
+            <!--<implementation name="default" class="org.jpublish.util.JPublishWhirlyCacheImpl"/>-->
+            <implementation name="default" class="org.jpublish.util.JPublishCacheImpl"/>
+        </jpublish.cache.provider>
+    </cache-manager>
+
+    <character-encoding-map path="*">
+        <page-encoding>utf8</page-encoding>
+        <template-encoding>utf8</template-encoding>
+        <request-encoding>utf8</request-encoding>
+        <response-encoding>utf8</response-encoding>
+    </character-encoding-map>
+
+    <debug>false</debug>
+</jpublish>

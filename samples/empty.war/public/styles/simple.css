@@ -1,0 +1,10 @@
+body {
+    color: #000;
+    background-color: #ffffff;
+    font: 12px Arial, Helvetica, Geneva, sans-serif;
+}
+
+h1 {
+    color: blue;
+    font: bold 15px "Lucida Grande", Lucida, Verdana, sans-serif;
+}

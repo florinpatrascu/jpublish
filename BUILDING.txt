@@ -1,3 +1,29 @@
-To build JPublish you will first need to check out the source code from
+To build JPublish you will first need to check out  or export the source code from
 the SVN.  Install the most recent version of Ant on your system.  Once
 Ant is installed, change into the jpublish root directory and type ant.
+
+To build an empty JPublish web application go to the folder where you have downloaded,
+checkout or exported the JPublish SVN code and use ant:
+
+$ ant empty-web-app
+
+An empty JPublish web application containing all the required libraries and a very basic
+site structure will be created in: build/samples/empty.war
+
+Copy/move/rename the empty.war and use it in your Servlet container of choice.
+
+Few hints for the impatient :)
+1. To modify the home page layout, edit the file:
+	empty.war/templates/basic.html
+
+2. To modify the home page contents, edit the file:
+	empty.war/content/index.html
+
+3. The simple CSS file is situated here: empty.war/public/styles/simple.css
+
+4. To add and use a scripting action:
+ - create a new Beanshell (bsh) or a Rhino(js) Action script in the empty.war/actions folder
+ - use the new Action in the page you need by declaring the new Action in the page's
+   specific xml file: <page-action name="the newly created action"/> 
+
+Good luck!
