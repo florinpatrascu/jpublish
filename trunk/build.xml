@@ -97,6 +97,29 @@
     </target>
 
     <!-- ====================================================================== -->
+    <!-- Create an empty JPublish web application.                              -->
+    <!-- ====================================================================== -->
+
+    <target name="empty-web-app" depends="jar">
+        <echo message="Building an empty JPublish web applications:"/>
+        <echo message="... empty.war"/>
+
+        <copy todir="${build.samples}/empty.war">
+           <fileset dir="${samples.dir}/empty.war" includes="**/*.*"/>
+        </copy>
+        <copy todir="${build.samples}/empty.war/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+
+    <!-- ====================================================================== -->
     <!-- Generate the API documentation.                                        -->
     <!-- ====================================================================== -->
 
