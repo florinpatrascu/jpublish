@@ -75,9 +75,8 @@ public class XMLConfiguration implements MutableConfiguration {
      * @param xmlString The xml string we want to load
      * @deprecated please use the XMLConfiguration(id, xmlString)
      */
-
     public XMLConfiguration(String xmlString) throws ConfigurationException {
-        load(EMPTY_STRING, new ByteArrayInputStream(xmlString.getBytes()));
+        this(EMPTY_STRING, xmlString, ConfigurationBase.ENCODING);
     }
 
     /**
@@ -87,9 +86,30 @@ public class XMLConfiguration implements MutableConfiguration {
      * @param id
      * @param xmlString The xml string we want to load
      */
-
     public XMLConfiguration(String id, String xmlString) throws ConfigurationException {
-        load(id, new ByteArrayInputStream(xmlString.getBytes()));
+        this(id, xmlString, ConfigurationBase.ENCODING);
+    }
+
+    /**
+     * Construct a configuration object from the given XML String
+     * with the given id.
+     *
+     * @param id        used to identify the parsing sequence
+     * @param xmlString The xml string we want to load
+     * @param encoding  character encoding
+     * @throws ConfigurationException
+     */
+
+    public XMLConfiguration(String id, String xmlString, String encoding)
+            throws ConfigurationException {
+
+        try {
+            load(id, new ByteArrayInputStream(xmlString.getBytes(encoding)));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            throw new ConfigurationException("Unsupported encoding: " + encoding +
+                    ", while parsing id: " + id + ", containing: " + xmlString);
+        }
     }
 
     /**
