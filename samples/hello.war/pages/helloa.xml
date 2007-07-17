@@ -2,5 +2,6 @@
 
 <page>
     <template>basic</template>
+    <!-- <page-action name="SayHello.rb"/> -->
     <page-action name="SayHello.bsh"/>
 </page>
