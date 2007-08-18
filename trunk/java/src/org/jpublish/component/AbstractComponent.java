@@ -37,10 +37,13 @@ import java.util.Map;
  * Abstract base implementation of the JPublishComponent interface.
  * Component implementations can extend this base class to reduce the
  * amount of work necessary to develop components.
+ * <p/>
+ * The repository is not anymore mandatory for those components able to
+ * handle their own
  *
  * @author Anthony Eden
  * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
- * @since $Revision$ (created: Sunday; May 20, 2007)
+ * @since $Revision$ (created: [2007.08.18])
  */
 
 public abstract class AbstractComponent implements JPublishComponent {
@@ -161,7 +164,7 @@ public abstract class AbstractComponent implements JPublishComponent {
      * override this method if they require configuration.  If an
      * implementation does override this method the implementation
      * should call <code>super.loadConfiguration(configuration)</code>
-     * first.
+     * first. 
      *
      * @param configuration The configuration data
      * @throws ConfigurationException
@@ -201,20 +204,20 @@ public abstract class AbstractComponent implements JPublishComponent {
             String name = repositoryConfiguration.getAttribute("name");
             if (name == null) {
                 throw new ConfigurationException(
-                        "Repository name attribute required");
+                        getName()+": the repository name attribute required");
             } else {
                 if (log.isDebugEnabled())
                     log.debug("Using repository name: " + name);
                 viewRepository = siteContext.getRepository(name);
+                if (viewRepository == null) {
+                    throw new ConfigurationException(
+                            "View repository must be specified for component " + getName());
+                }
             }
         } else {
-            log.error("Repository configuration element not found");
+            log.warn(getName()+": the repository configuration element not found");
         }
 
-        if (viewRepository == null) {
-            throw new ConfigurationException(
-                    "View repository must be specified for component " + getName());
-        }
     }
 
     /**
@@ -225,7 +228,7 @@ public abstract class AbstractComponent implements JPublishComponent {
      * @param context The context
      * @param path    render the View at the given path
      * @return The merged view
-     * @throws Exception
+     * @throws Exception if errors are encountered at the rendering process time
      */
 
     protected String renderView(String text, String path, JPublishContext context)
