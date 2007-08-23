@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+  <template>basic</template>
+  <property name="title">JPublish-StringTemplate DEMO</property>
+  <property name="foo">bar</property>
+  <property name="someUNICODE">Geschäftsbedingungen</property>
+  <page-action name="HomePageAction.bsh"/>
+</page>
