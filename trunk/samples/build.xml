@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~
+  ~ Copyright 2007 Florin T.PATRASCU
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<project name="JPublish-demos" default="empty-web-app" basedir=".">
+
+    <property file="build.properties"/>
+
+
+    <!-- Setup module paths -->
+    <property name="module.dir" value="${modules.dir}"/>
+
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- ==================================================== -->
+    <!-- Initialize Ant                                       -->
+    <!-- ==================================================== -->
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <!-- Compiler resources -->
+    <patternset id="compiler.resources">
+        <include name="**/?*.properties"/>
+        <include name="**/?*.xml"/>
+        <include name="**/?*.vm"/>
+    </patternset>
+
+
+    <!-- ====================================================================== -->
+    <!-- Create an empty JPublish web application.                              -->
+    <!-- ====================================================================== -->
+    <target name="empty-web-app">
+        <echo message="Building an empty JPublish web applications:"/>
+        <echo message="... empty.war"/>
+
+        <copy todir="${build.samples}/empty.war">
+            <fileset dir="empty.war" includes="**/*.*"/>
+        </copy>
+        <copy todir="${build.samples}/empty.war/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Create the JPublish StringTemplate demo web application.               -->
+    <!-- ====================================================================== -->
+    <target name="stdemo">
+        <echo message="A JPublish web application for testing the StringTemplate Viewer"/>
+        <echo message="... stdemo.war"/>
+
+        <copy todir="${build.samples}/stdemo.war">
+            <fileset dir="stdemo.war" includes="**/*.*"/>
+        </copy>
+        <copy todir="${build.samples}/stdemo.war/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+
+    <!-- ====================================================================== -->
+    <!-- Clean up generated stuff                                               -->
+    <!-- ====================================================================== -->
+    <target name="clean">
+        <delete dir="${build.dir}/samples"/>
+    </target>
+
+</project>

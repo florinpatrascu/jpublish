@@ -47,10 +47,30 @@ public class RepositoryWrapper {
      * @param repository The repository
      * @param context    The current context
      */
-
     public RepositoryWrapper(Repository repository, JPublishContext context) {
         this.repository = repository;
         this.context = context;
+    }
+
+    /**
+     * simple helper to avoid confusions during reflection
+     *
+     * @param path resource path that has to be extracted from the repository
+     * @return the String representation of the resource as processed by the Viewer
+     */
+    public String render(String path) {
+        return render(path, true);
+    }
+
+    /**
+     * simple helper to avoid confusions during reflection
+     *
+     * @param path resource path that has to be extracted from the repository
+     * @return the String representation of the resource as processed by the Viewer
+     * @param merged True to merge the page context
+     */
+    public String render(String path, boolean merged) {
+        return get(path, merged);
     }
 
     /**
@@ -105,7 +125,6 @@ public class RepositoryWrapper {
      * @return The InputStream
      * @throws Exception
      */
-
     public InputStream getInputStream(String path) throws Exception {
         return repository.getInputStream(path);
     }

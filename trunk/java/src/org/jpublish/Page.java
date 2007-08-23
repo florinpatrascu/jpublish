@@ -36,6 +36,7 @@ import java.util.Map;
  * and make changes.
  *
  * @author Anthony Eden
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
  */
 
 public class Page {
@@ -53,7 +54,6 @@ public class Page {
      *
      * @param pageInstance The wrapped PageInstance
      */
-
     public Page(PageInstance pageInstance) {
         this.pageInstance = pageInstance;
 
@@ -66,7 +66,6 @@ public class Page {
      *
      * @return The request path
      */
-
     public String getPath() {
         return pageInstance.getPath();
     }
@@ -76,7 +75,6 @@ public class Page {
      *
      * @return The page name
      */
-
     public String getPageName() {
         return pageInstance.getPageName();
     }
@@ -86,7 +84,6 @@ public class Page {
      *
      * @return The page type
      */
-
     public String getPageType() {
         return pageInstance.getPageType();
     }
@@ -96,7 +93,6 @@ public class Page {
      *
      * @return The PageInstance
      */
-
     public PageInstance getPageInstance() {
         return pageInstance;
     }
@@ -105,7 +101,7 @@ public class Page {
      * Return the page title.  Initially the page title is extracted from
      * the page's definition document, however it can be set programtically
      * at runtime.
-     *
+     * <p/>
      * <p>This method is deprecated.  Use getProperty("title") instead and
      * include a property named title in the page configuration file.  The
      * old &lt;title&gt; element and this method will be removed for the
@@ -114,21 +110,19 @@ public class Page {
      * @return The page title
      * @deprecated Use getProperty("title") instead
      */
-
     public String getTitle() {
         return getProperty("title");
     }
 
     /**
      * Set the title.  This will temporarily alter the page's title.
-     *
+     * <p/>
      * <p>This method is deprecated.  The old &lt;title&gt; element
      * and this method will be removed for the 1.0 release.
      *
      * @param title The page title
      * @deprecated
      */
-
     public void setTitle(String title) {
         setProperty("title", title);
     }
@@ -138,7 +132,6 @@ public class Page {
      *
      * @return The full template name
      */
-
     public String getFullTemplateName() {
         return getTemplateName() + "." + getPageType();
     }
@@ -150,7 +143,6 @@ public class Page {
      *
      * @return The template name
      */
-
     public String getTemplateName() {
         if (templateName == null) {
             templateName = pageInstance.getTemplateName();
@@ -165,7 +157,6 @@ public class Page {
      *
      * @param templateName The new template name or null to reset
      */
-
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
@@ -177,7 +168,6 @@ public class Page {
      *
      * @return A List of page actions
      */
-
     public List getPageActions() {
         return pageInstance.getPageActions();
     }
@@ -189,7 +179,6 @@ public class Page {
      * @param name The property name
      * @return The value or null
      */
-
     public String getProperty(String name) {
         return getProperty(name, getLocale());
     }
@@ -199,8 +188,8 @@ public class Page {
      * the property is not found then return null.  This method will try to find
      * the most suitable locale by searching the property values in the
      * following manner:
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * language + "_" + country + "_" + variant<br>
      * language + "_" + country<br>
      * langauge<br>
@@ -211,7 +200,6 @@ public class Page {
      * @param locale The locale
      * @return The value
      */
-
     public String getProperty(String name, Locale locale) {
         if (log.isDebugEnabled())
             log.debug("getProperty(" + name + "," + locale + ")");
@@ -242,7 +230,6 @@ public class Page {
      * @param name The property name
      * @return The value
      */
-
     public String get(String name) {
         return getProperty(name);
     }
@@ -254,7 +241,6 @@ public class Page {
      * @return A redirection value or null if there is no redirection
      * @throws Exception Any Exception which occurs while executing the action
      */
-
     public String executeActions(JPublishContext context) throws Exception {
         return pageInstance.executeActions(context);
     }
@@ -264,7 +250,6 @@ public class Page {
      *
      * @return The Locale
      */
-
     public Locale getLocale() {
         return locale;
     }
@@ -275,7 +260,6 @@ public class Page {
      *
      * @param locale
      */
-
     public void setLocale(Locale locale) {
         if (locale == null) {
             locale = Locale.getDefault();
@@ -289,7 +273,6 @@ public class Page {
      * @param name  The property name
      * @param value The property value
      */
-
     public void setProperty(String name, String value) {
         setProperty(name, value, getLocale());
     }
@@ -315,4 +298,10 @@ public class Page {
         property.setValue(value, locale);
     }
 
+    /**
+     * @return a read/write Map containing the page properties
+     */
+    public Map getProperties() {
+        return this.properties;
+    }
 }
