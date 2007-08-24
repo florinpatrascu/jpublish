@@ -1,0 +1,10 @@
+<script type='text/javascript' src='$request.ContextPath/dwr/interface/FilePing.js'/>
+<h1>SimpleDWR with JPublish</h1>
+
+<p>Imagine you want to display the contents of a text file that is arbitrarily updated, for example a notification file. This page demonstrates how you can accomplish this by using reverse Ajax through JPublishDWR module. Enjoy!</p>
+
+<input type="button" value="Start / Stop" onclick='FilePing.setFileName("/Users/flop/news.txt"); FilePing.setRequestUrl("$request.ContextPath/index.html"); FilePing.toggle();'/>
+
+<div style="font-size:200%;" id="fileDisplay"></div>
+
+<div id="dwr-debug">-</div>
