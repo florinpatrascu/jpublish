@@ -1,5 +1,19 @@
 JPublish 4 change log:
 
+[2007.08.25]
+- added new rendering support through the StringTemplateViewRenderer. For
+  more details visit the JPublish Wiki. We believe that ST will become the
+  default template language for JPublish.
+- wrapped the RepositoryWrapper in a Map, so modern template engines will
+  have an easy job identifying the repository content resources as simple keys.
+- small optimization
+- preparing to branch the SVN
+
+[2007.08.23]
+- added a new DWR demo application. A simple and clean code showing you how one can
+  monitor a file by using reverse AJAX through the DWR module.
+- small optimizations and misc examples
+
 [2007.05.28]
 - WEB-INF/lib folder is not anymore required when JPublish is instantiated
   from an application different than a standard Servlet container.
