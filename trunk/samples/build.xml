@@ -75,7 +75,7 @@
     <!-- ====================================================================== -->
     <target name="stdemo">
         <echo message="A JPublish web application for testing the StringTemplate Viewer"/>
-        <echo message="... stdemo.war"/>
+        <echo message="building stdemo.war ..."/>
 
         <copy todir="${build.samples}/stdemo.war">
             <fileset dir="stdemo.war" includes="**/*.*"/>
@@ -88,6 +88,7 @@
                 <include name="**/*.*"/>
             </fileset>
         </copy>
+        <echo message="stdemo.war, ready."/>
 
     </target>
 

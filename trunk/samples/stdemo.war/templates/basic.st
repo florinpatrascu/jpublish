@@ -4,12 +4,12 @@
 <html>
 <head>
     <title>JPublish: empty ST application [$page.Path$]</title>
-    <link rel="stylesheet" href="$request.ContextPath$/styles/simple.css" type="text/css">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="$request.ContextPath$/styles/simple.css" type="text/css"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 </head>
 
 <body>
-	$content$
+	$fs_repository.(page.Path)$
 	<p>2007, <a href="http://weblog.flop.ca">FloP.ca</a></p>
 </body>
 </html>
