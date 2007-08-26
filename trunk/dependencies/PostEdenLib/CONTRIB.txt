@@ -1,4 +1,5 @@
-Anthony Eden <aeden@users.sourceforge.net>
+Anthony Eden <aeden@gmail.com>
 Florin T.PATRASCU <florin.patrascu@gmail.com>
 Nick Bauman <nick@cortexity.com>
 Kalman Laszlo <klaszlo@users.sourceforge.net>
+Jakub Labath <jlabath@gmail.com>

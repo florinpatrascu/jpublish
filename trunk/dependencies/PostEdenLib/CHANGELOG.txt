@@ -1,5 +1,10 @@
 EdenLib change log:
 
+
+[2007.08.25]
+ - added the patch from Jakub Labath. Removing a child node after was added is
+   working now.
+
 2007.05.25
  - XML parsers can be specified in an external properties file. 
    The file named: edenlib-config.properties, has to be in the classpath of
