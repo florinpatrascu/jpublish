@@ -367,7 +367,7 @@ public class XMLConfiguration implements MutableConfiguration {
     /**
      * Add a child node with no child value to the configuration.  This
      * method should be the same as calling
-     * <code>addChild(name, null)</code>
+     * <code>addChild(name, "")</code>
      *
      * @param name The name of the new configuration node
      * @return The configuration node
@@ -375,7 +375,7 @@ public class XMLConfiguration implements MutableConfiguration {
 
     public MutableConfiguration addChild(String name) {
         if (configuration instanceof MutableConfiguration) {
-            return ((MutableConfiguration) configuration).addChild(name);
+            return ((MutableConfiguration) configuration).addChild(name, EMPTY_STRING);
         } else {
             throw new UnsupportedOperationException("This configuration is not mutable.");
         }
@@ -449,7 +449,7 @@ public class XMLConfiguration implements MutableConfiguration {
 
     public void removeChild(Configuration configuration) {
         if (configuration instanceof MutableConfiguration) {
-            ((MutableConfiguration) configuration).removeChild(configuration);
+            ((MutableConfiguration) this.configuration).removeChild(configuration);
         } else {
             throw new UnsupportedOperationException("This configuration is not mutable.");
         }
