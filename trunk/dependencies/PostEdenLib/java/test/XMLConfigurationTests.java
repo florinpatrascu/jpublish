@@ -19,12 +19,14 @@
 import com.anthonyeden.lib.config.Configuration;
 import com.anthonyeden.lib.config.ConfigurationException;
 import com.anthonyeden.lib.config.XMLConfiguration;
+import com.anthonyeden.lib.config.MutableConfiguration;
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.io.StringWriter;
 
 /**
  * unit tests for the {@link com.anthonyeden.lib.config.XMLConfiguration} class
@@ -55,5 +57,31 @@ public class XMLConfigurationTests extends TestCase {
         Configuration c = new XMLConfiguration("hitsTagByteArray",
                 new ByteArrayInputStream(hitsTagByteArray));
         assertTrue("aten忮".equals(c.getValue()));
+    }
+
+    public void testSaveMethodAfterAddChild() throws ConfigurationException {
+        //this was the case where when added new empty node the text was null and save failed
+        log.info("trying to save the xml document after adding a child node to an xml document");
+        XMLConfiguration c = new XMLConfiguration("testXML", hitsTagString);
+        c.addChild("boo");
+        String s = null;
+        StringWriter out = new StringWriter();
+        try {
+            c.save(out);
+            s = out.toString();
+        } catch (Exception ignore) {
+        }
+        assertNotNull(s);
+    }
+
+    public void testAddRemoveChild() throws ConfigurationException {
+        //try to add and remove a child node
+        log.info("trying to save the xml document after adding a child node to an xml document");
+        XMLConfiguration c = new XMLConfiguration("testXML", hitsTagString);
+        c.addChild("boo");
+        Configuration theSameChild = c.getChild("boo");
+        assertNotNull(theSameChild);
+        c.removeChild(theSameChild);
+        assertNull(c.getChild("boo"));
     }
 }
