@@ -47,137 +47,143 @@
 
 package com.anthonyeden.lib.config;
 
-import java.io.InputStream;
-import java.io.Reader;
 import java.util.List;
 
-/** 
+/**
  * The Configuration interface represents a node in a configuration tree.
  *
  * @author Anthony Eden
  */
 
 public interface Configuration {
-    
-    /** 
+
+    /**
      * Get the node's name.
-     *  
+     *
      * @return The node's name
      */
-    
+
     public String getName();
-    
-    /** 
+
+    /**
      * Get the parent configuration object.  This method will return null
      * if this configuration object is the top-most configuration object
      * in the configuration tree.
-     * 
+     *
      * @return The parent configuration object or null
      */
-    
+
     public Configuration getParent();
 
-    /** 
+    /**
      * Get the child configuration object with the given name.  If the
      * child with the name does not exist then this method returns
      * null.  If more than one child with the given name exists then
      * this method returns the first child.
-     *  
+     *
      * @param name The child name
      * @return The first named child or null
      */
 
     public Configuration getChild(String name);
-    
-    /** 
-     * Get the value of the first child configuration object with the 
+
+    /**
+     * Get the value of the first child configuration object with the
      * given name.  If the child cannot be found or the child had no
      * data then this method returns null.
-     *   
+     *
      * @param name The child name
      * @return The value or null
      */
-    
+
     public String getChildValue(String name);
-    
-    /** 
-     * Get the value of the first child configuration object with the 
+
+    /**
+     * Get the value of the first child configuration object with the
      * given name.  If the child cannot be found or the child had no
      * data then this method returns the given default value.
-     *  
-     * @param name The child name
+     *
+     * @param name         The child name
      * @param defaultValue The default value
      * @return The value
      */
-    
+
     public String getChildValue(String name, String defaultValue);
-    
-    /** 
+
+    /**
      * Get a list of all child nodes.
-     * 
+     *
      * @return A List of Configuration objects
      */
 
     public List getChildren();
-    
-    /** 
+
+    /**
      * Get a list of all child nodes with the given name.
-     * 
+     *
      * @param name The child node name
      * @return A List of Configuration objects
      */
-    
+
     public List getChildren(String name);
-    
-    /** 
+
+    /**
      * Get a List of attribute names.
-     * 
+     *
      * @return A List of attribute names
      */
-    
+
     public List getAttributeNames();
-    
-    /** 
+
+    /**
      * Get the named attribute or null.
-     * 
+     *
      * @param name The attribute name
      * @return The attribute value
      */
-    
+
     public String getAttribute(String name);
-    
-    /** 
+
+    /**
      * Get the named attribute.  If the attribute is not found then
      * return the given default value.
-     * 
-     * @param name The attribute name
+     *
+     * @param name         The attribute name
      * @param defaultValue The default value
      * @return The attribute value
      */
-    
+
     public String getAttribute(String name, String defaultValue);
-    
-    /** 
+
+    /**
      * Get the node's value or null if the node contains no data.
-     * 
+     *
      * @return The node value or null
      */
-    
+
     public String getValue();
-    
-    /** 
+
+    /**
      * Get the node's value.  If the node contains no data then return
      * the given default value.
-     * 
+     *
      * @param defaultValue The default value
      * @return The node value
      */
-    
+
     public String getValue(String defaultValue);
 
     public Location getLocation();
-    public void setLocation( String id);
-    
 
-    
+    public void setLocation(String id);
+
+    /**
+     * Get the copy of the current Configuration.
+     * Whether this copy is shallow or deep depends on implementation.
+     *
+     * @return copy of this Configuration
+     */
+    public Configuration copy();
+
+
 }

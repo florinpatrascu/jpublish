@@ -84,4 +84,26 @@ public class XMLConfigurationTests extends TestCase {
         c.removeChild(theSameChild);
         assertNull(c.getChild("boo"));
     }
+
+    public void testToXMLString() throws ConfigurationException {
+        log.info("trying to compare outputs of two different toXMLString methods");
+        XMLConfiguration c = new XMLConfiguration("testXML1", hitsTagString);
+        XMLConfiguration d = new XMLConfiguration("testXML2", hitsTagString);
+        assertEquals(c.toXMLString(), d.toXMLString());
+    }
+
+    public void testCopy() throws ConfigurationException {
+        log.info("trying to compare outputs of two different toXMLString methods");
+        XMLConfiguration c = new XMLConfiguration("testXML1", hitsTagString);
+        c.addChild("boo","foo");
+        Configuration d = c.copy();
+        assertEquals(c.getChildValue("boo"), d.getChildValue("boo"));
+        ((MutableConfiguration) c.getChild("boo")).addChild("zchor","smor");
+        assertEquals(1,c.getChild("boo").getChildren().size());
+        assertEquals(0,d.getChild("boo").getChildren().size());
+        ((MutableConfiguration) d.getChild("boo")).addChild("aaa","1a");
+        ((MutableConfiguration) d.getChild("boo")).addChild("bbb","2b");
+        assertEquals(2,d.getChild("boo").getChildren().size());
+        assertEquals(1,c.getChild("boo").getChildren().size());
+    }
 }

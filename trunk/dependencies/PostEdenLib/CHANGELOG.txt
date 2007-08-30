@@ -1,5 +1,7 @@
 EdenLib change log:
 
+[2007.08.30]
+ - added the copy node functionality patch from Jakub.
 
 [2007.08.25]
  - added the patch from Jakub Labath. Removing a child node after was added is

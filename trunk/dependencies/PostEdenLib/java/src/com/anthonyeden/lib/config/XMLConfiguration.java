@@ -666,4 +666,27 @@ public class XMLConfiguration implements MutableConfiguration {
         }
     }
 
+    /**
+     * Returns this XMLConfiguration as a string.
+     * Internally it uses the save method, to obtain the string.
+     *
+     * @return this XMLConfiguration as a string
+     * @throws ConfigurationException
+     */
+    public String toXMLString() throws ConfigurationException {
+        StringWriter sw = new StringWriter();
+        this.save(sw);
+        return sw.toString();
+    }
+
+    /**
+     * This is a deep copy of XMLConfiguration since atrributes and values are Strings and therefore immutable.
+     * Unless of course you modified the object manually and entered complex objects as values or attribute values.
+     * All this does is return the result of configuration.copy() call on the wrapped configuration object.
+     *
+     * @return copy of the wrapped Configuration object
+     */
+    public Configuration copy(){
+        return this.configuration.copy();
+    }
 }

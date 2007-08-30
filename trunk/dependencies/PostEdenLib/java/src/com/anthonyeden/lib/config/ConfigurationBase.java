@@ -492,4 +492,40 @@ public class ConfigurationBase implements MutableConfiguration {
         xmlOut.endTag();
     }
 
+    /**
+     * This would be a deep copy if you used immutable objects such as Strings for values and attributes,
+     * and shallow otherwise.
+     * It clones the Location object, however it sets the parent to null.
+     *
+     * @return copy of this Configuration
+     */
+    public Configuration copy() {
+        return copy(null);
+    }
+
+    /**
+     * This would be a deep copy if you used immutable objects such as Strings for values and attributes,
+     * and shallow otherwise.
+     * It clones the Location object, however it sets the parent to null.
+     *
+     * @return copy of this Configuration
+     */
+    public Configuration copy(Configuration parentConfig) {
+        ArrayList childrenCopy = new ArrayList();
+        HashMap attributesCopy = new HashMap();
+        Iterator attributeKeys = attributes.keySet().iterator();
+        while (attributeKeys.hasNext()) {
+            Object key = attributeKeys.next();
+            attributesCopy.put(key, attributes.get(key));
+        }
+        Iterator childIter = children.iterator();
+        while (childIter.hasNext()) {
+            childrenCopy.add(((Configuration) childIter.next()).copy());
+        }
+        Location locationCopy = null;
+        if (this.location != null) {
+            locationCopy = (Location) location.clone();
+        }
+        return new ConfigurationBase(this.name, this.value, childrenCopy, attributesCopy, parentConfig, locationCopy);
+    }
 }
