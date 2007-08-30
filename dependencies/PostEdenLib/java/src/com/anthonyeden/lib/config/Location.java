@@ -55,54 +55,54 @@ package com.anthonyeden.lib.config;
  * @since 2.0
  */
 
-public class Location {
-    
+public class Location implements Cloneable {
+
     private String sourceId;
     private int lineNumber;
     private int columnNumber;
-    
+
     /**
      * Construct a new Location object
      *
-     * @param sourceId The source ID
-     * @param lineNumber The line number
+     * @param sourceId     The source ID
+     * @param lineNumber   The line number
      * @param columnNumber The column number
      */
-    
+
     public Location(String sourceId, int lineNumber, int columnNumber) {
         this.sourceId = sourceId;
         this.lineNumber = lineNumber;
         this.columnNumber = columnNumber;
     }
-    
+
     /**
-     * Get the source ID which is used to identify the source of the 
+     * Get the source ID which is used to identify the source of the
      * configuration data.  This method should return a file path, URL or some
      * other form of human readable location ID
      *
      * @return The source ID
      */
-    
+
     public String getSourceId() {
         return sourceId;
     }
-    
+
     /**
      * Get the line number
      *
      * @return The line number
      */
-    
+
     public int getLineNumber() {
         return lineNumber;
     }
-    
-    /** 
+
+    /**
      * Get the column number
      *
      * @return The column number
      */
-    
+
     public int getColumnNumber() {
         return columnNumber;
     }
@@ -117,6 +117,15 @@ public class Location {
 
     public void setColumnNumber(int columnNumber) {
         this.columnNumber = columnNumber;
+    }
+
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
