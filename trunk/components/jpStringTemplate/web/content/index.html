@@ -1,0 +1,39 @@
+<h1>JPublish StringTemplate component DEMO page</h1>
+JPublish application demonstrating a Component level integration with the
+<a href="http://www.antlr.org/wiki/x/GgE">StringTemplate</a> (ST) engine.<br/><br/>
+
+This page path: $page.Path, is mostly driven by the current JPublish View Renderer:
+$site.ViewRenderer, but with the ability to use ST template files.<br/><br/>
+
+For example, using Velocity syntax you can define the following Velocity variables:<br/>
+<pre>
+\#set( $column = "USER_NAME")
+\#set( $table = "USER_PROFILES")
+</pre>
+#set( $column = "USER_NAME")
+#set( $table = "USER_PROFILES")
+<br/>
+
+And then use them in a ST template rendered by the JPublish ST component with a simple command like this:<br/>
+\$components.JPST.renderPath("index"), or: \$components.JPST.renderPath("default:index")
+<br/><br/>
+
+The original ST file looks like this:
+<pre>
+-- a basic query statement
+select \$column$ from \$table$;
+GO
+</pre>
+
+and the rendered result looks like this:
+
+<pre>
+$components.JPST.renderPath("index")
+</pre>
+
+Including a template from a different ST group is as easy as specifying the group name:<br/>
+\$components.JPST.renderPath("menus:main_menu"), 
+where "menus" represents the ST group defined in your jpublish.xml file.
+<pre>
+$components.JPST.renderPath("menus:main_menu")
+</pre>
