@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2007 the original author or authors.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<jpublish>
+
+    <name>Hello World of the StringTemplate ;)</name>
+    <component-manager>
+        <components>
+            <component id="JPST" classname="ca.flop.jpublish.components.JPSTComponent">
+                <stringtemplate-groups>
+                    <group name="default" relative-root-dir="/st_content" refresh-interval="15"
+                           lexer="org.antlr.stringtemplate.language.DefaultTemplateLexer"/>
+
+                    <group name="menus" relative-root-dir="/st_menus"/>
+
+                    <!--
+                    <group name="default" absolute-root-dir="/Users/flop/mytemplates" refresh-interval="20"
+                           lexer="org.antlr.stringtemplate.language.AngleBracketTemplateLexer"/>
+                     -->
+                </stringtemplate-groups>
+            </component>
+        </components>
+    </component-manager>
+
+    <static-root>public</static-root>
+    <action-root>actions</action-root>
+    <template-root>templates</template-root>
+    <page-root>pages</page-root>
+
+    <page-manager classname="org.jpublish.page.filesystem.FileSystemPageManagerWithDefault"/>
+    <default-template>basic</default-template>
+
+
+    <view-renderer classname="org.jpublish.view.velocity.VelocityViewRenderer">
+        <resource-cache-enabled>true</resource-cache-enabled>
+        <resource-cache-interval>15</resource-cache-interval>
+    </view-renderer>
+
+    <repository name="fs_repository" classname="org.jpublish.repository.filesystem.FileSystemRepository">
+        <root>content</root>
+        <cache>default</cache>
+    </repository>
+
+    <cache-manager>
+        <jpublish.cache.provider>
+            <implementation name="default" class="org.jpublish.util.JPublishCacheImpl"/>
+        </jpublish.cache.provider>
+    </cache-manager>
+
+    <character-encoding-map path="*">
+        <page-encoding>utf8</page-encoding>
+        <template-encoding>utf8</template-encoding>
+        <request-encoding>utf8</request-encoding>
+        <response-encoding>utf8</response-encoding>
+    </character-encoding-map>
+
+    <debug>false</debug>
+</jpublish>
