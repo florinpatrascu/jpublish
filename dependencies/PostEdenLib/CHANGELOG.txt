@@ -1,5 +1,9 @@
 EdenLib change log:
 
+[2007.09.21]
+ - ensure element is never added with a null value to mutable configuration. Another
+   patch from Jakub.
+
 [2007.08.30]
  - added the copy node functionality patch from Jakub.
 

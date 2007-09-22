@@ -62,6 +62,7 @@ import java.util.*;
 public class ConfigurationBase implements MutableConfiguration {
 
     public static final String ENCODING = "UTF-8";
+    private static final String EMPTY_STRING = "";
 
     private String name;
     private Object value;
@@ -266,7 +267,7 @@ public class ConfigurationBase implements MutableConfiguration {
      */
 
     public MutableConfiguration addChild(String name) {
-        ConfigurationBase child = new ConfigurationBase(name, null, this);
+        ConfigurationBase child = new ConfigurationBase(name, EMPTY_STRING, this);
         children.add(child);
         return child;
     }
