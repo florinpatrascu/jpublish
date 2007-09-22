@@ -37,20 +37,21 @@ import java.util.Map;
  * last modification time and will update if the stored time does not match
  * the file system's time.
  * <p/>
- * <p>This PageManager implementation will fall back to the default_page.xml page
+ * <p>This PageManager implementation will fall back to the default.xml page
  * descriptor of a pages directory and its parents, if the path's expected page
  * descriptor is not found.</p>
  *
  * @author Anthony Eden
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
  */
 
 public class FileSystemPageManagerWithContextDefault extends
         AbstractFileSystemPageManager {
 
     /**
-     * The default path (default_page.xml) of each page directory.
+     * The default path (default.xml) of each page directory.
      */
-    public static final String DEFAULT_PATH = "default_page.xml";
+    public static final String DEFAULT_PATH = "default.xml";
 
     private static Log log = LogFactory.getLog(FileSystemPageManager.class);
 
@@ -60,7 +61,6 @@ public class FileSystemPageManagerWithContextDefault extends
     /**
      * Construct a new FileSystemPageManagerWithContextDefault.
      */
-
     public FileSystemPageManagerWithContextDefault() {
         this.cache = new HashMap();
     }
@@ -70,7 +70,6 @@ public class FileSystemPageManagerWithContextDefault extends
      *
      * @return The default path
      */
-
     public String getDefaultPath() {
         return defaultPath;
     }
@@ -78,9 +77,8 @@ public class FileSystemPageManagerWithContextDefault extends
     /**
      * Set the path to the default descriptor.
      *
-     * @param defaultPath
+     * @param defaultPath the default descriptor
      */
-
     public void setDefaultPath(String defaultPath) {
         if (defaultPath == null) {
             this.defaultPath = DEFAULT_PATH;
@@ -97,7 +95,6 @@ public class FileSystemPageManagerWithContextDefault extends
      * @return The Page
      * @throws Exception Any Exception
      */
-
     public synchronized PageInstance getPage(String path) throws Exception {
         File file = new File(path);
         File parentDirectory = file.getParentFile();
@@ -192,9 +189,10 @@ public class FileSystemPageManagerWithContextDefault extends
 
 
     /**
+     * browse the parent folders for searching the default page descriptor
      *
-     * @param root
-     * @param path
+     * @param root the root directory
+     * @param path the requested path
      * @return default file
      */
     private File getPathContextDefaultPage(File root, String path) {
@@ -204,7 +202,7 @@ public class FileSystemPageManagerWithContextDefault extends
         File rootDefaultPage = new File(root, defPage);
         File defaultFile = new File(parentDir, defPage);
 
-        while (! defaultFile.exists() && !(rootDefaultPage.equals(defaultFile))) {
+        while (!defaultFile.exists() && !(rootDefaultPage.equals(defaultFile))) {
             parentDir = new File(parentDir.getParent());
             defaultFile = new File(parentDir + defPage);
         }
@@ -230,7 +228,6 @@ public class FileSystemPageManagerWithContextDefault extends
      * @param path The page path
      * @throws Exception Any Exception
      */
-
     public void removePage(String path) throws Exception {
         pathToFile(path).delete();
     }
@@ -254,7 +251,6 @@ public class FileSystemPageManagerWithContextDefault extends
      * @param path The path
      * @throws Exception
      */
-
     public void removeDirectory(String path) throws Exception {
         File file = new File(getRoot(), path);
         if (file.isDirectory()) {
@@ -270,7 +266,6 @@ public class FileSystemPageManagerWithContextDefault extends
      * @param configuration The Configuration object
      * @throws ConfigurationException
      */
-
     public void loadConfiguration(Configuration configuration) throws
             ConfigurationException {
         setDefaultPath(configuration.getChildValue("default-path"));
@@ -284,7 +279,6 @@ public class FileSystemPageManagerWithContextDefault extends
      * @return The configuration reader
      * @throws Exception
      */
-
     public Reader getPageConfigurationReader(String path) throws Exception {
         File xmlFile = pathToFile(path);
 
@@ -305,7 +299,6 @@ public class FileSystemPageManagerWithContextDefault extends
      * @return The Writer
      * @throws Exception
      */
-
     public Writer getPageConfigurationWriter(String path) throws Exception {
         return new FileWriter(pathToFile(path));
     }
