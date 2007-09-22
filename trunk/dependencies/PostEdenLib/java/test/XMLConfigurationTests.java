@@ -106,4 +106,13 @@ public class XMLConfigurationTests extends TestCase {
         assertEquals(2,d.getChild("boo").getChildren().size());
         assertEquals(1,c.getChild("boo").getChildren().size());
     }
+
+    public void testAddMutableChild() throws ConfigurationException {
+        log.info("trying to ensure element is never added with a null value to mutable configuration");
+        XMLConfiguration c = new XMLConfiguration("testXML", hitsTagString);
+        MutableConfiguration boo = c.addChild("boo");
+        boo.addChild("foo");
+        assertNotNull(boo.getChildValue("foo"));
+        assertNotNull(c.toXMLString());
+    }
 }
