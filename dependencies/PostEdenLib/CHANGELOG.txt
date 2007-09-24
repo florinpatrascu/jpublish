@@ -1,4 +1,7 @@
-EdenLib change log:
+PostEdenLib changelog:
+
+[2007.09.24]
+ - additional method to add a  child to a MutableConfiguration. Patch from Jakub.
 
 [2007.09.21]
  - ensure element is never added with a null value to mutable configuration. Another

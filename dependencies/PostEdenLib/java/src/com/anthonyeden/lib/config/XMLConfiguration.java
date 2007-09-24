@@ -398,6 +398,23 @@ public class XMLConfiguration implements MutableConfiguration {
     }
 
     /**
+     * Add a child node to the configuration.
+     *
+     * @param name  The name of the new configuration node
+     * @param value The value of the new configuration node
+     * @param defaultValue The value to use in case the value is null
+     * @return The configuration node
+     */
+
+    public synchronized MutableConfiguration addChild(String name, Object value, Object defaultValue) {
+        if (configuration instanceof MutableConfiguration) {
+            return ((MutableConfiguration) configuration).addChild(name, value, defaultValue);
+        } else {
+            throw new UnsupportedOperationException("This configuration is not mutable.");
+        }
+    }
+
+    /**
      * Add the configuration object as a child of this configuration object.
      *
      * @param child The child configuration object
