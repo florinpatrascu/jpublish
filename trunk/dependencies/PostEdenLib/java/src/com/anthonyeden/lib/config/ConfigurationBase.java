@@ -57,6 +57,7 @@ import java.util.*;
  * interface.
  *
  * @author Anthony Eden
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
  */
 
 public class ConfigurationBase implements MutableConfiguration {
@@ -288,6 +289,24 @@ public class ConfigurationBase implements MutableConfiguration {
     }
 
     /**
+     * Add a child node to the configuration.  The value's toString() method
+     * will be used to convert the value to a String. If the value is null use the
+     * default value.
+     *
+     * @param name         The name of the new configuration node
+     * @param value        The value of the new configuration node
+     * @param defaultValue value to use if the value was null
+     * @return The configuration node
+     */
+    public MutableConfiguration addChild(String name, Object value, Object defaultValue) {
+        if (value == null) {
+            return addChild(name, defaultValue);
+        } else {
+            return addChild(name, value);
+        }
+    }
+
+    /**
      * Add the configuration object as a child of this configuration object.
      *
      * @param configuration The child configuration object
@@ -347,7 +366,7 @@ public class ConfigurationBase implements MutableConfiguration {
         List attributeNames = new ArrayList();
         Iterator attributeKeys = attributes.keySet().iterator();
         while (attributeKeys.hasNext()) {
-            attributeNames.add((String) attributeKeys.next());
+            attributeNames.add(attributeKeys.next());
         }
         return attributeNames;
     }
@@ -505,11 +524,12 @@ public class ConfigurationBase implements MutableConfiguration {
     }
 
     /**
-     * This would be a deep copy if you used immutable objects such as Strings for values and attributes,
-     * and shallow otherwise.
-     * It clones the Location object, however it sets the parent to null.
+     * This would be a deep copy if you used immutable objects such as Strings for values and
+     * attributes, and shallow otherwise. It clones the Location object, however it sets the
+     * parent to null.
      *
      * @return copy of this Configuration
+     * @param parentConfig
      */
     public Configuration copy(Configuration parentConfig) {
         ArrayList childrenCopy = new ArrayList();

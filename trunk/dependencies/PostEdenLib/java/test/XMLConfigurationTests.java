@@ -18,15 +18,15 @@
 
 import com.anthonyeden.lib.config.Configuration;
 import com.anthonyeden.lib.config.ConfigurationException;
-import com.anthonyeden.lib.config.XMLConfiguration;
 import com.anthonyeden.lib.config.MutableConfiguration;
+import com.anthonyeden.lib.config.XMLConfiguration;
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 
 /**
  * unit tests for the {@link com.anthonyeden.lib.config.XMLConfiguration} class
@@ -38,7 +38,7 @@ public class XMLConfigurationTests extends TestCase {
     private static final Log log = LogFactory.getLog(XMLConfigurationTests.class);
     String hitsTagString = "<hits>Καλημέρα κόσμε</hits>";
     byte[] hitsTagByteArray = {'<', 'h', 'i', 't', 's', '>', 'a', 't', 'e', 'n',
-            (byte) 0xE5, (byte) 0xBF, (byte) 0xAE,'<', '/', 'h', 'i', 't', 's', '>', '\n'};
+            (byte) 0xE5, (byte) 0xBF, (byte) 0xAE, '<', '/', 'h', 'i', 't', 's', '>', '\n'};
 
     public void testParseString() throws ConfigurationException, UnsupportedEncodingException {
         log.info("parsing a String containing an xml structure....");
@@ -95,16 +95,16 @@ public class XMLConfigurationTests extends TestCase {
     public void testCopy() throws ConfigurationException {
         log.info("trying to compare outputs of two different toXMLString methods");
         XMLConfiguration c = new XMLConfiguration("testXML1", hitsTagString);
-        c.addChild("boo","foo");
+        c.addChild("boo", "foo");
         Configuration d = c.copy();
         assertEquals(c.getChildValue("boo"), d.getChildValue("boo"));
-        ((MutableConfiguration) c.getChild("boo")).addChild("zchor","smor");
-        assertEquals(1,c.getChild("boo").getChildren().size());
-        assertEquals(0,d.getChild("boo").getChildren().size());
-        ((MutableConfiguration) d.getChild("boo")).addChild("aaa","1a");
-        ((MutableConfiguration) d.getChild("boo")).addChild("bbb","2b");
-        assertEquals(2,d.getChild("boo").getChildren().size());
-        assertEquals(1,c.getChild("boo").getChildren().size());
+        ((MutableConfiguration) c.getChild("boo")).addChild("zchor", "smor");
+        assertEquals(1, c.getChild("boo").getChildren().size());
+        assertEquals(0, d.getChild("boo").getChildren().size());
+        ((MutableConfiguration) d.getChild("boo")).addChild("aaa", "1a");
+        ((MutableConfiguration) d.getChild("boo")).addChild("bbb", "2b");
+        assertEquals(2, d.getChild("boo").getChildren().size());
+        assertEquals(1, c.getChild("boo").getChildren().size());
     }
 
     public void testAddMutableChild() throws ConfigurationException {
@@ -114,5 +114,18 @@ public class XMLConfigurationTests extends TestCase {
         boo.addChild("foo");
         assertNotNull(boo.getChildValue("foo"));
         assertNotNull(c.toXMLString());
+    }
+
+    public void testAddChildWithDefaultValue() throws ConfigurationException {
+        log.info("trying to ensure that if child is added with null value that it indeed uses the provided default");
+        XMLConfiguration c = new XMLConfiguration("testXML", hitsTagString);
+        MutableConfiguration boo = c.addChild("boo", null, "Test");
+        String s = null;
+        try {
+            s = c.toXMLString();
+        } catch (Exception ignore) {
+        }
+        assertNotNull(s);
+        assertEquals("Test", c.getChildValue("boo"));
     }
 }
