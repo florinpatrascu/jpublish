@@ -1,3 +1,39 @@
-ROADMAP
+#summary JPublish roadmap.
 
-Version 4.01
+= JPublish ROADMAP =
+
+
+===Version 4.00===
+*ORM support*
+  * Cayenne  (via JPCayenneModule)  --> in progress <--
+
+
+===Version 4.01===
+*Pluggable Authentication Modules*
+  * OpenID support
+  * add the concept of secured Action, secured Resource (core JPublish)
+  * evaluative roles and resource based permission
+  * UI admin for user roles, permissions and resource access management
+  * pluggable permission evaluator
+
+*Quartz scheduler*
+  * individual cron-like plugin
+  * UI admin for jobs
+
+*Distributed cache support through Terracotta*
+
+*Components and Modules*
+  * ...
+
+
+===Version 4.02===
+*JPublish*
+  * engine
+  * sitelet
+  * router
+
+*ORM support*
+  * Hibernate
+
+*REST support*
+  * resource mapping and routing support similar to Rails
