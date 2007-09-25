@@ -9,6 +9,11 @@
 
 
 ===Version 4.01===
+*JPublish*
+  * break the dependency with the VFS
+  * reduce the dependencies with the PostEdenLib
+  * add Javolution
+
 *Pluggable Authentication Modules*
   * OpenID support
   * add the concept of secured Action, secured Resource (core JPublish)
