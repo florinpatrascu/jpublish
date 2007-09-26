@@ -22,8 +22,8 @@
   * pluggable permission evaluator
 
 *Quartz scheduler*
-  * individual cron-like plugin
-  * UI admin for jobs
+  * running scheduled jobs; cron-like plugin
+  * UI admin for scheduled/running jobs
 
 *Distributed cache support through Terracotta*
 
