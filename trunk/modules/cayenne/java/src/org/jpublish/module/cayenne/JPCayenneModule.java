@@ -83,7 +83,8 @@ public class JPCayenneModule implements JPublishModule {
 
     private boolean debugEnabled = false;
 
-    protected org.apache.cayenne.conf.Configuration configuration;
+    //protected org.apache.cayenne.conf.Configuration configuration;
+    DefaultConfiguration conf;
     protected DataSource dataSource;
 
 
@@ -101,10 +102,10 @@ public class JPCayenneModule implements JPublishModule {
         this.site = site;
 
         String cayenneConfigPath = config.getChildValue("cayenne-config-path", "WEB-INF");
-        log.info("Initializing the " +CAYENNE_VERSION+ "framework from: " + cayenneConfigPath);
+        log.info("Initializing the " + CAYENNE_VERSION + "framework from: " + cayenneConfigPath);
 
         // create new shared configuration
-        DefaultConfiguration conf = new DefaultConfiguration(
+        conf = new DefaultConfiguration(
                 org.apache.cayenne.conf.Configuration.DEFAULT_DOMAIN_FILE,
                 createLocator(site.getServletContext(), cayenneConfigPath));
         org.apache.cayenne.conf.Configuration.initializeSharedConfiguration(conf);
@@ -204,9 +205,18 @@ public class JPCayenneModule implements JPublishModule {
      * Servlet.destroy() method.
      */
     public void destroy() {
-        if (configuration != null) {
-            configuration.shutdown();
+        log.info("Shutting down the Cayenne configuration ....");
+        if (conf != null) {
+            conf.shutdown();
         }
+    }
+
+    /**
+     *
+     * @return the Cayenne configuration used by this module
+     */
+    public DefaultConfiguration getCayenneConfiguration() {
+        return conf;
     }
 
 
