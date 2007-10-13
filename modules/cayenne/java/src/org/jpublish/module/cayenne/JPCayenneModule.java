@@ -54,8 +54,8 @@ public class JPCayenneModule implements JPublishModule {
 
     private static final String NAME = "JPCayenne Module";
     private static final String VERSION = "v0.1b";
-    private static final String DESCRIPTION = "Cayenne " + CayenneException.getExceptionLabel() +
-            ", support for JPublish.";
+    private static final String DESCRIPTION = "Cayenne ORM support for JPublish";
+    private static final String CAYENNE_VERSION = "Cayenne " + CayenneException.getExceptionLabel();
 
     private SiteContext site;
     private Map actions = new HashMap(5);
@@ -98,11 +98,10 @@ public class JPCayenneModule implements JPublishModule {
      */
     public void init(SiteContext site, Configuration config) throws Exception {
         log.info(NAME + " starting for: " + site.getServletContext().getServletContextName());
-        log.info("- " + DESCRIPTION);
         this.site = site;
 
         String cayenneConfigPath = config.getChildValue("cayenne-config-path", "WEB-INF");
-        log.info("Initializing the Cayenne framework from: " + cayenneConfigPath);
+        log.info("Initializing the " +CAYENNE_VERSION+ "framework from: " + cayenneConfigPath);
 
         // create new shared configuration
         DefaultConfiguration conf = new DefaultConfiguration(
