@@ -1,3 +1,7 @@
 CHANGELOG
 
+[2007.10.13]
+ - upgraded Cayenne to 2.0.4, find more details here:
+   http://cayenne.apache.org/2007/10/12/october-12-2007-cayenne-204-and-124-released.html
+
 [2007.10.12] initial release
