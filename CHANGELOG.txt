@@ -1,5 +1,9 @@
 JPublish 4 change log:
 
+[2007.10.13]
+- The ORM support Wiki page was updated with details about the JPublish-Cayenne
+  implementation: http://code.google.com/p/jpublish/wiki/OrmSupport
+
 [2007.10.12]
 - Cayenne support is now available to any JPublish application
 
