@@ -18,6 +18,7 @@
 package org.jpublish.module.cayenne;
 
 import com.anthonyeden.lib.config.Configuration;
+import org.apache.cayenne.CayenneException;
 import org.apache.cayenne.access.DataContext;
 import org.apache.cayenne.conf.DefaultConfiguration;
 import org.apache.cayenne.conf.ServletUtil;
@@ -53,7 +54,8 @@ public class JPCayenneModule implements JPublishModule {
 
     private static final String NAME = "JPCayenne Module";
     private static final String VERSION = "v0.1b";
-    private static final String DESCRIPTION = "Cayenne support for JPublish.";
+    private static final String DESCRIPTION = "Cayenne " + CayenneException.getExceptionLabel() +
+            ", support for JPublish.";
 
     private SiteContext site;
     private Map actions = new HashMap(5);
@@ -96,6 +98,7 @@ public class JPCayenneModule implements JPublishModule {
      */
     public void init(SiteContext site, Configuration config) throws Exception {
         log.info(NAME + " starting for: " + site.getServletContext().getServletContextName());
+        log.info("- " + DESCRIPTION);
         this.site = site;
 
         String cayenneConfigPath = config.getChildValue("cayenne-config-path", "WEB-INF");
