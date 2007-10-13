@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<driver project-version="2.0" class="org.h2.Driver">
+	<url value="jdbc:h2:~/db/todos_dev"/>
+	<connectionPool min="2" max="15" />
+</driver>

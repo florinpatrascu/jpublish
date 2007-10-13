@@ -1,0 +1,3 @@
+CHANGELOG
+
+[2007.10.12] initial release

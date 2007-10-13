@@ -1,0 +1,11 @@
+10-12 21:14:09 jdbc[3]: SQLException
+org.h2.jdbc.JdbcSQLException: Constraint C_TODOS_144248387 already exists [90045-59]
+	at org.h2.message.Message.getSQLException(Message.java:84)
+	at org.h2.message.Message.getSQLException(Message.java:88)
+	at org.h2.message.Message.getSQLException(Message.java:66)
+	at org.h2.command.ddl.AlterTableAddConstraint.update(AlterTableAddConstraint.java:66)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:64)
+	at org.h2.command.Command.executeUpdate(Command.java:123)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:156)
+	at nmfl.MX.a(Unknown Source)
+	at nmfl.Jm.run(Unknown Source)

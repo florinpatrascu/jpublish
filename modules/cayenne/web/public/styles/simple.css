@@ -1,0 +1,171 @@
+body {
+	margin: 10px;
+	padding: 0;
+	font-family: 'Trebuchet MS','Lucida Grande', Arial, sans-serif;
+	font-size: small;
+	font-weight: 400;
+	border: 0px solid #ddd;
+	background-color: #fff;
+}
+
+PRE {
+	font-size: .9em;
+	color: #2B91AF;
+	padding: 3px 3px;
+	border: 1px solid #2B91AF;
+	background-color: #f8f8f8;
+	margin-bottom: 15px;
+}
+
+#banner {
+	border-bottom: solid 1px #ddd;
+	font-size: 24px;
+	color: navy;
+	font-weight: bold;
+}
+
+#banner a{
+	font-size: 24px;
+	color: navy;
+	font-weight: bold;
+	
+}
+
+#body {
+	padding: 6px;
+	background-color: #fff;
+}
+
+a {
+	padding: 1px;
+	font-size: 12px;
+	color: navy;
+	font-weight: bold;
+}
+
+#footer {
+	text-align: center;
+	border-top: solid 1px #ddd;
+	padding: 6px;
+	background: #1200b1;
+	color: #fff;
+	font-size: 11px;
+	clear: both;
+}
+
+#footer a {
+	color: #fff;
+}
+
+.error {
+	color: red;
+}
+
+.notice {
+	color: green;
+}
+
+label {
+	display: block;
+}
+
+div.tags-field input {
+	width: 500px;
+}
+
+div.help {
+	width: 160px;
+	font-style: italic;
+}
+
+input {
+	border: 1px solid #ccc;
+	border-top-color: #aaa;
+	border-left-color: #aaa;
+}
+
+fieldset {
+	border: 1px solid #ccc;
+}
+
+textarea {
+	border: 1px solid #ccc;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border: 1px solid #BA9;
+	font: 90% "Trebuchet MS", Tahoma, Arial, Helvetica, sans-serif;
+}
+
+caption {
+	padding: 0 .4em .4em;
+	text-align: left;
+	font-size: 110%;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #453827;
+	background: transparent;
+}
+
+tr {
+	
+}
+
+td, th {
+	border: 1px solid #BBAA99;
+	padding: .3em;
+	font-size: 0.9em;
+	color: #666;
+}
+
+thead th, tfoot th, tfoot td {
+	border: 1px solid #BA9;
+	text-align: left;
+	font-weight: bold;
+	font-size: 100%;
+	background: #BA9 url("images/thbg.gif") repeat-x top left;
+	color: #FFF;
+}
+
+tbody th,thead th,tbody td {
+	vertical-align: top;
+	text-align: left;
+}
+
+tbody tr:hover td, tbody tr:focus td,tbody tr:hover th,tbody tr:focus th {
+	background: url("images/shimx.gif")  repeat-x top left;
+	color: #000;
+}
+
+tr.odd {
+	background: url("images/shim.gif")  repeat-x top left;
+}
+
+table.sample {
+	border-width: 0px 0px 0px 0px;
+	border-spacing: 1px;
+	border-style: outset outset outset outset;
+	border-color: gray gray gray gray;
+	border-collapse: separate;
+	background-color: white;
+}
+
+table.sample th {
+	border-width: 0px 0px 0px 0px;
+	padding: 1px 1px 1px 1px;
+	border-style: none none none none;
+	border-color: gray gray gray gray;
+	background-color: white;
+	-moz-border-radius: 0px 0px 0px 0px;
+}
+
+table.sample td {
+	border-width: 0px 0px 0px 0px;
+	padding: 1px 1px 1px 1px;
+	border-style: none none none none;
+	border-color: gray gray gray gray;
+	background-color: white;
+	-moz-border-radius: 0px 0px 0px 0px;
+}

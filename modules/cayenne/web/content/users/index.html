@@ -1,0 +1,34 @@
+<h2>Simple user management</h2>
+## check for $jpCayenneService if you need to check for the JPCayenne support
+#if( $users)
+<table>
+	<thead>
+		<tr><th scope="col">id</th><th scope="col">Name</th><th scope="col">e-mail</th><th scope ="col" colspan="2"></th></tr>
+	</thead>
+   #foreach( $user in $users)
+ 	<tr #if( $velocityCount % 2 == 0) class="odd"#end><td>$user.ObjectId.getValueForAttribute("id")</td><td><a href="$request.ContextPath/users?user=$!user.Name&mail=$!user.Email">$user.Name</a></td><td>$user.Email</td>
+		<td><a href="$request.ContextPath/users/todos.html?user=$!user.Name">todos</a></td>
+		<td><a href="$request.ContextPath/users/index.html?user=$!user.Name&_cmd=del">DEL</a></td>
+		</tr>
+   #end
+	<tfoot>
+		<tr>
+			<th scope="row">Total</th>
+			<td colspan="5">#if($users) $users.size()#else 0#end user(s)</td>
+		</tr>
+	</tfoot>
+</table>
+#else
+  No users defined.<br/>
+#end
+<br>
+
+<p>
+<table class="sample">
+<form action="$request.ContextPath/users/index.html" method="post">
+	<tr><td valign="top">User name: </td><td valig="top"><input name="user" value='$!request.getParameter("user")' type="text" /></td></tr>
+	<tr><td valign="top">E-mail: </td><td valig="top"><input name="mail" value='$!request.getParameter("mail")' type="text" /></td></tr>
+	<tr><td colspan="2" align="center"><input name="_cmd" class="button" value=" add/update/save " type="submit" /></td></tr>
+</form>
+</table>
+</p>

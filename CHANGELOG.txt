@@ -1,5 +1,8 @@
 JPublish 4 change log:
 
+[2007.10.12]
+- Cayenne support is now available to any JPublish application
+
 [2007.08.25]
 - added new rendering support through the StringTemplateViewRenderer. For
   more details visit the JPublish Wiki. We believe that ST will become the
