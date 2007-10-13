@@ -5,7 +5,7 @@
 
 ===Version 4.00===
 *ORM support*
-  * Cayenne  (via JPCayenneModule)  --> in progress <--
+  * Cayenne  (via JPCayenneModule)  --> RC1 version availbe <--
 
 
 ===Version 4.01===

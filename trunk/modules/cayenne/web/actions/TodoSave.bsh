@@ -1,0 +1,101 @@
+/*
+ * Copyright (c) 2007 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+import org.jpublish.module.cayenne.demo.User;
+import org.jpublish.module.cayenne.demo.Todo;
+import org.jpublish.module.cayenne.demo.TodoType;
+import org.jpublish.module.cayenne.JPCayenneModule;
+import org.apache.cayenne.exp.Expression;
+import org.apache.cayenne.exp.ExpressionFactory;
+import org.apache.cayenne.query.SelectQuery;
+
+Map todoTypes;
+Todo todo;
+User user;
+boolean todoIsDone = false;
+
+
+jpCayenneService = context.get( JPCayenneModule.JPCAYENNE_SERVICE_NAME);
+userName = request.getParameter("user");
+
+todoId = request.getParameter("id");
+todoDescription = request.getParameter("description");
+todoTypeName = request.getParameter("todoTypeName");
+todoDone = request.getParameter("done");
+todoDueDate = request.getParameter("dueDate");
+
+
+cmd = request.getParameter("_cmd");
+
+
+if( userName == null || userName.length() ==0)
+    return;
+
+if( cmd == null){
+	cmd = "";
+}
+
+if( cmd.equalsIgnoreCase("del") || cmd.equalsIgnoreCase("new") || cmd.length() ==0)
+	return;
+	
+if( todoDescription == null || todoDescription.length() == 0){
+	todoDescription = "Try a better description for your task...";
+}
+
+if( todoTypeName == null || todoTypeName.trim().length() == 0){
+	todoTypeName = "personal";
+}
+
+if( todoDone != null){
+	todoIsDone= true;
+}
+
+context.put( "userName", userName);
+
+if( jpCayenneService != null){
+
+    todoTypes = site.getAttribute( "todoTypes");
+	context.put( "todoTypesList", site.getAttribute( "todoTypesList"));
+    context.put( "todoTypes", todoTypes);
+
+	if( todoId != null && todoId.trim().length() > 0){
+        todo = jpCayenneService.getObjectForPK( Todo.class, todoId);
+	    context.put( "todo", todo);
+	    context.put( "id", todoId);
+    }
+		
+	user = jpCayenneService.findObject( User.class, "name", userName);
+
+	if( todo == null ){
+		todo = new Todo();
+		todo.setCreatedAt( new Date());
+		syslog.info("new TODO created....");
+	}
+	
+	todo.setType( jpCayenneService.findObject( TodoType.class, "name", todoTypeName) );
+	todo.setDescription( todoDescription);
+	todo.setIsDone( todoIsDone);
+	
+	if( cmd.equalsIgnoreCase( "saveOrUpdate") ){
+	  	user.addToTodos( todo);
+		syslog.info("new TODO added to user: " + user.getName());
+	}
+
+	jpCayenneService.commitChanges();
+
+}else{
+	syslog.error("The Cayenne support is not available.");
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<driver project-version="2.0" class="com.mysql.jdbc.Driver">
+	<url value="jdbc:mysql://localhost/cayennedemo_dev"/>
+	<connectionPool min="2" max="15" />
+	<login userName="root" password=""/>
+</driver>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-map project-version="2.0">
+	<property name="defaultLockType" value="optimistic"/>
+	<property name="defaultPackage" value="org.jpublish.module.cayenne.demo"/>
+	<db-entity name="schema_info" catalog="cayennedemo_dev">
+		<db-attribute name="description" type="VARCHAR" length="250"/>
+		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="11"/>
+	</db-entity>
+	<db-entity name="todo_types" catalog="cayennedemo_dev">
+		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="11"/>
+		<db-attribute name="is_default" type="BIT" length="1"/>
+		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="50"/>
+	</db-entity>
+	<db-entity name="todos" catalog="cayennedemo_dev">
+		<db-attribute name="created_at" type="TIMESTAMP" length="19"/>
+		<db-attribute name="description" type="VARCHAR" isMandatory="true" length="250"/>
+		<db-attribute name="expires_at" type="TIMESTAMP" length="19"/>
+		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="11"/>
+		<db-attribute name="is_done" type="BIT" isMandatory="true" length="1"/>
+		<db-attribute name="type_id" type="INTEGER" isMandatory="true" length="11"/>
+		<db-attribute name="user_id" type="INTEGER" isMandatory="true" length="11"/>
+	</db-entity>
+	<db-entity name="users" catalog="cayennedemo_dev">
+		<db-attribute name="email" type="VARCHAR" isMandatory="true" length="250"/>
+		<db-attribute name="id" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="11"/>
+		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="50"/>
+	</db-entity>
+	<obj-entity name="SchemaInfo" className="org.jpublish.module.cayenne.demo.SchemaInfo" lock-type="optimistic" dbEntityName="schema_info">
+		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
+		<obj-attribute name="id" type="java.lang.Integer" lock="true" db-attribute-path="id"/>
+	</obj-entity>
+	<obj-entity name="Todo" className="org.jpublish.module.cayenne.demo.Todo" lock-type="optimistic" dbEntityName="todos">
+		<obj-attribute name="createdAt" type="java.util.Date" db-attribute-path="created_at"/>
+		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
+		<obj-attribute name="expiresAt" type="java.util.Date" db-attribute-path="expires_at"/>
+		<obj-attribute name="isDone" type="java.lang.Boolean" db-attribute-path="is_done"/>
+	</obj-entity>
+	<obj-entity name="TodoType" className="org.jpublish.module.cayenne.demo.TodoType" lock-type="optimistic" dbEntityName="todo_types">
+		<obj-attribute name="isDefault" type="java.lang.Boolean" db-attribute-path="is_default"/>
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+	</obj-entity>
+	<obj-entity name="User" className="org.jpublish.module.cayenne.demo.User" lock-type="optimistic" dbEntityName="users">
+		<obj-attribute name="email" type="java.lang.String" db-attribute-path="email"/>
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+	</obj-entity>
+	<db-relationship name="todosArray" source="todo_types" target="todos" toMany="true">
+		<db-attribute-pair source="id" target="type_id"/>
+	</db-relationship>
+	<db-relationship name="toTodoTypes" source="todos" target="todo_types" toMany="false">
+		<db-attribute-pair source="type_id" target="id"/>
+	</db-relationship>
+	<db-relationship name="toUsers" source="todos" target="users" toMany="false">
+		<db-attribute-pair source="user_id" target="id"/>
+	</db-relationship>
+	<db-relationship name="todosArray" source="users" target="todos" toMany="true">
+		<db-attribute-pair source="id" target="user_id"/>
+	</db-relationship>
+	<obj-relationship name="type" source="Todo" target="TodoType" lock="true" db-relationship-path="toTodoTypes"/>
+	<obj-relationship name="user" source="Todo" target="User" lock="true" db-relationship-path="toUsers"/>
+	<obj-relationship name="todos" source="User" target="Todo" lock="true" deleteRule="Cascade" db-relationship-path="todosArray"/>
+</data-map>

@@ -1,0 +1,62 @@
+<h3>View $user.Name's tasks</h3>
+
+#if( $user && $user.Todos.size() > 0)
+<table>
+	<thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">Description</th>
+        <th scope="col">created</th>
+        <th scope="col">done?</th>
+        <th scope="col">type</th>
+        <th  scope="col" colspan="2"></th>
+    </tr>
+	</thead>
+    #foreach( $todo in $user.Todos)
+     #set( $todoId = $todo.ObjectId.getValueForAttribute("id"))
+    <tr #if( $velocityCount % 2 == 0) class="odd"#end>
+        <td><a href="$request.ContextPath/users/todos.html?id=$!todoId&user=$!user.Name">&nbsp;$!todoId&nbsp;</a></td>
+        <td>$todo.Description</td>
+        <td>$dateUtilities.format( $todo.CreatedAt, "yyyy-MM-dd HH:mm")</td>
+        <td align="center">#if( $todo.IsDone)YES #else NO #end</td>
+        <td>$todo.Type.Name</td>
+        <td><a href="$request.ContextPath/users/todos.html?id=$!todoId&_cmd=del&user=$!user.Name">DEL</a></td>
+    </tr>
+    #end
+	<tfoot>
+		<tr>
+			<th scope="row">Total</th>
+			<td colspan="5">#if($user.Todos) $user.Todos.size()#end todos</td>
+		</tr>
+	</tfoot>
+</table>
+<br>
+#else
+no tasks.<br/>
+#end<br>
+<a href="$request.ContextPath/users/todos.html?_cmd=new&user=$!user.Name">NEW TODO</a>
+<br><br>
+<table class="sample">
+<form action="$request.ContextPath/users/todos.html" method="post">
+	#if( $id && !$del)
+    	<input type="hidden" name="id" value="$!id"/>
+    #end
+    <input type="hidden" name="user" value="$!userName"/>
+	<input type="hidden" name="_cmd" value="saveOrUpdate"/>
+		<thead><tr><th colspan="2">TODO: #if($id && !$del) [update] #else [NEW] #end</th></tr></thead>
+		<tr><td valign="top">Description*:</td><td valig="top"><textarea rows="5" cols="40" name ="description">$!todo.Description</textarea></td></tr>
+		<tr><td valign="top">Type:</td><td valig="top">
+			<SELECT NAME="todoTypeName">
+				#foreach( $type in $todoTypesList)
+				<option value="$type.Name" #if( $type.Name == $todo.Type.Name) selected="selected" #end>$type.Name</option>
+				#end
+			</SELECT>
+			</td></tr>
+		#if( $todo.IsDone)
+		 #set( $checked = "checked='checked'")
+		#end
+		<tr><td valign="top">Done?</td><td valig="top"><input name="done" value='#if( $todo.IsDone)on#end' type="checkbox" $!checked/></td></tr>	
+		<tr><td colspan="2"><input class="button" value=" save/update " type="submit" /></td></tr>
+</form>
+</table><br/>
+Back to the <a href="$request.ContextPath/users">users</a>
