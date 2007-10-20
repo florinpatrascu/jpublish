@@ -59,6 +59,7 @@ public class SiteContext implements ResourceRecipient {
     private static final Log log = LogFactory.getLog(SiteContext.class);
     public static final Log syslog = LogFactory.getLog("syslog");
     public static final String JPUBLISH_VERSION = "4.0";
+    public static final String NAME = "jpublishSiteContext";
 
     public static final String DEFAULT_PAGE_MANAGER = "org.jpublish.page.filesystem.FileSystemPageManager";
     public static final String DEFAULT_TEMPLATE_MANAGER = "org.jpublish.template.filesystem.FileSystemTemplateManager";

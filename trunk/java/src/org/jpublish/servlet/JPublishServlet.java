@@ -52,11 +52,10 @@ import java.util.Iterator;
  */
 
 public class JPublishServlet extends HttpServlet {
-
     private static final Log log = LogFactory.getLog(JPublishServlet.class);
 
     private SiteContext siteContext;
-
+    public static final String JPUBLISH_CONTEXT = "jpublishContext";
 
     /**
      * Initialize the servlet.
@@ -85,6 +84,7 @@ public class JPublishServlet extends HttpServlet {
         // create the site context
         try {
             siteContext = new SiteContext(contextRoot, configLocation);
+            servletContext.setAttribute(SiteContext.NAME, siteContext);
             siteContext.setWebInfPath(webInfPath);
             siteContext.setServletContext(servletContext);
             siteContext.setServletConfig(servletConfig);
@@ -382,6 +382,8 @@ public class JPublishServlet extends HttpServlet {
             if (siteContext.isProtectReservedNames()) {
                 context.enableCheckReservedNames(this);
             }
+
+            request.setAttribute(JPUBLISH_CONTEXT, context);
 
             // execute the global actions
             if (executeGlobalActions(request, response, context, path)) return;
@@ -740,6 +742,13 @@ public class JPublishServlet extends HttpServlet {
                 (servletContext.getMajorVersion() == majorVersion &&
                         servletContext.getMinorVersion() >= minorVersion)
         );
+    }
+
+    /**
+     * @return the siteContext aka "site"
+     */
+    public SiteContext getSiteContext() {
+        return siteContext;
     }
 
     /**
