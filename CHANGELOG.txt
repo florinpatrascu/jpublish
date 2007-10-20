@@ -1,5 +1,12 @@
 JPublish 4 change log:
 
+[2007.10.20]
+- the current JPublishContext instance is now added to every HttpServletRequest.
+  You can get it like this: request.getAttribute( JPublishServlet.JPUBLISH_CONTEXT);
+- the SiteContext is now available in the ServletContext:
+  ....getServletContext().getAttribute(SiteContext.NAME)
+- added the public method getSiteContext() to the JPublishServlet.
+ 
 [2007.10.13]
 - The ORM support Wiki page was updated with details about the JPublish-Cayenne
   implementation: http://code.google.com/p/jpublish/wiki/OrmSupport
