@@ -1,10 +1,23 @@
 <script type='text/javascript' src='$request.ContextPath/dwr/interface/FilePing.js'/>
+<script type='text/javascript' src='$request.ContextPath/js/testFunctions.js'/>
+<script type='text/javascript' src='$request.ContextPath/dwr/interface/InfoAction.js'/>
+
 <h1>SimpleDWR with JPublish</h1>
 
-<p>Imagine you want to display the contents of a text file that is arbitrarily updated, for example a notification file. This page demonstrates how you can accomplish this by using reverse Ajax through JPublishDWR module. Enjoy!</p>
+<p>Imagine you want to display the contents of a text file that is arbitrarily updated, for example a notification file.
+    This page demonstrates how you can accomplish this by using reverse Ajax through JPublishDWR module. Enjoy!</p>
 
-<input type="button" value="Start / Stop" onclick='FilePing.setFileName("/Users/flop/news.txt"); FilePing.setRequestUrl("$request.ContextPath/index.html"); FilePing.toggle();'/>
-
+<input type="button" value="Start / Stop"
+       onclick='FilePing.setFileName("/Users/flop/news.txt"); FilePing.setRequestUrl("$request.ContextPath/index.html"); FilePing.toggle();'/>
 <div style="font-size:200%;" id="fileDisplay"></div>
+<div id="dwr-debug">-</div><br/><br/>
 
-<div id="dwr-debug">-</div>
+Below is a simple demonstration of the ability to invoke JPublish Actions via DWR:<br/>
+<input type="button" value="Info" onclick='InfoAction.execute( params, function(response) {
+    dwr.util.setValue("serverDate", response.serverDate);
+    dwr.util.setValue("info", response.infoMsg);
+  });'/><br/>
+
+Messages received from server:<br/>
+<div class="dateField" id="serverDate">-server date-</div>
+<div class="salute" id="info">JPublish Salute...</div>

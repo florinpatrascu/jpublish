@@ -21,11 +21,27 @@
         "http://getahead.ltd.uk/dwr/dwr20.dtd">
 
 <dwr>
+    <init>
+        <creator id="jpublish" class="ca.flop.jpublish.dwr.JPublishCreator"/>
+    </init>
 
     <allow>
         <create creator="new" javascript="FilePing" scope="application">
             <param name="class" value="ca.flop.jpublish.dwr.demo.FilePing"/>
         </create>
+
+        <!--Test a JPublish Action-->
+        <create creator="jpublish" javascript="InfoAction" scope="application">
+            <param name="class" value="ca.flop.jpublish.dwr.DWRJPublishActionManager"/>
+            <param name="actionName" value="InfoAction.bsh"/>
+        </create>
     </allow>
 
+    <signatures>
+        <![CDATA[
+          import java.util.Map;
+          import ca.flop.jpublish.dwr.DWRJPublishActionManager;
+          DWRJPublishActionManager.execute( Map<String, String>);
+          ]]>
+    </signatures>
 </dwr>
