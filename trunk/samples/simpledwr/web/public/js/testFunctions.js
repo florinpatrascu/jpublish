@@ -1,12 +1,11 @@
 /*
- *
- * Copyright 2007 Florin T.PATRASCU
+ * Copyright (c) 2007 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,22 +15,5 @@
  *
  */
 
-body {
-	color: #000;
-	background-color: #ffffff;
-	font: 12px Arial, Helvetica, Geneva, sans-serif;
-}
-
-h1 {
-	color: blue;
-	font: bold 15px "Lucida Grande", Lucida, Verdana, sans-serif;
-}
-
-.dateField {
-	color: blue;
-	font: bold 12px "Arial", Lucida, Verdana, sans-serif;
-}
-.salute {
-	color: darkslategray;
-	font: bold 14px "Arial", Lucida, Verdana, sans-serif;
-}
+var params = {};
+params['foo'] = 'bar';

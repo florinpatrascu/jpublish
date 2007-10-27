@@ -1,5 +1,9 @@
 JPublish 4 change log:
 
+[2007.10.27]
+- added functionality to allow DWR to invoke JPublish Actions. Check the simpleDWR
+  web demo for a simple but complete example.
+
 [2007.10.20]
 - the current JPublishContext instance is now added to every HttpServletRequest.
   You can get it like this: request.getAttribute( JPublishServlet.JPUBLISH_CONTEXT);
