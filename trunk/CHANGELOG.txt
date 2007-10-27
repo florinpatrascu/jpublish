@@ -3,6 +3,7 @@ JPublish 4 change log:
 [2007.10.27]
 - added functionality to allow DWR to invoke JPublish Actions. Check the simpleDWR
   web demo for a simple but complete example.
+  http://jpublish.googlecode.com/svn/trunk/samples/simpledwr/
 
 [2007.10.20]
 - the current JPublishContext instance is now added to every HttpServletRequest.
