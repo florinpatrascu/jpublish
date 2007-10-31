@@ -26,6 +26,8 @@
     </init>
 
     <allow>
+        <convert converter="bean" match="org.jpublish.util.*"/>
+
         <create creator="new" javascript="FilePing" scope="application">
             <param name="class" value="ca.flop.jpublish.dwr.demo.FilePing"/>
         </create>

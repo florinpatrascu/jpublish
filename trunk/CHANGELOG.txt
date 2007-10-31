@@ -1,5 +1,18 @@
 JPublish 4 change log:
 
+[2007.10.31]
+- the JPublishContext received by the Actions from the JPublishCreator contains now more useful
+  objects. They are as follows:
+    JPublishContext.JPUBLISH_REQUEST
+    JPublishContext.JPUBLISH_RESPONSE
+    JPublishContext.JPUBLISH_SESSION
+    JPublishCreator.APPLICATION
+    JPublishContext.JPUBLISH_CHARACTER_ENCODING_MAP
+    JPublishContext.JPUBLISH_URL_UTILITIES
+    JPublishContext.JPUBLISH_DATE_UTILITIES
+    JPublishContext.JPUBLISH_NUMBER_UTILITIES
+    JPublishCreator.DWR_CURRENT_PAGE
+
 [2007.10.27]
 - added functionality to allow DWR to invoke JPublish Actions. Check the simpleDWR
   web demo for a simple but complete example.

@@ -19,8 +19,13 @@ package ca.flop.jpublish.dwr;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 import org.jpublish.JPublishContext;
 import org.jpublish.SiteContext;
+import org.jpublish.util.DateUtilities;
+import org.jpublish.util.NumberUtilities;
+import org.jpublish.util.URLUtilities;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,6 +41,8 @@ import java.util.Map;
 
 public class DWRJPublishActionManager {
     protected static final Log log = LogFactory.getLog(DWRJPublishActionManager.class);
+    public static final String JPUBLISH_CONTEXT_NAME = "context";
+
     private SiteContext site;
     private String actionName;
 
@@ -66,9 +73,39 @@ public class DWRJPublishActionManager {
      * @throws Exception if anything wrong happens
      */
     public Map execute(Map params) throws Exception {
-
+        WebContext dwrContext = WebContextFactory.get();
         JPublishContext context = new JPublishContext(null);
         Map response = new HashMap();
+        context.put(JPublishContext.JPUBLISH_REQUEST, dwrContext.getHttpServletRequest());
+        context.put(JPublishContext.JPUBLISH_RESPONSE, dwrContext.getHttpServletResponse());
+        context.put(JPublishContext.JPUBLISH_SESSION, dwrContext.getSession());
+        context.put(JPublishCreator.APPLICATION, site.getServletContext());
+        // add the character encoding map to the context
+        context.put(JPublishContext.JPUBLISH_CHARACTER_ENCODING_MAP, site.getCharacterEncodingManager().getDefaultMap());
+
+        // add the URLUtilities to the context
+        URLUtilities urlUtilities = new URLUtilities(dwrContext.getHttpServletRequest(),
+                dwrContext.getHttpServletResponse());
+        context.put(JPublishContext.JPUBLISH_URL_UTILITIES, urlUtilities);
+
+        // add the DateUtilities to the context
+        context.put(JPublishContext.JPUBLISH_DATE_UTILITIES, DateUtilities.getInstance());
+
+        // add the NumberUtilities to the context
+        context.put(JPublishContext.JPUBLISH_NUMBER_UTILITIES, NumberUtilities.getInstance());
+
+        // add the messages log to the context
+        //context.put(JPublishContext.JPUBLISH_SYSLOG, SiteContext.syslog);
+
+        // expose the SiteContext
+        //context.put(JPublishContext.JPUBLISH_SITE, site);
+
+        // expose the context itself for debugging purposes
+        if (site.isDebug()) {
+            context.put(JPUBLISH_CONTEXT_NAME, context);
+        }
+        // various gifts from DWR ;)
+        context.put(JPublishCreator.DWR_CURRENT_PAGE, dwrContext.getCurrentPage());
 
         if (params != null && !params.values().isEmpty()) {
             for (Iterator it = params.entrySet().iterator(); it.hasNext();) {

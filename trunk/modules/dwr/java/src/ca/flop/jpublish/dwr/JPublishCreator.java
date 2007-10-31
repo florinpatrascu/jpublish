@@ -36,6 +36,7 @@ public class JPublishCreator extends AbstractCreator implements Creator {
     private Class clazz = DWRJPublishActionManager.class;
     private SiteContext site = null;
     private String actionName;
+    public static final String DWR_CURRENT_PAGE = "dwrCurrentPage";
 
     /**
      * Access to the <code>java.lang.Class</code> that this Creator
