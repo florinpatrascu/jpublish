@@ -1,5 +1,13 @@
 JPublish 4 change log:
 
+[2007.12.20]
+- integrated profiling via the Atlassian profiling library
+To enable the JPublish profiler, simply add the following line to the jpublish.xml config file:
+   <profiling>true</profiling>
+You can also set the minimum time reported in the trace when profiling. You probably only want to
+profile methods that take more than 50ms, which is done like so:
+   <profiling MIN_TIME="50">true</profiling>
+
 [2007.10.31]
 - the JPublishContext received by the Actions from the JPublishCreator contains now more useful
   objects. They are as follows:

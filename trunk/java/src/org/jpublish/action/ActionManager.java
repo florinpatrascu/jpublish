@@ -21,6 +21,8 @@ import com.anthonyeden.lib.config.Configuration;
 import com.anthonyeden.lib.config.ConfigurationException;
 import com.anthonyeden.lib.util.ClassUtilities;
 import com.anthonyeden.lib.util.IOUtilities;
+import com.atlassian.util.profiling.UtilTimerStack;
+import com.atlassian.util.profiling.object.ObjectProfiler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jpublish.JPublishContext;
@@ -32,6 +34,7 @@ import org.jpublish.util.vfs.VFSProvider;
 import org.jpublish.util.vfs.provider.filesystem.FileSystemProvider;
 
 import java.io.*;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -88,7 +91,7 @@ public class ActionManager {
 
         // add the messages log to the context
         this.startupContext.put(JPublishContext.JPUBLISH_SYSLOG, SiteContext.syslog);
-        
+
         // expose the SiteContext
         this.startupContext.put(JPublishContext.JPUBLISH_SITE, siteContext);
 
@@ -410,7 +413,19 @@ public class ActionManager {
 
         Action action = findAction(name);
         if (action != null) {
-            action.execute(context, configuration);
+            if (SiteContext.getProfiling()) {
+                try {
+                    UtilTimerStack.push(action.getClass().getName());
+                    Class[] paramTypes = {JPublishContext.class, Configuration.class};
+                    Object[] params = {context, configuration};
+                    Method execute = action.getClass().getMethod("execute", paramTypes);
+                    ObjectProfiler.profiledInvoke(execute, action, params);
+                } finally {
+                    UtilTimerStack.pop(action.getClass().getName());
+                }
+            } else {
+                action.execute(context, configuration);
+            }
 
             String redirect = (String) context.get("redirect");
             if (log.isDebugEnabled())

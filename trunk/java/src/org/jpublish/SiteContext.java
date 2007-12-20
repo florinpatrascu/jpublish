@@ -25,6 +25,7 @@ import com.anthonyeden.lib.resource.ResourceException;
 import com.anthonyeden.lib.resource.ResourceRecipient;
 import com.anthonyeden.lib.util.ClassUtilities;
 import com.anthonyeden.lib.util.IOUtilities;
+import com.atlassian.util.profiling.UtilTimerStack;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jpublish.action.ActionManager;
@@ -121,6 +122,7 @@ public class SiteContext implements ResourceRecipient {
     private Map attributes;
     private ServletConfig servletConfig;
     private HttpServlet jPublishServlet;
+    private static boolean profiling = false;
 
     /**
      * Construct a new SiteContext using the given File to load the
@@ -132,6 +134,7 @@ public class SiteContext implements ResourceRecipient {
      */
 
     public SiteContext(File contextRoot, String configPath) throws Exception {
+        String systemProfilingProperty = System.getProperty(UtilTimerStack.ACTIVATE_PROPERTY);
         setContextRoot(contextRoot);
 
         File configurationFile = new File(configPath);
@@ -152,6 +155,9 @@ public class SiteContext implements ResourceRecipient {
         disableSessionPaths = new ArrayList();
 
         attributes = new HashMap();
+        if (systemProfilingProperty != null) {
+            profiling = systemProfilingProperty.equalsIgnoreCase("true");
+        }
     }
 
     public void init() throws ResourceException {
@@ -1070,7 +1076,7 @@ public class SiteContext implements ResourceRecipient {
 
         if (cacheManagerConfiguration != null) {
             if (log.isDebugEnabled()) {
-                log.debug("laoding cache-manager elements");
+                log.debug("loading cache-manager elements");
             }
             jPublishCacheManager.loadConfiguration(configuration);
         }
@@ -1258,6 +1264,17 @@ public class SiteContext implements ResourceRecipient {
         // enable or disable debugging
         setDebug(configuration.getChildValue("debug", "false"));
 
+        // enable or disable profiling
+        String minTime = "0";
+        setProfiling(configuration.getChildValue("profiling", "false"));
+        UtilTimerStack.setActive(getProfiling());
+        if (getProfiling()) {
+            // check to see if the user establishe a minimum execution threshold
+            minTime = configuration.getChild("profiling").getAttribute("MIN_TIME", "0");
+            System.setProperty(UtilTimerStack.MIN_TIME, minTime);
+        }
+        log.info("JPublish profiling is: " + (getProfiling() ? "On" : "Off") +
+                "; minimum time reported: >=" + minTime + "ms");
         // enable or disable debugging
         setEval(configuration.getChildValue("evaluateVelocityTemplates", "false"));
 
@@ -1355,6 +1372,23 @@ public class SiteContext implements ResourceRecipient {
 
     }
 
+    /**
+     * enable or disable the profiling mode
+     *
+     * @param value a String containing "true" or anything else for false
+     */
+    public static void setProfiling(String value) {
+        if (value != null) {
+            profiling = value.trim().equalsIgnoreCase("true");
+        }
+    }
+
+    /**
+     * @return the boolean value of the profiling mode
+     */
+    public static boolean getProfiling() {
+        return profiling;
+    }
 
     private void setEval(String evaluateVelocityTemplates) {
         this.evaluateVelocityTemplates = evaluateVelocityTemplates;

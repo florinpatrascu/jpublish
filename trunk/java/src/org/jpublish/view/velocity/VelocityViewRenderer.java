@@ -20,6 +20,7 @@ package org.jpublish.view.velocity;
 import com.anthonyeden.lib.config.Configuration;
 import com.anthonyeden.lib.config.ConfigurationException;
 import com.anthonyeden.lib.util.IOUtilities;
+import com.atlassian.util.profiling.UtilTimerStack;
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -175,6 +176,7 @@ public class VelocityViewRenderer implements ViewRenderer {
         }
 
         try {
+            UtilTimerStack.push(" ==> /" + path);
             VelocityViewContext viewContext = new VelocityViewContext(context);
             if (context.get("evaluateVelocityTemplates") != null)
                 //Florin 15 Feb 2005
@@ -189,6 +191,8 @@ public class VelocityViewRenderer implements ViewRenderer {
         } catch (Exception e) {
             log.error(path + ", rendering exception: " + e.getMessage());
             throw new ViewRenderException(e);
+        } finally {
+            UtilTimerStack.pop(" ==> /" + path);
         }
     }
 
