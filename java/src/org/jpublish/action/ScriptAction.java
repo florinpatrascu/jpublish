@@ -18,6 +18,7 @@
 package org.jpublish.action;
 
 import com.anthonyeden.lib.config.Configuration;
+import com.atlassian.util.profiling.UtilTimerStack;
 import org.apache.bsf.BSFManager;
 import org.apache.bsf.util.IOUtils;
 import org.apache.commons.logging.Log;
@@ -140,7 +141,7 @@ public class ScriptAction implements Action {
                 if (log.isDebugEnabled())
                     log.debug("HTTP request is null");
             } else {
-                bsfManager.declareBean("request", request,  HttpServletRequest.class);
+                bsfManager.declareBean("request", request, HttpServletRequest.class);
             }
 
             if (response == null) {
@@ -203,11 +204,15 @@ public class ScriptAction implements Action {
             synchronized (this) {
                 if (reloadScript || scriptString == null) {
                     timeLastLoaded = System.currentTimeMillis();
-                    scriptString = IOUtils.getStringFromReader( new FileReader(script));
+                    scriptString = IOUtils.getStringFromReader(new FileReader(script));
                 }
             }
         }
-
-        bsfManager.exec(scriptLang, script.getCanonicalPath(), 0, 0, scriptString);
+        try {
+            UtilTimerStack.push(script.getName());
+            bsfManager.exec(scriptLang, script.getCanonicalPath(), 0, 0, scriptString);
+        } finally {
+            UtilTimerStack.pop(script.getName());
+        }
     }
 }

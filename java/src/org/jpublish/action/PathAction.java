@@ -18,52 +18,59 @@
 package org.jpublish.action;
 
 import com.anthonyeden.lib.config.Configuration;
-
+import com.atlassian.util.profiling.UtilTimerStack;
 import org.jpublish.JPublishContext;
 
-/** An action which is executed when a particular path is matched.  PathAction
-    actually wraps another action.  The current algorithm for matching is 
-    contained in the <code>PathUtilities.match()</code> method.
-    
-    @author Anthony Eden
-    @see org.jpublish.util.PathUtilities
-*/
+/**
+ * An action which is executed when a particular path is matched.  PathAction
+ * actually wraps another action.  The current algorithm for matching is
+ * contained in the <code>PathUtilities.match()</code> method.
+ *
+ * @author Anthony Eden
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
+ * @see org.jpublish.util.PathUtilities
+ */
 
-public class PathAction implements Action{
-    
+public class PathAction implements Action {
+
     private String path;
     private Action action;
 
-    /** Construct a new PathAction.
-    
-        @param path The path to match for execution
-        @param action The action which will be executed
-    */
-
-    public PathAction(String path, Action action){
+    /**
+     * Construct a new PathAction.
+     *
+     * @param path   The path to match for execution
+     * @param action The action which will be executed
+     */
+    public PathAction(String path, Action action) {
         this.path = path;
         this.action = action;
     }
-    
-    /** Get the path for matching.
-    
-        @return The path
-    */
-    
-    public String getPath(){
+
+    /**
+     * Get the path for matching.
+     *
+     * @return The path
+     */
+    public String getPath() {
         return path;
     }
-    
-    /** Execute the action using the given context.
-    
-        @param context The current context
-        @param configuration The configuration
-        @throws Exception Any error
-    */
-    
-    public void execute(JPublishContext context, Configuration configuration) 
-    throws Exception{
-        action.execute(context, configuration);
+
+    /**
+     * Execute the action using the given context.
+     *
+     * @param context       The current context
+     * @param configuration The configuration
+     * @throws Exception Any error
+     */
+    public void execute(JPublishContext context, Configuration configuration) throws Exception {
+        try {
+            UtilTimerStack.push(action.getClass().getName());
+            action.execute(context, configuration);
+
+        } finally {
+            UtilTimerStack.pop(action.getClass().getName());
+        }
     }
 
 }

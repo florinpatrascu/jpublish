@@ -45,4 +45,7 @@
     </character-encoding-map>
 
     <debug>false</debug>
+    <!--To enable the JPublish profiler, simply enable the following line:
+    <profiling MIN_TIME="50">true</profiling>
+    -->
 </jpublish>

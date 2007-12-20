@@ -21,6 +21,7 @@ import com.anthonyeden.lib.config.Configuration;
 import com.anthonyeden.lib.config.ConfigurationException;
 import com.anthonyeden.lib.config.XMLConfiguration;
 import com.anthonyeden.lib.util.IOUtilities;
+import com.atlassian.util.profiling.UtilTimerStack;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jpublish.*;
@@ -93,6 +94,7 @@ public class ExtendedFileSystemRepository extends AbstractFileSystemRepository i
      */
 
     public String get(String path, JPublishContext context) throws Exception {
+        UtilTimerStack.push( " ==> /"+path);
         executeActions(path, context);
 
         if (log.isDebugEnabled())
@@ -121,6 +123,7 @@ public class ExtendedFileSystemRepository extends AbstractFileSystemRepository i
             IOUtilities.close(in);
             IOUtilities.close(reader);
             IOUtilities.close(writer);
+            UtilTimerStack.pop( " ==> /"+path);
         }
     }
 
