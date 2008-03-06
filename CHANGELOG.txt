@@ -71,3 +71,6 @@ profile methods that take more than 50ms, which is done like so:
 
 Version 4.0 (2007.05.14)
  - Initial release
+
+[2008.03.06]
+ - added the ability to use locale when parsing or formatting using DateUtilities

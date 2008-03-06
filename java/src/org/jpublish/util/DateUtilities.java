@@ -20,6 +20,7 @@ package org.jpublish.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /** Utility class for parsing and formatting dates.  An instance of this 
     class can be dropped in the context to allow parsing and formatting
@@ -55,6 +56,21 @@ public class DateUtilities{
         SimpleDateFormat fmt = new SimpleDateFormat(format);
         return fmt.format(date);
     }
+
+        /** Format the specified date using the specified format String.  The
+        format String follows the rules specified in the
+        <code>java.text.SimpleDateFormat</code> class.
+
+        @param date The date
+        @param format The format String
+        @param locale The locale to use to format
+        @return A formatted Date String
+    */
+
+    public String format(Date date, String format, Locale locale){
+        SimpleDateFormat fmt = new SimpleDateFormat(format, locale);
+        return fmt.format(date);
+    }
     
     /** Parse the specified date String using the specified format String.
         The format String follows the rules specified in the 
@@ -70,5 +86,22 @@ public class DateUtilities{
         SimpleDateFormat fmt = new SimpleDateFormat(format);
         return fmt.parse(date);
     }
+
+    /** Parse the specified date String using the specified format String.
+        The format String follows the rules specified in the
+        <code>java.text.SimpleDateFormat</code> class.
+
+        @param date The date String
+        @param format The format String
+        @param locale The locale to use to parse
+        @return A Date object
+        @throws ParseException
+    */
+
+    public Date parse(String date, String format, Locale locale) throws ParseException{
+        SimpleDateFormat fmt = new SimpleDateFormat(format,locale);
+        return fmt.parse(date);
+    }
+
     
 }
