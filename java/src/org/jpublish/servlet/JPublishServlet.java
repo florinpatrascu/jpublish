@@ -424,9 +424,9 @@ public class JPublishServlet extends HttpServlet {
             template.merge(context, context.getPage(), out);
 
         } catch (FileNotFoundException e) {
-            log.error("[404] " + e.getMessage());
+            log.error("[404] " + path);
             if (!response.isCommitted()) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, path);
             }
         } catch (Exception e) {
             // Allow Jetty RequestRetry exception to propogate to container!
