@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2004-2007 the original author or authors.
+  ~ Copyright 2004-2008 the original author or authors.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -30,11 +30,11 @@
         defined on your system. On a standard Linux system this will be /tmp"
         -->
     <defaultCache
-        maxElementsInMemory="10000"
-        eternal="false"
-        overflowToDisk="true"
-        timeToIdleSeconds="10"
-        timeToLiveSeconds="20"
-        />
+            maxElementsInMemory="10000"
+            eternal="false"
+            overflowToDisk="true"
+            timeToIdleSeconds="10"
+            timeToLiveSeconds="20"
+            />
 </ehcache>
 
