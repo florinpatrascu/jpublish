@@ -1,5 +1,10 @@
 JPublish 4 change log:
 
+[2008.05.05]
+- removed the cache default configurations from the JPublish package. They may conflict with the
+user ones. Copy the docs/cache/ehcache.xml and/or the docs/cache/whirlycache.xml to your WEB-INF/classes
+folder in case you don't have a custom cache setup already.
+
 [2008.03.06]
  - added the ability to use locale when parsing or formatting using DateUtilities
 
