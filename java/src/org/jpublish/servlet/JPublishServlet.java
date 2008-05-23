@@ -160,6 +160,14 @@ public class JPublishServlet extends HttpServlet {
         doPost(request, response);
     }
 
+    public void doPut(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        doPost(httpServletRequest, httpServletResponse);
+    }
+
+    public void doDelete(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        doPost(httpServletRequest, httpServletResponse);
+    }
+
     /**
      * Called when the HTTP request method is POST.  This method provides the
      * main control logic.
