@@ -20,6 +20,7 @@ package ca.flop.jpublish.dwr;
 
 import org.directwebremoting.extend.Handler;
 import org.directwebremoting.extend.Remoter;
+import org.directwebremoting.servlet.HttpConstants;
 import org.directwebremoting.servlet.PathConstants;
 import org.directwebremoting.util.LocalUtil;
 import org.directwebremoting.util.MimeConstants;
@@ -30,10 +31,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * update: [2008.06.16] - added last modified header and
+ * check if modified since header, implementation inspired from:
+ * http://blogs.dekoh.com/dev/2007/07/24/caching-dwr-interface-java-script-files/
+ *
  * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
  * @version $Revision:$ Apr 5, 2007, 10:43:43 AM
  */
 public class DWRInterfaceHandler implements Handler {
+    //Store the application startup time. This will be the time we will set
+    //as the Last-Modified time for all the interface scripts
+    private final long lastUpdatedTime = (System.currentTimeMillis() / 1000) * 1000;
 
     /**
      * What URL is this handler available on?
@@ -50,22 +58,33 @@ public class DWRInterfaceHandler implements Handler {
         //I will refactor this code
         String dwrPrefix = (String) request.getAttribute(DWRModule.DWR_PREFIX_REQUEST_TAG_NAME);
         if (dwrPrefix == null || dwrPrefix.trim().length() == 0) {
-            dwrPrefix =DWRModule.DWR_DEFAULT_PREFIX;
+            dwrPrefix = DWRModule.DWR_DEFAULT_PREFIX;
         }
 
-        scriptName = LocalUtil.replace(scriptName, dwrPrefix, "");
-        scriptName = LocalUtil.replace(scriptName, interfaceHandlerUrl, "");
-        scriptName = LocalUtil.replace(scriptName, PathConstants.EXTENSION_JS, "");
-        String path = request.getContextPath() + request.getServletPath();
+        long ifModifiedSince = request.getDateHeader(HttpConstants.HEADER_IF_MODIFIED);
+        if (ifModifiedSince < lastUpdatedTime) {
+            //If the browser does not have the script in the cache or the cached copy is stale
+            //set the Last-Modified date header and send the new script file
+            //Note: If the browser does not have the script in its cache ifModifiedSince will be -1
 
-        String script = remoter.generateInterfaceScript(scriptName, path);
+            scriptName = LocalUtil.replace(scriptName, dwrPrefix, "");
+            scriptName = LocalUtil.replace(scriptName, interfaceHandlerUrl, "");
+            scriptName = LocalUtil.replace(scriptName, PathConstants.EXTENSION_JS, "");
+            String path = request.getContextPath() + request.getServletPath();
 
-        // Officially we should use MimeConstants.MIME_JS, but if we cheat and
-        // use MimeConstants.MIME_PLAIN then it will be easier to read in a
-        // browser window, and will still work just fine.
-        response.setContentType(MimeConstants.MIME_PLAIN);
-        PrintWriter out = response.getWriter();
-        out.print(script);
+            String script = remoter.generateInterfaceScript(scriptName, path);
+
+            // Officially we should use MimeConstants.MIME_JS, but if we cheat and
+            // use MimeConstants.MIME_PLAIN then it will be easier to read in a
+            // browser window, and will still work just fine.
+            response.setContentType(MimeConstants.MIME_PLAIN);
+            response.setDateHeader(HttpConstants.HEADER_LAST_MODIFIED, lastUpdatedTime);
+            PrintWriter out = response.getWriter();
+            out.print(script);
+        } else {
+            //If the browser has current version of the file, dont send the script. Just say it has not changed
+            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+        }
     }
 
     /**
