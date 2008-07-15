@@ -1,4 +1,10 @@
 JPublish 4 change log:
+[2008.07.15]
+-added code to allow profiling on DWR calls.
+-our JPublishDWR integration is now allowing DWR to graciously fall back on jpublish's own control for MIME types.
+For example, to control the dwr/interface/... response, add the following to your jpublish.xml:
+   <mime-mapping ext="js" mimetype="text/javascript"/>
+
 
 [2008.05.05]
 - removed the cache default configurations from the JPublish package. They may conflict with the
