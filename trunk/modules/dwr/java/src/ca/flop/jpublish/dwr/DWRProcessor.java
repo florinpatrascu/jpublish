@@ -19,6 +19,7 @@
 package ca.flop.jpublish.dwr;
 
 import com.anthonyeden.lib.config.Configuration;
+import com.atlassian.util.profiling.UtilTimerStack;
 import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.extend.ServerLoadMonitor;
 import org.directwebremoting.impl.ContainerUtil;
@@ -46,6 +47,7 @@ import java.util.Set;
  * @since $Revision$ (created: Oct 1, 2006 3:24:22 PM)
  */
 public class DWRProcessor {
+    public static final String EMPTY_STRING = "";
 
     /**
      * Our IoC container
@@ -73,6 +75,7 @@ public class DWRProcessor {
 
     private SiteContext site;
     private FakeServletConfig fakeServletConfig;
+    private static final String DWR_PROFIILING_PREFIX = " dwr> ";
 
     public void init(SiteContext site) throws ServletException {
 
@@ -144,6 +147,12 @@ public class DWRProcessor {
     protected void execute(JPublishContext context, Configuration configuration) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) context.get("request");
         HttpServletResponse response = (HttpServletResponse) context.get("response");
+        String reqPathInfo = EMPTY_STRING;
+        if (request != null) {
+            reqPathInfo = request.getPathInfo();
+        }
+
+        UtilTimerStack.push(DWR_PROFIILING_PREFIX + reqPathInfo);
         try {
 
             webContextBuilder.set(
@@ -157,6 +166,7 @@ public class DWRProcessor {
         finally {
             webContextBuilder.unset();
             ServletLoggingOutput.unsetExecutionContext();
+            UtilTimerStack.pop(DWR_PROFIILING_PREFIX + reqPathInfo);
         }
     }
 

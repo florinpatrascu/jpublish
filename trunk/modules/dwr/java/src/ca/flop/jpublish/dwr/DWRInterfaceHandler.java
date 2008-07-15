@@ -23,7 +23,6 @@ import org.directwebremoting.extend.Remoter;
 import org.directwebremoting.servlet.HttpConstants;
 import org.directwebremoting.servlet.PathConstants;
 import org.directwebremoting.util.LocalUtil;
-import org.directwebremoting.util.MimeConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,9 +66,9 @@ public class DWRInterfaceHandler implements Handler {
             //set the Last-Modified date header and send the new script file
             //Note: If the browser does not have the script in its cache ifModifiedSince will be -1
 
-            scriptName = LocalUtil.replace(scriptName, dwrPrefix, "");
-            scriptName = LocalUtil.replace(scriptName, interfaceHandlerUrl, "");
-            scriptName = LocalUtil.replace(scriptName, PathConstants.EXTENSION_JS, "");
+            scriptName = LocalUtil.replace(scriptName, dwrPrefix, DWRProcessor.EMPTY_STRING);
+            scriptName = LocalUtil.replace(scriptName, interfaceHandlerUrl, DWRProcessor.EMPTY_STRING);
+            scriptName = LocalUtil.replace(scriptName, PathConstants.EXTENSION_JS, DWRProcessor.EMPTY_STRING);
             String path = request.getContextPath() + request.getServletPath();
 
             String script = remoter.generateInterfaceScript(scriptName, path);
@@ -77,7 +76,10 @@ public class DWRInterfaceHandler implements Handler {
             // Officially we should use MimeConstants.MIME_JS, but if we cheat and
             // use MimeConstants.MIME_PLAIN then it will be easier to read in a
             // browser window, and will still work just fine.
-            response.setContentType(MimeConstants.MIME_PLAIN);
+            //response.setContentType(MimeConstants.MIME_PLAIN);
+
+            // [Florin] I believe the best way is to let the web admin to decide about the MIME. In our
+            // case the control is delegated via the mime-mapping options from jpublish.xml
             response.setDateHeader(HttpConstants.HEADER_LAST_MODIFIED, lastUpdatedTime);
             PrintWriter out = response.getWriter();
             out.print(script);
