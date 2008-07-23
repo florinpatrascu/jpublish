@@ -61,6 +61,8 @@
         <request-encoding>UTF-8</request-encoding>
         <response-encoding>UTF-8</response-encoding>
     </character-encoding-map>
-
+    
+    <mime-mapping ext="js" mimetype="text/javascript"/>
+    
     <debug>false</debug>
 </jpublish>

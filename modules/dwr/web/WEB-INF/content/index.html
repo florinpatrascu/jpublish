@@ -3,13 +3,28 @@
 In order to prove (to myself;)) that this implementation works I am using below most of the demos from DWR package, but I changed them to be "clean" from JPublish perspective, I mean using templates and stuff.
 Availables *working* demos:
 <ul>
-	<li><a href="$request.ContextPath/chat/java-chat.html">chat</a> - simple chat utility
-	<li><a href="$request.ContextPath/asmg">asmg</a> - Anti-spam mailto: Link Creator
-	<li><a href="$request.ContextPath/clock">clock</a> - a clock demo
-	<li><a href="$request.ContextPath/simpletext">simpletext</a> - Simple Text Generation Demo
-	<li><a href="$request.ContextPath/address">AddressLookup</a> - AddressLookup and the low level <a href="$request.ContextPath/dwr/test/AddressLookup">test</a> of it
+    <li><a href="$request.ContextPath/chat/java-chat.html">chat</a> - simple chat utility
+    <li><a href="$request.ContextPath/asmg">asmg</a> - Anti-spam mailto: Link Creator
+    <li><a href="$request.ContextPath/clock">clock</a> - a clock demo
+    <li><a href="$request.ContextPath/simpletext">simpletext</a> - Simple Text Generation Demo
+    <li><a href="$request.ContextPath/address">AddressLookup</a> - AddressLookup and the low level <a
+            href="$request.ContextPath/dwr/test/AddressLookup">test</a> of it
 </ul>
+Below is a simple demonstration of the ability to invoke JPublish Actions via DWR:
+<input type="button" value="Click me" onclick='
+    var params={};
+    params["action"]="poke JPublish";
+    InfoAction.execute( params, function(response) {
+    dwr.util.setValue("serverDate", response.serverDate);
+    dwr.util.setValue("info", response.infoMsg);
+  });'/><br>and get a server side feedback :)<br/>
 
+<p>
+Messages received from server:
+<div class="dateField" id="serverDate">-server date-</div>
+<div class="salute" id="info">JPublish Salute...</div>
+</p>
 
-<div id="page-title">For more info about DWR, visit the <a href="http://getahead.ltd.uk/dwr/">DWR Website</a> </div>
+<br><br><br>
+<div id="page-title">For more info about DWR, visit the <a href="http://getahead.ltd.uk/dwr/">DWR Website</a></div>
 
