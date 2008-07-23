@@ -1,7 +1,30 @@
 JPublish 4 change log:
+[2008.07.23]
+ - JPublishDWR  Actions will receive now all of the traditional JPublish objects in the context:
+
+    JPublishContext.JPUBLISH_REQUEST
+    JPublishContext.JPUBLISH_RESPONSE
+    JPublishContext.JPUBLISH_SESSION
+    JPublishCreator.APPLICATION
+    JPublishContext.JPUBLISH_CHARACTER_ENCODING_MAP
+    JPublishContext.JPUBLISH_URL_UTILITIES
+    JPublishContext.JPUBLISH_DATE_UTILITIES
+    JPublishContext.JPUBLISH_NUMBER_UTILITIES
+    JPublishContext.JPUBLISH_SYSLOG
+    JPublishContext.JPUBLISH_SITE
+
+however, we are also cleaning the context so they are not accidentally sent to the remote caller.
+
+- minor JPublishDWR revision number increased.
+- added a simple example of how to invoke a JPublish server side Action from your Javascript
+client code.
+
+
 [2008.07.15]
 -added code to allow profiling on DWR calls.
--our JPublishDWR integration is now allowing DWR to graciously fall back on jpublish's own control for MIME types.
+-our JPublishDWR integration is now allowing DWR to graciously falling back on jpublish's
+own control for MIME types.
+
 For example, to control the dwr/interface/... response, add the following to your jpublish.xml:
    <mime-mapping ext="js" mimetype="text/javascript"/>
 

@@ -1,5 +1,26 @@
 CHANGELOG
 
+[2008.07.23]
+ - JPublishDWR  Actions will receive now all of the traditional JPublish objects in the context:
+
+    JPublishContext.JPUBLISH_REQUEST
+    JPublishContext.JPUBLISH_RESPONSE
+    JPublishContext.JPUBLISH_SESSION
+    JPublishCreator.APPLICATION
+    JPublishContext.JPUBLISH_CHARACTER_ENCODING_MAP
+    JPublishContext.JPUBLISH_URL_UTILITIES
+    JPublishContext.JPUBLISH_DATE_UTILITIES
+    JPublishContext.JPUBLISH_NUMBER_UTILITIES
+    JPublishContext.JPUBLISH_SYSLOG
+    JPublishContext.JPUBLISH_SITE
+
+however, we are also cleaning the context so they are not accidentally sent to the remote caller.
+
+- minor JPublishDWR revision number increased.
+
+
+
+
 [2007.10.31]
  - the JPublishContext received by the Actions from the JPublishCreator contains now more useful
    objects. They are as follows:

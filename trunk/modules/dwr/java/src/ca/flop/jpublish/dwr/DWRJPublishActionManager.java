@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Florin T.PATRASCU.
+ * Copyright (c) 2008 Florin T.PATRASCU.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,8 +74,47 @@ public class DWRJPublishActionManager {
      */
     public Map execute(Map params) throws Exception {
         WebContext dwrContext = WebContextFactory.get();
-        JPublishContext context = new JPublishContext(null);
+        JPublishContext context = newContextForAction(dwrContext);
         Map response = new HashMap();
+
+        // expose the context itself for debugging purposes
+        if (site.isDebug()) {
+            context.put(JPUBLISH_CONTEXT_NAME, context);
+            // various gifts from DWR ;)
+            context.put(JPublishCreator.DWR_CURRENT_PAGE, dwrContext.getCurrentPage());
+            context.put(JPublishCreator.DWR_SCRIPT_SESSION, dwrContext.getScriptSession());
+        }
+
+        if (params != null && !params.values().isEmpty()) {
+            for (Iterator it = params.entrySet().iterator(); it.hasNext();) {
+                Map.Entry entry = (Map.Entry) it.next();
+                context.put((String) entry.getKey(), entry.getValue());
+            }
+        }
+        // execute the Action ...
+        site.getActionManager().execute(actionName, context);
+        removeJPublishContextObjects(context);
+
+        // ... and collect any context parameter
+        Object[] keys = context.getKeys();
+
+        for (int i = 0; i < keys.length; i++) {
+            String key = (String) keys[i];
+            response.put(key, context.get(key));
+        }
+        return response;
+    }
+
+    /**
+     * create a new mini-JPublish context
+     *
+     * @param dwrContext the WebContext created by the DWR
+     * @return a new JPublish context
+     */
+    private JPublishContext newContextForAction(WebContext dwrContext) {
+        JPublishContext context = new JPublishContext(this);
+        context.disableCheckReservedNames(this);
+
         context.put(JPublishContext.JPUBLISH_REQUEST, dwrContext.getHttpServletRequest());
         context.put(JPublishContext.JPUBLISH_RESPONSE, dwrContext.getHttpServletResponse());
         context.put(JPublishContext.JPUBLISH_SESSION, dwrContext.getSession());
@@ -95,35 +134,41 @@ public class DWRJPublishActionManager {
         context.put(JPublishContext.JPUBLISH_NUMBER_UTILITIES, NumberUtilities.getInstance());
 
         // add the messages log to the context
-        //context.put(JPublishContext.JPUBLISH_SYSLOG, SiteContext.syslog);
+        context.put(JPublishContext.JPUBLISH_SYSLOG, SiteContext.syslog);
 
         // expose the SiteContext
-        //context.put(JPublishContext.JPUBLISH_SITE, site);
+        context.put(JPublishContext.JPUBLISH_SITE, site);
+        return context;
+    }
 
-        // expose the context itself for debugging purposes
-        if (site.isDebug()) {
-            context.put(JPUBLISH_CONTEXT_NAME, context);
-        }
-        // various gifts from DWR ;)
-        context.put(JPublishCreator.DWR_CURRENT_PAGE, dwrContext.getCurrentPage());
+    /**
+     * remove any references to internal JPublish objects
+     *
+     * @param context a clean context containing only what needs to be returned to the dwr client
+     */
+    private void removeJPublishContextObjects(JPublishContext context) {
+        context.remove(JPublishContext.JPUBLISH_REQUEST);
+        context.remove(JPublishContext.JPUBLISH_RESPONSE);
+        context.remove(JPublishContext.JPUBLISH_SESSION);
+        context.remove(JPublishCreator.APPLICATION);
+        // add the character encoding map to the context
+        context.remove(JPublishContext.JPUBLISH_CHARACTER_ENCODING_MAP);
 
-        if (params != null && !params.values().isEmpty()) {
-            for (Iterator it = params.entrySet().iterator(); it.hasNext();) {
-                Map.Entry entry = (Map.Entry) it.next();
-                context.put((String) entry.getKey(), entry.getValue());
-            }
-        }
-        // execute the Action ...
-        site.getActionManager().execute(actionName, context);
 
-        // ... and collect any context parameter
-        Object[] keys = context.getKeys();
+        context.remove(JPublishContext.JPUBLISH_URL_UTILITIES);
 
-        for (int i = 0; i < keys.length; i++) {
-            String key = (String) keys[i];
-            response.put(key, context.get(key));
-        }
-        return response;
+        // add the DateUtilities to the context
+        context.remove(JPublishContext.JPUBLISH_DATE_UTILITIES);
+
+        // add the NumberUtilities to the context
+        context.remove(JPublishContext.JPUBLISH_NUMBER_UTILITIES);
+
+        // add the messages log to the context
+        context.remove(JPublishContext.JPUBLISH_SYSLOG);
+
+        // expose the SiteContext
+        context.remove(JPublishContext.JPUBLISH_SITE);
+
     }
 }
 

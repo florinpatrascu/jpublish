@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c)2007, Florin T.PATRASCU.
+  ~ Copyright (c)2008, Florin T.PATRASCU.
   ~ All Rights Reserved.
   -->
 
@@ -8,14 +8,19 @@
 
 <dwr>
 
-  <allow>
+    <init>
+        <creator id="jpublish" class="ca.flop.jpublish.dwr.JPublishCreator"/>
+    </init>
 
-    <!--
-    <filter class="org.getahead.dwrdemo.monitor.MonitoringAjaxFilter"/>
-    <filter class="org.directwebremoting.filter.ExtraLatencyAjaxFilter">
-      <param name="delay" value="200"/>
-    </filter>
-    -->
+    <allow>
+     <convert converter="bean" match="org.jpublish.util.*"/>
+
+        <!--
+        <filter class="org.getahead.dwrdemo.monitor.MonitoringAjaxFilter"/>
+        <filter class="org.directwebremoting.filter.ExtraLatencyAjaxFilter">
+          <param name="delay" value="200"/>
+        </filter>
+        -->
 
     <create creator="new" javascript="Demo">
       <param name="class" value="uk.ltd.getahead.dwrdemo.simpletext.Demo"/>
@@ -90,31 +95,42 @@
       </param>
     </create>
 
+      <!--Test a JPublish Action-->
+      <create creator="jpublish" javascript="InfoAction" scope="application">
+          <param name="class" value="ca.flop.jpublish.dwr.DWRJPublishActionManager"/>
+          <param name="actionName" value="InfoAction.bsh"/>
+      </create>
   </allow>
 
   <signatures>
-  <![CDATA[
-  import java.util.*;
-  import uk.ltd.getahead.dwrdemo.test.*;
+      <![CDATA[
+        import java.util.Map;
+        import ca.flop.jpublish.dwr.DWRJPublishActionManager;
+        DWRJPublishActionManager.execute( Map<String, String>);
+        ]]>
+  
+      <![CDATA[
+      import java.util.*;
+      import uk.ltd.getahead.dwrdemo.test.*;
 
-  Test.testBeanSetParam(Set<TestBean>);
-  Test.testBeanListParam(List<TestBean>);
-  Test.charTestBeanMapParam(Map<Character, TestBean>);
+      Test.testBeanSetParam(Set<TestBean>);
+      Test.testBeanListParam(List<TestBean>);
+      Test.charTestBeanMapParam(Map<Character, TestBean>);
 
-  Test.stringStringMapParam(Map<String, String>);
-  Test.stringStringHashMapParam(HashMap<String, String>);
-  Test.stringStringTreeMapParam(TreeMap<String, String>);
+      Test.stringStringMapParam(Map<String, String>);
+      Test.stringStringHashMapParam(HashMap<String, String>);
+      Test.stringStringTreeMapParam(TreeMap<String, String>);
 
-  Test.stringCollectionParam(Collection<String>);
+      Test.stringCollectionParam(Collection<String>);
 
-  Test.stringListParam(List<String>);
-  Test.stringLinkedListParam(LinkedList<String>);
-  Test.stringArrayListParam(ArrayList<String>);
+      Test.stringListParam(List<String>);
+      Test.stringLinkedListParam(LinkedList<String>);
+      Test.stringArrayListParam(ArrayList<String>);
 
-  Test.stringSetParam(Set<String>);
-  Test.stringHashSetParam(HashSet<String>);
-  Test.stringTreeSetParam(TreeSet<String>);
-  ]]>
+      Test.stringSetParam(Set<String>);
+      Test.stringHashSetParam(HashSet<String>);
+      Test.stringTreeSetParam(TreeSet<String>);
+      ]]>
   </signatures>
 
 </dwr>
