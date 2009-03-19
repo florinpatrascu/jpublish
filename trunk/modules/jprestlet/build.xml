@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="JPSimpleRestlet" default="jar">
+    <property environment="env"/>
+
+    <property file="build.properties"/>
+    <property name="skip.tests" value="true"/>
+
+    <!-- Compiler options -->
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.optimize" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+
+    <!-- Compiler resources -->
+    <patternset id="compiler.resources">
+        <include name="**/?*.properties"/>
+        <include name="**/?*.xml"/>
+        <include name="**/?*.vm"/>
+    </patternset>
+
+
+    <!-- Global Libraries -->
+    <path id="build.classpath">
+        <fileset dir="${global.libraries}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${jpublish.lib}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- ==================================================== -->
+    <!-- Initialize Ant                                       -->
+    <!-- ==================================================== -->
+    <target name="init">
+        <tstamp/>
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Compile the source code.                                               -->
+    <!-- ====================================================================== -->
+    <target name="compile" depends="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.classes}"/>
+
+        <javac srcdir="${src.dir}"
+               destdir="${build.classes}"
+               debug="${compiler.debug}"
+               deprecation="${compiler.generate.no.warnings}"
+               encoding="utf8"
+               classpathref="build.classpath"
+               optimize="${compiler.optimize}">
+            <include name="**/*.java"/>
+        </javac>
+
+        <copy todir="${build.classes}">
+            <fileset dir="${src.dir}">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <!-- ====================================================================== -->
+    <!-- Create the JAR archive.                                                -->
+    <!-- ====================================================================== -->
+    <target name="jar" depends="compile">
+        <mkdir dir="${build.dist}"/>
+        <jar jarfile="${build.dist}/${name}-${version}.jar"
+             basedir="${build.classes}"/>
+        <copy file="LICENSE.txt" tofile="${dist.dir}/${Name}.license.txt"/>
+    </target>
+
+
+    <!-- ====================================================================== -->
+    <!-- Create the distribution                                                -->
+    <!-- ====================================================================== -->
+
+    <target name="dist" depends="clean, jar">
+        <echo message="Building the JPublish RESTLET demo applications ..."/>
+        <copy todir="${dist.dir}/jprestlet">
+            <fileset dir="${web.dir}" includes="**/*.*"/>
+            <fileset dir="${web.dir}" includes="**/*"/>
+        </copy>
+
+        <copy todir="${dist.dir}/jprestlet/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${global.libraries}">
+                <include name="**/*.jar"/>
+                <include name="**/*.txt"/>
+            </fileset>
+            <fileset dir="${jpublish.lib}">
+                <include name="**/*.jar"/>
+                <include name="**/*.txt"/>
+            </fileset>
+            <!--copy the JPSimpleRestlet library as well-->
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar"/>
+                <include name="**/*.txt"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Clean up generated stuff                                               -->
+    <!-- ====================================================================== -->
+    <target name="clean">
+        <delete dir="${dist.dir}"/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${docs.dir}/api"/>
+    </target>
+
+
+</project>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+	jprestlet-config
+	Created by Florin T.PATRASCU on [2008.10.31]
+-->
+<jprestlet>
+    <repository name="extended"/>
+    <routes>
+        <route map="/hello/{name}" restlet="org.jpublish.module.restlet.demo.HelloJPRestlet"/>
+        <route map="/user/{name}/{id}" page="user.html"/>
+        <route map="/action/info/{id}" action="rest/Info.bsh" page="info.html"/>
+        <route map="/info/{id}" page="info.html"/>
+    </routes>
+    <debug>true</debug>
+</jprestlet>

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2009, Florin T.PATRASCU
+  ~ All Rights Reserved.
+  -->
+
+<jpublish>
+    <name>JPRestlet test application</name>
+    <static-root>public</static-root>
+    <action-root>WEB-INF/actions</action-root>
+    <template-root>WEB-INF/templates</template-root>
+    <page-root>WEB-INF/pages</page-root>
+
+    <module classname="org.jpublish.module.restlet.JPRestletModule">
+        <url>/rest/*</url>
+        <restlet-config>/WEB-INF/jprestlet-config.xml</restlet-config>
+        <profilling>true</profilling>
+        <!-- Verbose [on|off]; turn on or off the route mapping and other annoying messages-->
+        <verbose>on</verbose>
+        <debug>true</debug>
+    </module>
+
+    <view-renderer classname="org.jpublish.view.velocity.VelocityViewRenderer">
+        <velocity-properties relative-paths="true">WEB-INF/velocity.properties</velocity-properties>
+        <resource-cache-enabled>true</resource-cache-enabled>
+        <resource-cache-interval>15</resource-cache-interval>
+    </view-renderer>
+
+    <repository name="content" classname="org.jpublish.repository.filesystem.FileSystemRepository">
+        <root>WEB-INF/content</root>
+        <cache>default</cache>
+    </repository>
+
+    <repository name="extended" classname="org.jpublish.repository.filesystem.ExtendedFileSystemRepository">
+        <root>WEB-INF/extended</root>
+        <cache>default</cache>
+    </repository>
+
+    <default-template>default</default-template>
+    <page-manager classname="org.jpublish.page.filesystem.FileSystemPageManagerWithDefault"/>
+
+    <cache-manager>
+        <jpublish.cache.provider>
+            <implementation name="default" class="org.jpublish.util.JPublishCacheImpl"/>
+            <!-- <flushInterval minutes="5"/> -->
+        </jpublish.cache.provider>
+    </cache-manager>
+
+    <mime-mapping ext="txt" mimetype="text/html"/>
+    
+    <character-encoding-map path="*">
+        <page-encoding>UTF-8</page-encoding>
+        <template-encoding>UTF-8</template-encoding>
+        <request-encoding>UTF-8</request-encoding>
+        <response-encoding>UTF-8</response-encoding>
+    </character-encoding-map>
+
+    <debug>false</debug>
+</jpublish>

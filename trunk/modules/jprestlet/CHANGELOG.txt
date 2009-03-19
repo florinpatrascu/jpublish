@@ -1,0 +1,7 @@
+CHANGELOG
+
+2009-10-28
+- work started
+
+2009.03.17
+- a first very basic implementation

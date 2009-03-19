@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c)2008, Florin T.PATRASCU.
+  ~ All Rights Reserved.
+  -->
+
+<!DOCTYPE web-app
+        PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+    <servlet>
+        <servlet-name>jpublish</servlet-name>
+        <servlet-class>org.jpublish.servlet.JPublishServlet</servlet-class>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>WEB-INF/jpublish.xml</param-value>
+        </init-param>
+        <!-- Set the load order -->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jpublish</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>jpublish</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+</web-app>

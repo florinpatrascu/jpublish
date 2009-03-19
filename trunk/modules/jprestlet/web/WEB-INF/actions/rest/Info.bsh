@@ -1,0 +1,5 @@
+import org.jpublish.module.restlet.JPRestletModule;
+
+context.put( "actionExecuted", Boolean.TRUE);
+context.put(JPRestletModule.JP_RESTLET_ACTION_RESPONSE, "I received id="+context.get("id"));
+context.put(JPRestletModule.JP_RESTLET_ACTION_RESPONSE_TYPE, "text/plain");
