@@ -4,10 +4,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jpublish.JPublishContext;
 import org.restlet.Restlet;
-import org.restlet.data.MediaType;
-import org.restlet.data.Request;
-import org.restlet.data.Response;
-import org.restlet.data.Status;
+import org.restlet.resource.Representation;
+import org.restlet.resource.StringRepresentation;
+import org.restlet.data.*;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -81,7 +80,9 @@ public class JPSimpleRestlet extends Restlet {
                             (String) context.get(JPRestletModule.JP_RESTLET_ACTION_RESPONSE_TYPE));
                 }
 
-                response.setEntity(value, valueType);
+                Representation r = new StringRepresentation(value, valueType);
+                r.setCharacterSet(CharacterSet.UTF_8);
+                response.setEntity(r);
 
             } catch (Exception e) {
                 e.printStackTrace();
