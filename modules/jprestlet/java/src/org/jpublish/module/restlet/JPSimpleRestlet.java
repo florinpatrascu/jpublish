@@ -3,10 +3,11 @@ package org.jpublish.module.restlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jpublish.JPublishContext;
+import org.jpublish.util.CharacterEncodingMap;
 import org.restlet.Restlet;
+import org.restlet.data.*;
 import org.restlet.resource.Representation;
 import org.restlet.resource.StringRepresentation;
-import org.restlet.data.*;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Map;
  * This is a very simple support for publishing basic text, html content obtained
  * from a JPublish "rest" repository. For more advanced features use an ExtendedFileSystemRepository
  * repository.
- *
+ * <p/>
  * A future version will allow any JPublish response to be published as a Representation, in Restlet parlance
  *
  * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
@@ -40,8 +41,13 @@ public class JPSimpleRestlet extends Restlet {
         boolean actionExecuted = false;
         boolean actionOnly = true;
 
-
         if (context != null) {
+
+            CharacterEncodingMap characterEncodingMap =
+                    module.getSite().getCharacterEncodingManager().getMap(path);
+            //todo decode the input parameters
+            //URLDecoder.decode("", characterEncodingMap.getRequestEncoding());
+
             try {
                 Map reqAttributes = request.getAttributes();
                 if (reqAttributes != null && !reqAttributes.isEmpty()) {
@@ -81,7 +87,8 @@ public class JPSimpleRestlet extends Restlet {
                 }
 
                 Representation r = new StringRepresentation(value, valueType);
-                r.setCharacterSet(CharacterSet.UTF_8);
+                //r.setCharacterSet(CharacterSet.UTF_8);
+                r.setCharacterSet(CharacterSet.valueOf(characterEncodingMap.getResponseEncoding()));
                 response.setEntity(r);
 
             } catch (Exception e) {
