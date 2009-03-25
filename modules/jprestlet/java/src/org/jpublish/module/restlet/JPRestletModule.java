@@ -108,11 +108,12 @@ public class JPRestletModule implements JPublishModule {
                     if (route.getAttribute("restlet") != null) {
                         restlet = (Restlet) ClassUtilities.loadClass(route.getAttribute("restlet")).newInstance();
                         router.attach(jpRestletPath, restlet);
+                        log.info("... routing: " + jpRestletPath + " to: " + restlet);
                     } else{
                         router.attach(jpRestletPath, new JPSimpleRestlet(this, page, action));
+                        log.info("... routing: " + jpRestletPath + " to action: " + action+", page: "+page);
                     }
 
-                    log.info("... routing: " + jpRestletPath + " to: " + restlet);
                 }
             }
         } else {
