@@ -1,7 +1,7 @@
 JPublish 4 change log:
 [2009.04.28]
  - added few more default mime types
- - introduced the support for the "format" parameter. The response.ContentType will
+ - introduced the support for the "format" request parameter. The response.ContentType will
    follow the ?format=<xml|html|json|etc>, if the "format" parameter exists.
 
 [2008.07.23]
