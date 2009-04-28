@@ -82,10 +82,22 @@ public class MimeTypeMap extends HashMap{
         put("htm", "text/html");
         put("txt", "text/plain");
         put("xml", "text/xml");
+        put("xls", "application/vnd.ms-excel");
         put("css", "text/css");
         put("gif", "image/gif");
         put("jpeg", "image/jpeg");
         put("jpg", "image/jpeg");
+        put("png", "image/png");
+        put("ico", "image/x-icon");
+        put("js", "application/x-javascript");
+        put("json", "text/plain");
+
+        put("pdf", "application/pdf");
+        put("mp3", "audio/mpeg");
+        put("wav", "audio/x-wav");
+        put("asf", "video/x-ms-asf");
+        put("avi", "video/x-msvideo");
+        put("mpg", "video/mpeg");
     }
 
 }
