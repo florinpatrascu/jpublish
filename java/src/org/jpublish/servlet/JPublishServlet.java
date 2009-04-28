@@ -247,13 +247,19 @@ public class JPublishServlet extends HttpServlet {
         int lastDotIndex = path.lastIndexOf(".");
         if (lastDotIndex >= 0) {
             String extension = path.substring(lastDotIndex + 1);
-            String mimeType = siteContext.getMimeTypeMap().getMimeType(extension);
+            //introduce the format parameter
+            String format = request.getParameter("format");
+            if(format== null || format.trim().length()==0){
+                format = extension; // fall -back on the filename extension
+            }
+            
+            String mimeType = siteContext.getMimeTypeMap().getMimeType(format);
             String contentType = getMimeTypeWithCharset(mimeType,
                     characterEncodingMap.getResponseEncoding());
             response.setContentType(contentType);
 
             if (log.isDebugEnabled())
-                log.debug("Content type for extension " + extension + " is " + contentType);
+                log.debug("Content type for extension " + format + " is " + contentType);
         } else {
             response.setContentType(getMimeTypeWithCharset(MimeTypeMap.DEFAULT_MIME_TYPE,
                     characterEncodingMap.getResponseEncoding()));

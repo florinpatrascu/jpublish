@@ -1,4 +1,9 @@
 JPublish 4 change log:
+[2009.04.28]
+ - added few more default mime types
+ - introduced the support for the "format" parameter. The response.ContentType will
+   follow the ?format=<xml|html|json|etc>, if the "format" parameter exists.
+
 [2008.07.23]
  - JPublishDWR  Actions will receive now all of the traditional JPublish objects in the context:
 
