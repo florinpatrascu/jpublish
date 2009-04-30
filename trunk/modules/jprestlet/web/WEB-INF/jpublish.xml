@@ -55,5 +55,6 @@
         <response-encoding>UTF-8</response-encoding>
     </character-encoding-map>
 
+    <formatChangeParameterName>format</formatChangeParameterName>
     <debug>false</debug>
 </jpublish>

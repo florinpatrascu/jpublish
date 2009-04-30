@@ -56,6 +56,7 @@ public class JPublishServlet extends HttpServlet {
 
     private SiteContext siteContext;
     public static final String JPUBLISH_CONTEXT = "jpublishContext";
+    private boolean formatParameterSupported = false;
 
     /**
      * Initialize the servlet.
@@ -90,6 +91,8 @@ public class JPublishServlet extends HttpServlet {
             siteContext.setServletConfig(servletConfig);
             siteContext.setJPublishServlet(this);
             siteContext.init();
+            formatParameterSupported = siteContext.getFormatChangeParameterName() != null
+                    && siteContext.getFormatChangeParameterName().trim().length()>0;
         } catch (Exception e) {
             log.error("Error creating SiteContext: " + e.getMessage());
             throw new ServletException(e);
@@ -248,7 +251,11 @@ public class JPublishServlet extends HttpServlet {
         if (lastDotIndex >= 0) {
             String extension = path.substring(lastDotIndex + 1);
             //introduce the format parameter
-            String format = request.getParameter("format");
+            String format = null;
+            if(formatParameterSupported){
+                format = request.getParameter(siteContext.getFormatChangeParameterName());
+            }
+
             if(format== null || format.trim().length()==0){
                 format = extension; // fall -back on the filename extension
             }
