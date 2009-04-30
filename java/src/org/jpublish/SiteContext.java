@@ -123,6 +123,7 @@ public class SiteContext implements ResourceRecipient {
     private ServletConfig servletConfig;
     private HttpServlet jPublishServlet;
     private static boolean profiling = false;
+    private String formatChangeParameterName="";
 
     /**
      * Construct a new SiteContext using the given File to load the
@@ -1264,6 +1265,9 @@ public class SiteContext implements ResourceRecipient {
         // enable or disable debugging
         setDebug(configuration.getChildValue("debug", "false"));
 
+        // enable or disable the support for the 'format' request parameter
+        setFormatChangeParameterName(configuration.getChildValue("formatChangeParameterName", ""));
+
         // enable or disable profiling
         String minTime = "0";
         setProfiling(configuration.getChildValue("profiling", "false"));
@@ -1478,5 +1482,13 @@ public class SiteContext implements ResourceRecipient {
 
     public ServletConfig getServletConfig() {
         return servletConfig;
+    }
+
+    public String getFormatChangeParameterName() {
+        return formatChangeParameterName;
+    }
+
+    public void setFormatChangeParameterName(String formatChangeParameterName) {
+        this.formatChangeParameterName = formatChangeParameterName;
     }
 }

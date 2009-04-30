@@ -1,8 +1,19 @@
 JPublish 4 change log:
+[2009.04.30]
+- supporting the request parameter 'format' (or any user defined parameter name) is now optional; disabled by default.
+  To enable this support, add the following line to your jpublish.xml config file, excerpt:
+
+       <formatChangeParameterName>format</formatChangeParameterName>
+
+  If the above parameter is specified, the JPublish servlet will resolve the response ContentType based on
+  the request.getParameter( "format") value or will fall back on checking the requested file extension, as usual.
+
+
 [2009.04.28]
  - added few more default mime types
  - introduced the support for the "format" request parameter. The response.ContentType will
    follow the ?format=<xml|html|json|etc>, if the "format" parameter exists.
+
 
 [2008.07.23]
  - JPublishDWR  Actions will receive now all of the traditional JPublish objects in the context:
