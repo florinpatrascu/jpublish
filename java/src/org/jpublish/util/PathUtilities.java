@@ -103,13 +103,16 @@ public final class PathUtilities {
         File file = new File(path);
         File parentDirectory = file.getParentFile();
 
-        String pagePath;
+        String pagePath = null;
 
         if (parentDirectory == null) {
             pagePath = extractPageName(path);
         } else {
-            pagePath = new File(parentDirectory.getPath(), extractPageName(path)).getPath();
-            pagePath = pagePath.replace(File.separatorChar, '/');
+            String pageName = extractPageName(path);
+            if (pageName != null) {
+                pagePath = new File(parentDirectory.getPath(), pageName).getPath();
+                pagePath = pagePath.replace(File.separatorChar, '/');
+            }
         }
 
         return pagePath;
