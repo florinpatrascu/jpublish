@@ -12,9 +12,12 @@
     <page-root>WEB-INF/pages</page-root>
 
     <module classname="org.jpublish.module.restlet.JPRestletModule">
-        <url>/rest/*</url>
+        <urls>
+            <url>/rest/*</url>
+            <url>/restful/*</url>
+        </urls>
         <restlet-config>/WEB-INF/jprestlet-config.xml</restlet-config>
-        <profilling>true</profilling>
+        <profiling>true</profiling>
         <!-- Verbose [on|off]; turn on or off the route mapping and other annoying messages-->
         <verbose>on</verbose>
         <debug>true</debug>

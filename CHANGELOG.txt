@@ -1,4 +1,22 @@
 JPublish 4 change log:
+
+[2009.05.19]
+  JPRestletModule can now be mapped on a list of paths.
+
+  Example:
+  <module classname="org.jpublish.module.restlet.JPRestletModule">
+    <urls>
+        <url>/rest/*</url>
+        <url>/restful/*</url>
+    </urls>
+    <restlet-config>/WEB-INF/jprestlet-config.xml</restlet-config>
+  </module>
+
+  With a configuration like the one above, JPRestletModule will respond for any path starting with
+  /rest/ or /restful/. This implementation is backward compliant.
+
+
+
 [2009.04.30]
 - supporting the request parameter 'format' (or any user defined parameter name) is now optional; disabled by default.
   To enable this support, add the following line to your jpublish.xml config file, excerpt:
