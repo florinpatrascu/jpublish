@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * A JPublish module offering integration support with the Restlet framework.
@@ -38,7 +39,7 @@ public class JPRestletModule implements JPublishModule {
     private static final Log log = LogFactory.getLog(JPRestletModule.class);
 
     private static final String NAME = "JPRestlet Module";
-    private static final String VERSION = "1.0";
+    private static final String VERSION = "1.0.1";
     private static final String JPUBLISH_DEFAULT_REST_URL = "/rest";
 
     private static final String DESCRIPTION = "RESTLET (" + Engine.VERSION + ") support for JPublish";
@@ -48,6 +49,7 @@ public class JPRestletModule implements JPublishModule {
     private ServletConverter converter;
     public boolean debug = false;
     private String restJPublishURL = JPUBLISH_DEFAULT_REST_URL;
+    private List restJPublishURLS = new ArrayList();
 
     private String repository = "content";
     public static final String JP_RESTLET_ACTION_RESPONSE = "__jpRestletActionResponseValue__";
@@ -58,18 +60,35 @@ public class JPRestletModule implements JPublishModule {
         this.site = site;
 
         String restletConfigPath = configuration.getChildValue("restlet-config", "WEB-INF/jprestlet-config.xml");
-        restJPublishURL = configuration.getChildValue("url", JPUBLISH_DEFAULT_REST_URL);
+        //legacy parameter
+        if (configuration.getChildValue("url") != null) {
+            restJPublishURLS.add(
+                    configuration.getChildValue("url", JPUBLISH_DEFAULT_REST_URL));
+        }
 
-        log.info("Mapping JPRestlet for all calls on: " + restJPublishURL);
+        if (configuration.getChild("urls") != null) {
+            List restURLSConfig = configuration.getChild("urls").getChildren();
+            for (int i = 0; restURLSConfig != null && i < restURLSConfig.size(); i++) {
+                Configuration urlConfig = (Configuration) restURLSConfig.get(i);
+                restJPublishURLS.add(urlConfig.getValue(JPUBLISH_DEFAULT_REST_URL));
+            }
+        }
 
         log.info("Initializing the " + this.toString() + " framework from: " + restletConfigPath);
         this.converter = new ServletConverter(site.getServletContext());
         initJPRestlet(restletConfigPath);
 
-        site.getActionManager().getPathActions().add(
-                new ActionWrapper(
-                        new PathAction(restJPublishURL, new JPRestletAction(this)), configuration)
-        );
+        log.info("Mapping JPRestlet for all calls on: ");
+
+        //map JPRestletModule as a pth-action
+        for (int i = 0; i < restJPublishURLS.size(); i++) {
+            String url = (String) restJPublishURLS.get(i);
+            site.getActionManager().getPathActions().add(
+                    new ActionWrapper(
+                            new PathAction(url, new JPRestletAction(this)), configuration)
+            );
+            log.info("    " + url);
+        }
 
         log.info(this.toString() + " is ready.");
     }
@@ -93,29 +112,32 @@ public class JPRestletModule implements JPublishModule {
         log.info("Default restlet repository: " + repository);
         log.info("Adding routes to RESTLET support...");
         if (routes != null && !routes.isEmpty()) {
-            String jpublishRestletPathPrefix = restJPublishURL.substring(0, restJPublishURL.lastIndexOf("/"));
+            for (int j = 0; j < restJPublishURLS.size(); j++) {
+                String restJPublishURL = (String) restJPublishURLS.get(j);
+                String jpublishRestletPathPrefix = restJPublishURL.substring(0, restJPublishURL.lastIndexOf("/"));
+                for (int i = 0; i < routes.size(); i++) {
+                    Configuration route = (Configuration) routes.get(i);
+                    String map = route.getAttribute("map");
 
-            for (int i = 0; i < routes.size(); i++) {
-                Configuration route = (Configuration) routes.get(i);
-                String map = route.getAttribute("map");
+                    if (map != null) {
+                        String jpRestletPath = jpublishRestletPathPrefix + map;
+                        String action = route.getAttribute("action", EMPTY_STRING);
+                        String page = route.getAttribute("page", EMPTY_STRING);
 
-                if (map != null) {
-                    String jpRestletPath = jpublishRestletPathPrefix + map;
-                    String action = route.getAttribute("action", EMPTY_STRING);
-                    String page = route.getAttribute("page", EMPTY_STRING);
+                        Restlet restlet = null;
+                        if (route.getAttribute("restlet") != null) {
+                            restlet = (Restlet) ClassUtilities.loadClass(route.getAttribute("restlet")).newInstance();
+                            router.attach(jpRestletPath, restlet);
+                            log.info("... routing: " + jpRestletPath + " to: " + restlet);
+                        } else {
+                            router.attach(jpRestletPath, new JPSimpleRestlet(this, page, action));
+                            log.info("... routing: " + jpRestletPath + " to action: " + action + ", page: " + page);
+                        }
 
-                    Restlet restlet = null;
-                    if (route.getAttribute("restlet") != null) {
-                        restlet = (Restlet) ClassUtilities.loadClass(route.getAttribute("restlet")).newInstance();
-                        router.attach(jpRestletPath, restlet);
-                        log.info("... routing: " + jpRestletPath + " to: " + restlet);
-                    } else{
-                        router.attach(jpRestletPath, new JPSimpleRestlet(this, page, action));
-                        log.info("... routing: " + jpRestletPath + " to action: " + action+", page: "+page);
                     }
-
                 }
             }
+
         } else {
             log.info(" ... no REST mappings? REST support will be unavailable for some of the web requests.");
 
