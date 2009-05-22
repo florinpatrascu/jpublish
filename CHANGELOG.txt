@@ -1,5 +1,10 @@
 JPublish 4 change log:
 
+[2009.05.22]
+  the response Content-Type will be calculated just before rendering the result and not before executing the
+  actions. This will allow user modules to manipulate the response content type.
+
+
 [2009.05.19]
   JPRestletModule can now be mapped on a list of paths.
 
