@@ -92,7 +92,7 @@ public class JPublishServlet extends HttpServlet {
             siteContext.setJPublishServlet(this);
             siteContext.init();
             formatParameterSupported = siteContext.getFormatChangeParameterName() != null
-                    && siteContext.getFormatChangeParameterName().trim().length()>0;
+                    && siteContext.getFormatChangeParameterName().trim().length() > 0;
         } catch (Exception e) {
             log.error("Error creating SiteContext: " + e.getMessage());
             throw new ServletException(e);
@@ -246,34 +246,6 @@ public class JPublishServlet extends HttpServlet {
             request.setCharacterEncoding(characterEncodingMap.getRequestEncoding());
         }
 
-        // set the response content type
-        int lastDotIndex = path.lastIndexOf(".");
-        if (lastDotIndex >= 0) {
-            String extension = path.substring(lastDotIndex + 1);
-            //introduce the format parameter
-            String format = null;
-            if(formatParameterSupported){
-                format = request.getParameter(siteContext.getFormatChangeParameterName());
-            }
-
-            if(format== null || format.trim().length()==0){
-                format = extension; // fall -back on the filename extension
-            }
-            
-            String mimeType = siteContext.getMimeTypeMap().getMimeType(format);
-            String contentType = getMimeTypeWithCharset(mimeType,
-                    characterEncodingMap.getResponseEncoding());
-            response.setContentType(contentType);
-
-            if (log.isDebugEnabled())
-                log.debug("Content type for extension " + format + " is " + contentType);
-        } else {
-            response.setContentType(getMimeTypeWithCharset(MimeTypeMap.DEFAULT_MIME_TYPE,
-                    characterEncodingMap.getResponseEncoding()));
-
-            if (log.isDebugEnabled())
-                log.debug("No extension found, using default content type.");
-        }
 
         // put standard servlet stuff into the context
         JPublishContext context = new JPublishContext(this);
@@ -365,8 +337,10 @@ public class JPublishServlet extends HttpServlet {
                     log.debug("Loading static resource");
 
                 OutputStream o = response.getOutputStream();
+                setResponseContentType(request, response, path, characterEncodingMap);
                 response.setDateHeader("Last-Modified", staticResourceManager.getLastModified(path));
                 response.setContentLength((int) staticResourceManager.getContentLength(path));
+
                 try {
                     staticResourceManager.load(path, o);
                 } catch (SocketException e) {
@@ -425,7 +399,11 @@ public class JPublishServlet extends HttpServlet {
 
             if (optionalRedirect(page.executeActions(context), path, response))
                 return;
-            if (context.getStopProcessing() != null) return;
+            if (context.getStopProcessing() != null) {
+                return;
+            }
+            setResponseContentType(request, response, path, characterEncodingMap);
+
 
             // get the template
             // OLAT: PATCH using context.getPage() instead of page object
@@ -474,6 +452,37 @@ public class JPublishServlet extends HttpServlet {
                 log.error("Error executing post evaluation actions: " +
                         MessageUtilities.format(e.getMessage()));
             }
+        }
+    }
+
+    private void setResponseContentType(HttpServletRequest request, HttpServletResponse response, String path, CharacterEncodingMap characterEncodingMap) {
+        // set the response content type
+        int lastDotIndex = path.lastIndexOf(".");
+        if (lastDotIndex >= 0) {
+            String extension = path.substring(lastDotIndex + 1);
+            //introduce the format parameter
+            String format = null;
+            if (formatParameterSupported) {
+                format = request.getParameter(siteContext.getFormatChangeParameterName());
+            }
+
+            if (format == null || format.trim().length() == 0) {
+                format = extension; // fall -back on the filename extension
+            }
+
+            String mimeType = siteContext.getMimeTypeMap().getMimeType(format);
+            String contentType = getMimeTypeWithCharset(mimeType,
+                    characterEncodingMap.getResponseEncoding());
+            response.setContentType(contentType);
+
+            if (log.isDebugEnabled())
+                log.debug("Content type for extension " + format + " is " + contentType);
+        } else {
+            response.setContentType(getMimeTypeWithCharset(MimeTypeMap.DEFAULT_MIME_TYPE,
+                    characterEncodingMap.getResponseEncoding()));
+
+            if (log.isDebugEnabled())
+                log.debug("No extension found, using default content type.");
         }
     }
 
