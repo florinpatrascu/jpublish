@@ -1,4 +1,6 @@
 JPublish 4 change log:
+[2009.05.28]
+  upgraded JPublish RESTLET support to Noelios-Restlet-Engine/1.1.5
 
 [2009.05.22]
   the response Content-Type will be calculated just before rendering the result and not before executing the
