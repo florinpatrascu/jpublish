@@ -42,7 +42,7 @@ public class JPRestletModule implements JPublishModule {
     private static final String VERSION = "1.0.1";
     private static final String JPUBLISH_DEFAULT_REST_URL = "/rest";
 
-    private static final String DESCRIPTION = "RESTLET (" + Engine.VERSION + ") support for JPublish";
+    private static final String DESCRIPTION = "RESTLET (" + Engine.VERSION_HEADER + ") support for JPublish";
 
     private SiteContext site;
     private Map actions = new HashMap(5);
