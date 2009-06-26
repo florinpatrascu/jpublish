@@ -215,4 +215,8 @@ public class JPublishCacheImpl implements JPublishCache {
             throw new JPublishCacheException(e);
         }
     }
+
+    public Object getStatistics() throws JPublishCacheException {
+        return cache.getStatistics();
+    }
 }

@@ -154,4 +154,8 @@ public class JPublishWhirlyCacheImpl implements JPublishCache {
         log.warn("'getKeys()' not supported by WhirlyCache. Sorry!");
         return null;
     }
+
+    public Object getStatistics() throws JPublishCacheException {
+        return null;
+    }
 }

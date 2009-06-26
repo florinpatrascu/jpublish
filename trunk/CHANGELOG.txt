@@ -1,4 +1,8 @@
 JPublish 4 change log:
+[2009.06.26]
+  upgraded to Ehcache 1.6.0 (http://ehcache.sourceforge.net)
+  re-factored the JPublish cache support for obtaining cache statistics (if supported)
+
 [2009.05.28]
   upgraded JPublish RESTLET support to Noelios-Restlet-Engine/1.1.5
 
