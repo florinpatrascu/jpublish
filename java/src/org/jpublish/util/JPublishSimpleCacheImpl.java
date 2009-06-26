@@ -142,4 +142,8 @@ public class JPublishSimpleCacheImpl implements JPublishCache {
         else
             return null;
     }
+
+    public Object getStatistics() throws JPublishCacheException {
+        return null;
+    }
 }

@@ -101,12 +101,16 @@ public interface JPublishCache {
     public long getFlushInterval() throws JPublishCacheException;
 
     /**
-     *
-     *
      * @return
      * @throws JPublishCacheException
      */
     public List getKeys() throws JPublishCacheException;
 
-
+    /**
+     * obtain statistics on the current cache
+     *
+     * @return a "statistics" value object if supported
+     * @throws JPublishCacheException
+     */
+    public Object getStatistics() throws JPublishCacheException;
 }
