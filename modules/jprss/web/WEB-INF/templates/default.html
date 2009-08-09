@@ -1,0 +1,41 @@
+<!--
+  ~ Copyright (c)2009, Florin T.PATRASCU.
+  ~ All Rights Reserved.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <title>.:. JPublish-RSS test/demo</title>
+
+    <link rel="stylesheet" href="$request.ContextPath/styles/generic.css" type="text/css"/>
+    <link rel="shortcut icon" href="$request.ContextPath/images/favicon.ico" type="image/x-icon" />
+    #if( $JPRSSENABLED && $JPRSSFEED)
+
+    <link rel="alternate" type="$JPRSSModule.feedType("rss")" title="$JPRSSFEED.Title (RSS)" href="${request.ContextPath}$JPRSSFEED.Url/$JPRSSModule.feedExtension("rss")" />
+    <link rel="alternate" type="$JPRSSModule.feedType("atom")" title="$JPRSSFEED.Title (Atom)" href="${request.ContextPath}$JPRSSFEED.Url/$JPRSSModule.feedExtension("atom")" />
+    <link rel="alternate" type="$JPRSSModule.feedType("rdf")" title="$JPRSSFEED.Title (RDF)" href="${request.ContextPath}$JPRSSFEED.Url/$JPRSSModule.feedExtension("rdf")" />
+    #end
+
+    ##in case you want to advertise all available feeds in one place, do this:
+    ## #if( $JPRSSENABLED)
+    ##      #foreach($feed in $JPRSSModule.AvailableFeeds)
+    ##
+    ##  <link rel="alternate" type="$JPRSSModule.feedType("rss")" title="$feed.Title (RSS)" href="${request.ContextPath}$feed.Url/$JPRSSModule.feedExtension("rss")" />
+    ##  <link rel="alternate" type="$JPRSSModule.feedType("atom")" title="$feed.Title (Atom)" href="${request.ContextPath}$feed.Url/$JPRSSModule.feedExtension("atom")" />
+    ##  <link rel="alternate" type="$JPRSSModule.feedType("rdf")" title="$feed.Title (RDF)" href="${request.ContextPath}$feed.Url/$JPRSSModule.feedExtension("rdf")" />
+    ##
+    ##      #end
+    ##  #end
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+
+$content.get($page.Path)
+<br/>
+________<br />
+(c)2009 <b>JPRSS</b>, <a href="http://www.flop.ca">Florin T.PATRASCU</a>
+</body>
+</html>

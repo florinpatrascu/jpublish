@@ -1,0 +1,77 @@
+package com.sun.syndication.samples;
+
+import com.sun.syndication.feed.synd.*;
+import com.sun.syndication.io.SyndFeedOutput;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jpublish.util.*;
+
+/**
+ * Simple demo Action using ROME to publish a feed
+ * example inspired from:
+ * - http://wiki.java.net/bin/view/Javawsxml/Rome04TutorialFeedWriter
+ *
+ * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
+ * @since $Revision$ (created: 2009.02.07)
+ */
+
+URLUtilities urlUtilities = context.get( "urlUtilities");
+DateFormat DATE_PARSER = new SimpleDateFormat( "yyyy-MM-dd");
+JPRSSModule = context.get( "JPRSSModule");
+JPRSSFEED = context.get( "JPRSSFEED");
+
+
+SyndFeed feed = new SyndFeedImpl();
+pagePath = page.getPath();
+
+feedUrl =  urlUtilities.buildStandard( pagePath);
+articleRootPath = urlUtilities.buildStandard(JPRSSFEED.getUrl());
+
+feedType = "atom_0.3";
+if( pagePath!= null &&  pagePath.lastIndexOf( "rss.xml") >=0){
+	feedType = "rss_2.0";
+}
+
+feed.setFeedType( feedType);
+
+feed.setTitle("JPublish RSS Demo Feed");
+feed.setLink( feedUrl);
+feed.setDescription("This feed has been created using JPublish and ROME v1.0");
+
+List entries = new ArrayList();
+SyndEntry entry;
+SyndContent description;
+
+entry = new SyndEntryImpl();
+entry.setTitle("Story 1");
+entry.setLink( articleRootPath+"/story1.html");
+entry.setPublishedDate(DATE_PARSER.parse("2009-08-07"));
+description = new SyndContentImpl();
+description.setType("text/plain");
+description.setValue("Initial release of JPRSS");
+entry.setDescription(description);
+entries.add(entry);
+
+entry = new SyndEntryImpl();
+entry.setTitle("Story 2");
+entry.setLink( articleRootPath+"/story2.html");
+entry.setPublishedDate(DATE_PARSER.parse("2009-08-11"));
+description = new SyndContentImpl();
+description.setType("text/html");
+description.setValue("<strong>2nd</strong> release of JPRSS");
+entry.setDescription(description);
+entries.add(entry);
+
+
+feed.setEntries(entries);
+
+SyndFeedOutput output = new SyndFeedOutput();
+response.setContentType( JPRSSModule.feedType( feedType));
+output.output(feed, response.getWriter());
+
+// tell JPublish we handle the output
+context.setStopProcessing();

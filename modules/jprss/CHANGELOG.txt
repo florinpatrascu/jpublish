@@ -1,0 +1,12 @@
+CHANGELOG
+
+2009.08.07
+- working ROME demo
+
+2009.07.09
+- added a very simple demo Action to use ROME for ATOM/RSS2.x feed publishing.
+- todo: 
+    1. design the RSS model and provide a set of interfaces for allowing custom
+    integration.
+    2. provide a simple service skeleton.
+    
