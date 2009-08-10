@@ -2,7 +2,7 @@ package org.jpublish.module.jprss;
 
 import com.anthonyeden.lib.config.Configuration;
 import org.jpublish.JPublishContext;
-import org.jpublish.module.jprss.model.JPRSSFeedHeader;
+import org.jpublish.module.jprss.model.JPRSSFeed;
 import org.jpublish.action.Action;
 
 /**
@@ -11,11 +11,11 @@ import org.jpublish.action.Action;
  */
 public class JPRSSFeedHeaderAction implements Action {
     private JPRSSModule jpRSSModule;
-    private JPRSSFeedHeader feedHeader;
+    private JPRSSFeed feed;
 
-    public JPRSSFeedHeaderAction(JPRSSModule jpRSSModule, JPRSSFeedHeader feedHeader) {
+    public JPRSSFeedHeaderAction(JPRSSModule jpRSSModule, JPRSSFeed feed) {
         this.jpRSSModule = jpRSSModule;
-        this.feedHeader = feedHeader;
+        this.feed = feed;
     }
 
     /**
@@ -27,7 +27,7 @@ public class JPRSSFeedHeaderAction implements Action {
      */
     public void execute(JPublishContext context, Configuration configuration) throws Exception {
         context.put("JPRSSENABLED", Boolean.TRUE);
-        context.put("JPRSSFEED", feedHeader);
+        context.put("JPRSSFEED", feed);
         context.put("JPRSSModule", jpRSSModule);
     }
 
