@@ -7,7 +7,7 @@ import org.jpublish.JPublishModule;
 import org.jpublish.SiteContext;
 import org.jpublish.action.ActionWrapper;
 import org.jpublish.action.PathAction;
-import org.jpublish.module.jprss.model.JPRSSFeedHeader;
+import org.jpublish.module.jprss.model.JPRSSFeedImpl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +30,7 @@ public class JPRSSModule implements JPublishModule {
     private static final String VERSION = "1.0";
     private static final String JPUBLISH_DEFAULT_RSS_URL = "/rss";
 
-    private static final String DESCRIPTION = "ROME support for JPublish";
+    private static final String DESCRIPTION = "simple JPublish RSS support";
 
     private SiteContext site;
     private Map actions = new HashMap(5);
@@ -54,7 +54,7 @@ public class JPRSSModule implements JPublishModule {
          */
         if (configuration.getChild("feeds") != null) {
             List rssURLSConfig = configuration.getChild("feeds").getChildren();
-            JPRSSFeedHeader feedHeader;
+            JPRSSFeedImpl feedHeader;
 
             log.info("Mapping JPRSS feedHeader creator for all *.xml requests on: ");
             for (int i = 0; rssURLSConfig != null && i < rssURLSConfig.size(); i++) {
@@ -73,7 +73,7 @@ public class JPRSSModule implements JPublishModule {
                 }
                 // todo read-story actions
 
-                feedHeader = new JPRSSFeedHeader(url, title, description);
+                feedHeader = new JPRSSFeedImpl(url, title, description);
                 feedHeader.setReadFeedActionName(readFeedActionName);
 
                 log.info("    url: " + url + ", title: " + feedHeader.getTitle() +

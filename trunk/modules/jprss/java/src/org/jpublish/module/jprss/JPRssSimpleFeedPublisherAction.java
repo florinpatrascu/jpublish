@@ -2,7 +2,7 @@ package org.jpublish.module.jprss;
 
 import com.anthonyeden.lib.config.Configuration;
 import org.jpublish.JPublishContext;
-import org.jpublish.module.jprss.model.JPRSSFeedHeader;
+import org.jpublish.module.jprss.model.JPRSSFeed;
 import org.jpublish.action.Action;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JPRssSimpleFeedPublisherAction implements Action {
     private JPRSSModule jpRSSModule;
-    private JPRSSFeedHeader feedHeader;
+    private JPRSSFeed feed;
 
-    public JPRssSimpleFeedPublisherAction(JPRSSModule jpRSSModule, JPRSSFeedHeader feedHeader) {
+    public JPRssSimpleFeedPublisherAction(JPRSSModule jpRSSModule, JPRSSFeed feed) {
         this.jpRSSModule = jpRSSModule;
-        this.feedHeader = feedHeader;
+        this.feed = feed;
     }
 
     /**
@@ -32,7 +32,7 @@ public class JPRssSimpleFeedPublisherAction implements Action {
     public void execute(JPublishContext context, Configuration configuration) throws Exception {
         HttpServletRequest request = context.getRequest();
         if (jpRSSModule.getLog().isDebugEnabled()) {
-            jpRSSModule.getLog().debug("Publishing: " + feedHeader);
+            jpRSSModule.getLog().debug("Publishing: " + feed);
         }
         context.setStopProcessing();
     }
@@ -41,7 +41,7 @@ public class JPRssSimpleFeedPublisherAction implements Action {
     public String toString() {
         final StringBuffer sb = new StringBuffer();
         sb.append("JPRssSimpleFeedPublisherAction");
-        sb.append("{feedHeader=").append(feedHeader);
+        sb.append("{feedHeader=").append(feed);
         sb.append('}');
         return sb.toString();
     }

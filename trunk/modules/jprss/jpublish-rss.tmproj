@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>LICENSE.txt</string>
+	<string>java/src/org/jpublish/module/jprss/JPRSSFeedHeaderAction.java</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,31 +18,17 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>222</integer>
+	<integer>234</integer>
 	<key>metaData</key>
 	<dict>
-		<key>LICENSE.txt</key>
+		<key>java/src/org/jpublish/module/jprss/JPRSSFeedHeaderAction.java</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>build.properties</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
 				<integer>0</integer>
-				<key>line</key>
-				<integer>22</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -52,12 +38,11 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>build.properties</string>
-		<string>LICENSE.txt</string>
+		<string>java/src/org/jpublish/module/jprss/JPRSSFeedHeaderAction.java</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{580, 107}, {608, 755}}</string>
+	<string>{{398, 144}, {709, 780}}</string>
 </dict>
 </plist>

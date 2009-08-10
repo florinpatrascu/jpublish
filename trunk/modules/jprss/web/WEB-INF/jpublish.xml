@@ -16,7 +16,7 @@
         <feeds>
             <!--supported feed types: RSS, Atom-->
             <feed url="/news/jprss" title="JPRSS News" description="JPublish-ROME news">
-                <read-feed-action name="jprss/JPRssRomwFeedPublisher.bsh"/>
+                <read-feed-action name="jprss/JPRssRomeFeedPublisher.bsh"/>
             </feed>                                                 
             
             <feed url="/newsfeed/jpublish" title="JPublish News">

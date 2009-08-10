@@ -6,17 +6,35 @@ package org.jpublish.module.jprss.model;
  * @author <a href="mailto:florin.patrascu@gmail.com">Florin T.PATRASCU</a>
  * @since $Revision$ (created: 07.08.2009 12:14:57)
  */
-public class JPRSSFeedHeader {
+public class JPRSSFeedImpl implements JPRSSFeed {
+    private int id;
+    private String name;
     private String url;
     private String title;
     private String description;
     private String readFeedActionName;
     private String readStoryActionName;
 
-    public JPRSSFeedHeader(String url, String title, String description) {
+    public JPRSSFeedImpl(String url, String title, String description) {
         this.url = url;
         this.title = title;
         this.description = description;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUrl() {
@@ -62,8 +80,9 @@ public class JPRSSFeedHeader {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer();
-        sb.append("JPRSSFeedHeader");
+        sb.append("JPRSSFeedImpl");
         sb.append("{url='").append(url).append('\'');
+        sb.append(", name='").append(name).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", readFeedActionName='").append(readFeedActionName).append('\'');
