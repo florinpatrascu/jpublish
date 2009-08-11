@@ -1,5 +1,3 @@
-package com.sun.syndication.samples;
-
 import com.sun.syndication.feed.synd.*;
 import com.sun.syndication.io.SyndFeedOutput;
 
