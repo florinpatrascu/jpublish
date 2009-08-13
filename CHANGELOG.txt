@@ -1,4 +1,9 @@
 JPublish 4 change log:
+[2009.08.09]
+  added generic RSS support. The demo provided (svn) is using a simple Beanshell action as a
+  feed manager and the ROME framework for publishing the feed. RSS Domain modeling is in progress and a 
+  new JPublish News Repository will follow shortly.
+
 [2009.06.26]
   upgraded to Ehcache 1.6.0 (http://ehcache.sourceforge.net)
   re-factored the JPublish cache support for obtaining cache statistics (if supported)
