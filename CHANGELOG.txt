@@ -1,4 +1,7 @@
 JPublish 4 change log:
+[2009.09.10]
+  added support for the Content-Length response attribute
+
 [2009.08.09]
   added generic RSS support. The demo provided (svn) is using a simple Beanshell action as a
   feed manager and the ROME framework for publishing the feed. RSS Domain modeling is in progress and a 
