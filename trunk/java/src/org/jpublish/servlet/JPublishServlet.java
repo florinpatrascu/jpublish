@@ -29,6 +29,7 @@ import org.jpublish.util.*;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,6 +58,8 @@ public class JPublishServlet extends HttpServlet {
     private SiteContext siteContext;
     public static final String JPUBLISH_CONTEXT = "jpublishContext";
     private boolean formatParameterSupported = false;
+    private static final int INITIAL_BUFFER_SIZE = 4 * 1024;
+
 
     /**
      * Initialize the servlet.
@@ -404,23 +407,23 @@ public class JPublishServlet extends HttpServlet {
             }
             setResponseContentType(request, response, path, characterEncodingMap);
 
-
             // get the template
             // OLAT: PATCH using context.getPage() instead of page object
             // since page can be changed in internal forward and page points
             // still to the original page
-            Template template = siteContext.getTemplateManager().getTemplate(context.getPage().getFullTemplateName());
-
-            // get the Servlet writer
-            out = response.getWriter();
+            Template template = siteContext.getTemplateManager().getTemplate(
+                    context.getPage().getFullTemplateName());
 
             // merge the template
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()){
                 log.debug("Merging with template " + template.getPath());
-            // OLAT: PATCH using context.getPage() instead of page object
-            // since page can be changed in internal forward and page points
-            // still to the original page
-            template.merge(context, context.getPage(), out);
+            }
+            Writer writer = new StringWriter();
+            template.merge(context, context.getPage(), writer);
+            String mergedContent = writer.toString();
+
+            response.setContentLength(mergedContent.getBytes().length);
+            FileCopyUtils.copy(mergedContent, response.getWriter());
 
         } catch (FileNotFoundException e) {
             log.error("[404] " + path);
