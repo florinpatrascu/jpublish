@@ -1,6 +1,8 @@
-JPTextileComponent: A Textile component for JPublish
+StringTemplate: component
 
-To build this component you have to build first the latest JPublish framework and after that
-from the components\jptextile folder run: ant jar, for building only the library required to
-render Textile syntax, or run: ant dist, to build the jar and the web demo application as well.
+To build this component you have to build first the latest JPublish framework from svn.
 
+Having a fresh JPublish run: ant jar, to build the library, or: ant dist, to build the library and
+a web demo application as well.
+
+Have fun!
