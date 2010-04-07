@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
 	jprestlet-config
-	Created by Florin T.PATRASCU on [2008.10.31]
+	Created by Florin T.PATRASCU on [2010.04.07]
 -->
 <jprestlet>
     <repository name="extended"/>
     <routes>
+        <!--
+          ~  $ curl "http://localhost:8080/rest/users"
+          ~  $ curl "http://localhost:8080/rest/users/Teddy"
+          ~     SimpleUser{name='Teddy', email='florin.patrascu@gmail.com'}
+          ~  $ curl -H "Accept:application/json" "http://localhost:8080/restful/users/Gogo"
+          ~     {"email":"florin.patrascu@gmail.com","name":"Gogo"}
+          ~  $ curl -d PUT -d "user[name]=Simona" "http://localhost:8080/rest/users"
+          ~     {"name":"Simona"}
+          -->
+        <route map="/users" resource="test.UserResource"/>
+        <route map="/users/{name}" resource="test.UserResource"/>
+
         <route map="/hello/{name}" restlet="org.jpublish.module.restlet.demo.HelloJPRestlet"/>
+
         <route map="/user/{name}/{id}" page="user.html"/>
+
         <route map="/action/info/{id}" action="rest/Info.bsh" page="info.html"/>
+
         <route map="/info/{id}" page="info.html"/>
     </routes>
     <debug>true</debug>
