@@ -1,4 +1,9 @@
 JPublish 4 change log:
+[2010.04.07]
+   - added support for Restlet resource and a new configuration syntax (check the JPRestlet module
+   changelog). Upgraded Restlet to 1.1.9
+   - added Restlet Resource examples for GET, POST, etc
+
 [2009.09.10]
   - added support for the Content-Length response attribute
   - rollback :(

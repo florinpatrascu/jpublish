@@ -1,7 +1,16 @@
 CHANGELOG
 
-2009-10-28
-- work started
+2010.04.07
+- added support for the: org.restlet.resource.Resource, and a new
+JPRestlet configuration attribute (check the JPRestlet module changelog and
+examples for more details). Upgraded Restlet to 1.1.9
+- added Restlet Resource examples for GET, POST, etc.
+        <route map="/users/{name}" resource="test.UserResource"/>
 
 2009.03.17
 - a first very basic implementation
+
+2009-10-28
+- work started
+
+
