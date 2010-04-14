@@ -1,0 +1,9 @@
+2010.04.13
+- added support for annotated REST resources via a JPublish Wink module; first release
+- Apache Wink is a full implementation of the JAX-RS 1.0 specification, providing a rich set of
+  features and expansions that extend and supplement the JAX-RS specification.
+- added a couple of REST resources (non dynamic, though) and a demo JPublish application as an
+  integration example.
+
+2010.04.11
+- initial repository
