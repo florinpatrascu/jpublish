@@ -1,4 +1,10 @@
 JPublish 4 change log:
+
+[2010.04.13]
+  -added support for annotated REST resources via a JPublish Wink module; JPWink
+  -Apache Wink is a full implementation of the JAX-RS 1.0 specification, providing a rich set of
+  features and expansions that extend and supplement the JAX-RS specification.
+
 [2010.04.07]
    - added support for Restlet resource and a new configuration syntax (check the JPRestlet module
    changelog). Upgraded Restlet to 1.1.9
