@@ -330,7 +330,12 @@ public class JPublishServlet extends HttpServlet {
                 long ifModifiedSince = request.getDateHeader(HEADER_IF_MODIFIED);
                 // will round the file's lastModified down to the nearest second by dividing by 1000 and then
                 // multiplying it by 1000; florin
-                long lastUpdatedTime = (staticResourceManager.getLastModified(path) / 1000) * 1000;
+                long lastUpdatedTime = -1;
+                try {
+                    lastUpdatedTime = (staticResourceManager.getLastModified(path) / 1000) * 1000;
+                } catch (Exception e) {
+                    log.warn("Cannot read the LastModified for: "+path);
+                }
                 //log.info(String.format("%s: if modified since: %d, file time:%d, modified? %s", path, ifModifiedSince, lastUpdatedTime, (ifModifiedSince < lastUpdatedTime)));
 
                 if (ifModifiedSince < lastUpdatedTime) {
