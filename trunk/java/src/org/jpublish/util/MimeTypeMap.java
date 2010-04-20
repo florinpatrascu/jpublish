@@ -90,7 +90,11 @@ public class MimeTypeMap extends HashMap{
         put("png", "image/png");
         put("ico", "image/x-icon");
         put("js", "application/x-javascript");
-        put("json", "text/plain");
+        // for debug only
+        // put("json", "text/plain");
+        put("json", "application/json"); //http://www.ietf.org/rfc/rfc4627.txt
+        put("jsonp", "text/javascript");
+        put("properties", "text/plain");
 
         put("pdf", "application/pdf");
         put("mp3", "audio/mpeg");

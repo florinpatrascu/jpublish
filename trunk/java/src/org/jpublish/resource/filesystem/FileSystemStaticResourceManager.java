@@ -107,8 +107,7 @@ public class FileSystemStaticResourceManager extends AbstractStaticResourceManag
         if (path == null || path.trim().length() == 0)
             return;
 
-        InputStream in = new BufferedInputStream(new FileInputStream(pathToFile(path)));
-        FileCopyUtils.copy(in, out);
+        FileCopyUtils.copy(FileCopyUtils.copyToByteArray(pathToFile(path)), out);
     }
 
     /**
