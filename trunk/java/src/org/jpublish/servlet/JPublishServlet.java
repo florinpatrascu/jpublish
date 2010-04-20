@@ -33,7 +33,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Writer;
 import java.net.SocketException;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -53,6 +56,15 @@ import java.util.Iterator;
 
 public class JPublishServlet extends HttpServlet {
     private static final Log log = LogFactory.getLog(JPublishServlet.class);
+    /**
+     * HTTP header for when a file was last modified
+     */
+    public static final String HEADER_LAST_MODIFIED = "Last-Modified";
+
+    /**
+     * HTTP header to request only modified data
+     */
+    public static final String HEADER_IF_MODIFIED = "If-Modified-Since";
 
     private SiteContext siteContext;
     public static final String JPUBLISH_CONTEXT = "jpublishContext";
@@ -313,45 +325,49 @@ public class JPublishServlet extends HttpServlet {
             // if the page is static
             StaticResourceManager staticResourceManager = siteContext.getStaticResourceManager();
 
-            if (log.isDebugEnabled())
-                log.debug("Checking if static resource exists: " + path);
-
             if (staticResourceManager.resourceExists(path)) {
-                // execute the global actions
-                if (executeGlobalActions(request, response, context, path))
-                    return;
 
-                if (context.getStopProcessing() != null) return;
+                long ifModifiedSince = request.getDateHeader(HEADER_IF_MODIFIED);
+                // will round the file's lastModified down to the nearest second by dividing by 1000 and then
+                // multiplying it by 1000; florin
+                long lastUpdatedTime = (staticResourceManager.getLastModified(path) / 1000) * 1000;
+                //log.info(String.format("%s: if modified since: %d, file time:%d, modified? %s", path, ifModifiedSince, lastUpdatedTime, (ifModifiedSince < lastUpdatedTime)));
 
-                // execute path actions
-                if (executePathActions(request, response, context, path)) return;
-                if (context.getStopProcessing() != null) return;
+                if (ifModifiedSince < lastUpdatedTime) {
+                    // execute the global actions
+                    if (executeGlobalActions(request, response, context, path))
+                        return;
 
-                // execute parameter actions
-                if (executeParameterActions(request, response, context, path))
-                    return;
-                if (context.getStopProcessing() != null) return;
+                    if (context.getStopProcessing() != null) return;
 
-                // load and return the static resource
-                if (log.isDebugEnabled())
-                    log.debug("Loading static resource");
+                    // execute path actions
+                    if (executePathActions(request, response, context, path)) return;
+                    if (context.getStopProcessing() != null) return;
 
-                OutputStream o = response.getOutputStream();
-                setResponseContentType(request, response, path, characterEncodingMap);
-                response.setDateHeader("Last-Modified", staticResourceManager.getLastModified(path));
-                response.setContentLength((int) staticResourceManager.getContentLength(path));
+                    // execute parameter actions
+                    if (executeParameterActions(request, response, context, path))
+                        return;
+                    if (context.getStopProcessing() != null) return;
 
-                try {
-                    staticResourceManager.load(path, o);
-                } catch (SocketException e) {
-                    log.warn("Error writing to output stream: " + e.getMessage());
-                }
-                // OLAT: PATCH: Ignore org.apache.catalina.connector.ClientAbortException
-                // that is produced by InternetExplorer (6.0) browser caching.
-                catch (IOException e) {
-                    if (e instanceof FileNotFoundException) {
-                        throw e;
+                    // load and return the static resource
+                    setResponseContentType(request, response, path, characterEncodingMap);
+                    response.setDateHeader(HEADER_LAST_MODIFIED, lastUpdatedTime);
+                    response.setContentLength((int) staticResourceManager.getContentLength(path));
+                    try {
+                        staticResourceManager.load(path, response.getOutputStream());
+                    } catch (SocketException e) {
+                        log.warn("Error writing to output stream: " + e.getMessage());
                     }
+                    // OLAT: PATCH: Ignore org.apache.catalina.connector.ClientAbortException
+                    // that is produced by InternetExplorer (6.0) browser caching.
+                    catch (IOException e) {
+                        if (e instanceof FileNotFoundException) {
+                            throw e;
+                        }
+                    }
+                } else {
+                    //If the browser has current version of the file, don't send it. Just say it has not changed
+                    response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
                 }
                 return;
             } else {
