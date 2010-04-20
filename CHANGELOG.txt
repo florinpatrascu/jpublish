@@ -1,5 +1,10 @@
 JPublish 4 change log:
 
+[2010.04.20]
+  - refactored the servlet response for static resources.
+  - honors the "If-Modified-Since" request header and answers with 304-Not modified, if the static
+  resource was not changed.
+
 [2010.04.13]
   -added support for annotated REST resources via a JPublish Wink module; JPWink
   -Apache Wink is a full implementation of the JAX-RS 1.0 specification, providing a rich set of
