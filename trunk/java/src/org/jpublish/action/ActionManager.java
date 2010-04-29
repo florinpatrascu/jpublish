@@ -559,9 +559,11 @@ public class ActionManager {
         Iterator modules = siteContext.getModules().iterator();
         while (modules.hasNext()) {
             JPublishModule module = (JPublishModule) modules.next();
-            action = (Action) (module.getDefinedActions().get(name));
-            if (action != null) {
-                return action;
+            if (module.getDefinedActions() != null && !module.getDefinedActions().isEmpty()) {
+                action = (Action) (module.getDefinedActions().get(name));
+                if (action != null) {
+                    return action;
+                }
             }
         }
 
@@ -597,6 +599,7 @@ public class ActionManager {
             action = (Action) ClassUtilities.loadClass(name).newInstance();
             return action;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ActionNotFoundException(e, name);
         }
 
