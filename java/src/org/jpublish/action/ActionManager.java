@@ -66,6 +66,7 @@ public class ActionManager {
     private Map cachedScriptActions = new HashMap();
     public static final String SCRIPT_ACTION = "ScriptAction";
     public static final String EXECUTE_METHOD_NAME = "execute";
+    public static final String PATH_ACTION = "PathAction";
 
     /**
      * Construct a new ActionManager with the given SiteContext.
