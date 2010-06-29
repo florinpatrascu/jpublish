@@ -20,6 +20,7 @@ package org.jpublish.action;
 import com.anthonyeden.lib.config.Configuration;
 import com.atlassian.util.profiling.UtilTimerStack;
 import org.jpublish.JPublishContext;
+import org.jpublish.SiteContext;
 
 /**
  * An action which is executed when a particular path is matched.  PathAction
@@ -64,12 +65,20 @@ public class PathAction implements Action {
      * @throws Exception Any error
      */
     public void execute(JPublishContext context, Configuration configuration) throws Exception {
+        boolean scriptOrPathActionWrapper = action.getClass().getName()
+                .indexOf(ActionManager.SCRIPT_ACTION) >= 0 || action.getClass().getName()
+                .indexOf(ActionManager.PATH_ACTION) >=0;
+
         try {
-            UtilTimerStack.push(action.getClass().getName());
+            if (SiteContext.getProfiling() && !scriptOrPathActionWrapper) {
+                UtilTimerStack.push(action.getClass().getName());
+            }
             action.execute(context, configuration);
 
         } finally {
-            UtilTimerStack.pop(action.getClass().getName());
+            if (SiteContext.getProfiling() && !scriptOrPathActionWrapper) {
+                UtilTimerStack.pop(action.getClass().getName());
+            }
         }
     }
 
