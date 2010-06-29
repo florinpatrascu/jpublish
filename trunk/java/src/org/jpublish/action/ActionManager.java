@@ -64,6 +64,8 @@ public class ActionManager {
     private JPublishContext startupContext;
 
     private Map cachedScriptActions = new HashMap();
+    public static final String SCRIPT_ACTION = "ScriptAction";
+    public static final String EXECUTE_METHOD_NAME = "execute";
 
     /**
      * Construct a new ActionManager with the given SiteContext.
@@ -412,28 +414,31 @@ public class ActionManager {
             log.debug("Executing action: " + name);
 
         Action action = findAction(name);
-        if (action != null) {
-            if (SiteContext.getProfiling()) {
-                try {
-                    UtilTimerStack.push(action.getClass().getName());
-                    Class[] paramTypes = {JPublishContext.class, Configuration.class};
-                    Object[] params = {context, configuration};
-                    Method execute = action.getClass().getMethod("execute", paramTypes);
-                    ObjectProfiler.profiledInvoke(execute, action, params);
-                } finally {
-                    UtilTimerStack.pop(action.getClass().getName());
-                }
-            } else {
-                action.execute(context, configuration);
-            }
+        final String className = action.getClass().getName();
+        boolean scriptActionWrapper = action.getClass().getName().indexOf(SCRIPT_ACTION) >= 0;
 
-            String redirect = (String) context.get("redirect");
-            if (log.isDebugEnabled())
-                log.debug("Action redirect: " + redirect);
-            if (redirect != null) {
-                return redirect;
+        if (SiteContext.getProfiling() && !scriptActionWrapper) {
+
+            try {
+
+                UtilTimerStack.push(className);
+                Class[] paramTypes = {JPublishContext.class, Configuration.class};
+                Object[] params = {context, configuration};
+                Method execute = action.getClass().getMethod(EXECUTE_METHOD_NAME, paramTypes);
+                ObjectProfiler.profiledInvoke(execute, action, params);
+
+            } finally {
+                UtilTimerStack.pop(className);
             }
+        } else {
+            action.execute(context, configuration);
         }
+
+        String redirect = (String) context.get("redirect");
+        if (redirect != null) {
+            return redirect;
+        }
+
         return null;
     }
 
