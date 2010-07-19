@@ -123,7 +123,8 @@ public class SiteContext implements ResourceRecipient {
     private ServletConfig servletConfig;
     private HttpServlet jPublishServlet;
     private static boolean profiling = false;
-    private String formatChangeParameterName="";
+    private String formatChangeParameterName = "";
+    public static final String DEFAULT_CACHE_NAME = "default";
 
     /**
      * Construct a new SiteContext using the given File to load the
@@ -1127,10 +1128,22 @@ public class SiteContext implements ResourceRecipient {
             templateManager.setSiteContext(this);
         }
 
-        if (jPublishCacheManager.getCache("default") != null) {
-            templateManager.setCache(jPublishCacheManager.getCache("default"));
+        if (jPublishCacheManager.getCache(DEFAULT_CACHE_NAME) != null) {
+            templateManager.setCache(jPublishCacheManager.getCache(DEFAULT_CACHE_NAME));
         } else {
-            log.warn("Template caching will be disabled unless you'll define a 'default' cache in jpublish.xml");
+            // no default cache enabled, will use the first cache available
+            String[] cacheNames = jPublishCacheManager.getAvailableCacheNames();
+            if (cacheNames != null && cacheNames.length > 0) {
+                String cacheName = cacheNames[0];
+                JPublishCache templateCache = jPublishCacheManager.getCache(cacheName);
+
+                if (templateCache != null) {
+                    templateManager.setCache(templateCache);
+                    log.info(String.format("The JPublish Template Manager is using the: %s cache.", cacheName));
+                }
+            } else {
+                log.warn("Template caching is disabled. Please define a cache manager in the jpublish.xml file");
+            }
         }
 
         // load the StaticResourceManager
