@@ -114,12 +114,13 @@ public class JPublishCacheManager {
                 if (t < 1) throw new IllegalArgumentException(
                         "A flush interval must specify one or more of milliseconds, seconds, minutes or hours.");
             } else {
-                log.warn("no cache flush interval defined for this cache space! Zero flush interval assumed;");
+                log.debug("no cache flush interval defined for this cache space! Zero flush interval assumed;");
             }
         } catch (NumberFormatException e) {
             //throw new NestedRuntimeException("Error building cache '" + vars.currentCacheModel.getId() + "' in '" + "resourceNAME" + "'.  Flush interval milliseconds must be a valid long integer value.  Cause: " + e, e);
         }
-        log.info("flushing cache after: " + t + "ms. (not yet implemented)");
+
+        //todo: log.info("flushing cache after: " + t + "ms. (not yet implemented)");
         return t;
     }
 
