@@ -562,7 +562,7 @@ public class JPublishServlet extends HttpServlet {
         if (log.isDebugEnabled())
             log.debug("Adding Ruby to BSF");
         String[] rubyExtensions = {"ruby", "rb"};
-        BSFManager.registerScriptingEngine("ruby", "org.jruby.javasupport.bsf.JRubyEngine", rubyExtensions);
+        BSFManager.registerScriptingEngine("ruby", "org.jruby.embed.bsf.JRubyEngine", rubyExtensions);
     }
 
     /**
