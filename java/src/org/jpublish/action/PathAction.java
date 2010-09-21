@@ -58,6 +58,13 @@ public class PathAction implements Action {
     }
 
     /**
+     * @return the action executed on path matching
+     */
+    public Action getAction() {
+        return action;
+    }
+
+    /**
      * Execute the action using the given context.
      *
      * @param context       The current context
@@ -67,7 +74,7 @@ public class PathAction implements Action {
     public void execute(JPublishContext context, Configuration configuration) throws Exception {
         boolean scriptOrPathActionWrapper = action.getClass().getName()
                 .indexOf(ActionManager.SCRIPT_ACTION) >= 0 || action.getClass().getName()
-                .indexOf(ActionManager.PATH_ACTION) >=0;
+                .indexOf(ActionManager.PATH_ACTION) >= 0;
 
         try {
             if (SiteContext.getProfiling() && !scriptOrPathActionWrapper) {
