@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+  ~ JPublish config file
+  ~
+  -->
+
+<jpublish>
+    <name>JPublish Test/Demo site</name>
+    <static-root>public</static-root>
+    <action-root>WEB-INF/actions</action-root>
+    <template-root>WEB-INF/templates</template-root>
+    <page-root>WEB-INF/pages</page-root>
+
+    <view-renderer classname="org.jpublish.view.haml.HamlViewRenderer">
+    <!-- <jruby_home>/Users/florin/jruby/bin/jruby</jruby_home> -->
+        <haml><![CDATA[
+            require 'java'
+
+            require 'rubygems'
+            require 'date'
+            require 'haml'
+
+            Haml::Engine.new( haml_template).render.to_s            
+            ]]></haml>
+    </view-renderer>
+
+    <repository name="fs_repository" classname="org.jpublish.repository.filesystem.FileSystemRepository">
+        <root>WEB-INF/content</root>
+        <cache>default_cache</cache>
+    </repository>
+
+    <repository name="includes" classname="org.jpublish.repository.filesystem.ExtendedFileSystemRepository">
+        <root>WEB-INF/includes</root>
+        <cache>default_cache</cache>
+    </repository>
+
+    <default-template>default</default-template>
+
+    <page-manager classname="org.jpublish.page.filesystem.FileSystemPageManagerWithDefault"/>
+
+    <cache-manager>
+        <jpublish.cache.provider>
+            <implementation name="default_cache" class="org.jpublish.util.JPublishCacheImpl"/>
+        </jpublish.cache.provider>
+    </cache-manager>
+
+    <mime-mapping ext="txt" mimetype="text/html"/>
+    
+    <character-encoding-map path="*">
+        <page-encoding>UTF-8</page-encoding>
+        <template-encoding>UTF-8</template-encoding>
+        <request-encoding>UTF-8</request-encoding>
+        <response-encoding>UTF-8</response-encoding>
+    </character-encoding-map>
+
+    <formatChangeParameterName>format</formatChangeParameterName>
+    <debug>false</debug>
+</jpublish>
