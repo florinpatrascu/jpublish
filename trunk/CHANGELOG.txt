@@ -1,4 +1,6 @@
 JPublish 4 change log:
+[2010-09-23]
+  - added #haml/Sass template rendering
 
 [2010-09-21]
   - added a PathAction method for getting access to the Action executed on path matching
