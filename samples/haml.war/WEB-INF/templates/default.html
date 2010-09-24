@@ -26,11 +26,11 @@
       pre
         :font-size 13px
         :font-family Monaco, "DejaVu Sans Mono", "Bitstream Vera Mono", "Courier New", monospace
-  %body
-  #container  
-  %p
-    Date/Time:
-    - now = DateTime.now
-    %strong= now
-    - if now > DateTime.parse("December 31, 2006")
-      = "Happy new " + "year!"    
+%body
+  #container
+    %p
+      Date/Time:
+      - now = DateTime.now
+      %strong= now
+      - if now > DateTime.parse("December 31, 2006")
+        = "Happy new " + "year!"
