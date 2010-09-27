@@ -27,10 +27,10 @@
         :font-size 13px
         :font-family Monaco, "DejaVu Sans Mono", "Bitstream Vera Mono", "Courier New", monospace
 %body
+  #header
   #container
+    = $fs_repository.get( $page.path)
+  #footer
     %p
-      Date/Time:
-      - now = DateTime.now
-      %strong= now
-      - if now > DateTime.parse("December 31, 2006")
-        = "Happy new " + "year!"
+      Footer
+      

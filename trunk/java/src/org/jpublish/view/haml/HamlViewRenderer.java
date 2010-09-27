@@ -29,6 +29,7 @@ import org.jruby.RubyInstanceConfig;
 import org.jruby.embed.EvalFailedException;
 import org.jruby.embed.LocalContextScope;
 import org.jruby.embed.ScriptingContainer;
+import org.jruby.javasupport.JavaEmbedUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -47,6 +48,8 @@ public class HamlViewRenderer implements ViewRenderer {
     protected static final Log log = LogFactory.getLog(HamlViewRenderer.class);
 
     private ScriptingContainer container;
+    private Configuration scriptingContainerConfiguration;
+
     private String jrubyhome = "";  // will be addressed before the final version
     private String haml_rb = "require 'java'\n" +
             "require 'rubygems'\n" +
@@ -54,9 +57,14 @@ public class HamlViewRenderer implements ViewRenderer {
             "require 'haml'\n" +
             "Haml::Engine.new( haml_template).render.to_s";
 
+    private JavaEmbedUtils.EvalUnit haml_rb_unit;
+
     private SiteContext siteContext;
     public static final String UTF_8 = "utf-8";
-    public static final String HAML_TEMPLATE_KEY = "haml_template";
+    public static final String $HAML_TEMPLATE_KEY = "$haml_template";
+    public static final String $ = "$";
+    public static final String $CONTEXT = $ + "context";
+    private static final String JRUBY_CONTEXT_INSTANCE = "$jruby_context_instance";
 
     /**
      * Set the SiteContext.
@@ -92,22 +100,22 @@ public class HamlViewRenderer implements ViewRenderer {
                        Writer out) throws IOException, ViewRenderException {
 
         String template = FileCopyUtils.copyToString(in); //faster than processing the Reader inside the script
-
         // thread safe, right?? Promise??
         Object keys[] = context.getKeys(); // the keys must be Strings only
 
         // transfer the JPublish context to JRuby
         for (Object key : keys) {
-            container.put((String) key, context.get((String) key));
+            container.put($ + key, context.get((String) key));
         }
 
-        container.put("context", context); // pass our jpublish context too
-        container.put(HAML_TEMPLATE_KEY, template); // put our template too
+        container.put($CONTEXT, context); // pass our jpublish context too
+        container.put($HAML_TEMPLATE_KEY, template); // put our template too
 
         try {
-            FileCopyUtils.copy(container.runScriptlet(haml_rb).toString(), out); //send it
+            FileCopyUtils.copy(haml_rb_unit.run().asJavaString(), out); //send it
+            container.clear();
         } catch (EvalFailedException e) {
-            FileCopyUtils.copy(String.format("[Haml::SyntaxError?] %s", e.getMessage()), out);
+            FileCopyUtils.copy(String.format("[EvalFailedException] %s", e.getMessage()), out);
             e.printStackTrace(); //will be disabled in the final version
         }
     }
@@ -138,23 +146,28 @@ public class HamlViewRenderer implements ViewRenderer {
             throws ConfigurationException {
 
         List<String> loadPaths = new ArrayList<String>();
+        // SINGLETHREAD is not threadsafe: http://www.ruby-forum.com/topic/206056#new
         container = new ScriptingContainer(LocalContextScope.THREADSAFE);
+        scriptingContainerConfiguration = configuration;
+
         RubyInstanceConfig config = container.getProvider().getRubyInstanceConfig();
 
-        if (configuration != null) {
+        if (scriptingContainerConfiguration != null) {
 
-            jrubyhome = configuration.getChildValue("jruby_home");
+            jrubyhome = scriptingContainerConfiguration.getChildValue("jruby_home");
 
             if (jrubyhome != null) {
                 config.setJRubyHome(jrubyhome);
                 loadPaths.add(jrubyhome);
             }
 
-            String userHamlScript = configuration.getChildValue("haml");
+            String userHamlScript = scriptingContainerConfiguration.getChildValue("haml");
             if (userHamlScript != null) {
                 haml_rb = userHamlScript; //just a bit of inversion of control
             }
         }
+
+        haml_rb_unit = container.parse(haml_rb);
 
         log.info("haml enabled ... have fun!");
     }

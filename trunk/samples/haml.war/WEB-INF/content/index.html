@@ -1,0 +1,10 @@
+%p
+  Date/Time:
+  - now = DateTime.now
+  %strong= now
+  - if now > DateTime.parse("December 31, 2006")
+    %p
+      = "Happy new " + "year!"
+      %p
+        :textile
+          And I like *cake*!

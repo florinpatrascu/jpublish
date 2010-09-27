@@ -20,7 +20,7 @@
             require 'date'
             require 'haml'
 
-            Haml::Engine.new( haml_template).render.to_s            
+            Haml::Engine.new( $haml_template).render
             ]]></haml>
     </view-renderer>
 
@@ -45,7 +45,7 @@
     </cache-manager>
 
     <mime-mapping ext="txt" mimetype="text/html"/>
-    
+
     <character-encoding-map path="*">
         <page-encoding>UTF-8</page-encoding>
         <template-encoding>UTF-8</template-encoding>
