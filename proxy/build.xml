@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2010, Florin T.PATRASCU
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project name="proxy" default="jar">
+    <property environment="env"/>
+
+    <property file="build.properties"/>
+    <property name="skip.tests" value="true"/>
+
+    <!-- Compiler options -->
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.optimize" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+
+    <!-- Compiler resources -->
+    <patternset id="compiler.resources">
+        <include name="**/?*.properties"/>
+    </patternset>
+
+
+    <!-- Global Libraries -->
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- ==================================================== -->
+    <!-- Initialize Ant                                       -->
+    <!-- ==================================================== -->
+    <target name="init">
+        <tstamp/>
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Compile the source code.                                               -->
+    <!-- ====================================================================== -->
+    <target name="compile" depends="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.classes}"/>
+
+        <javac srcdir="${src.dir}"
+               destdir="${build.classes}"
+               debug="${compiler.debug}"
+               deprecation="${compiler.generate.no.warnings}"
+               encoding="utf8"
+               classpathref="build.classpath"
+               optimize="${compiler.optimize}">
+            <include name="**/*.java"/>
+
+        </javac>
+
+        <copy todir="${build.classes}">
+            <fileset dir="${src.dir}">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <!-- ====================================================================== -->
+    <!-- Create the JAR archive.                                                -->
+    <!-- ====================================================================== -->
+    <target name="jar" depends="compile">
+        <mkdir dir="${build.dist}"/>
+        <jar jarfile="${build.dist}/${name}-${version}.jar"
+             basedir="${build.classes}"/>
+    </target>
+
+
+    <!-- ====================================================================== -->
+    <!-- Create the distribution                                                -->
+    <!-- ====================================================================== -->
+
+    <target name="dist" depends="clean, jar">
+        <echo message="Building the proxy library ..."/>
+
+        <copy todir="${dist.dir}/${name}/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar"/>
+                <include name="**/*.txt"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+    <!-- ====================================================================== -->
+    <!-- Clean up generated stuff                                               -->
+    <!-- ====================================================================== -->
+    <target name="clean">
+        <delete dir="${dist.dir}"/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${docs.dir}/api"/>
+    </target>
+
+</project>
