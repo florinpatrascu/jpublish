@@ -1,0 +1,30 @@
+#set( $testUrl = "$request.ContextPath/rpa/hello/JPublish.json")
+
+<h2>REST like Path Actions</h2>
+<p>
+    A JPublish web app demonstrating the "REST Path Actions" module
+</p>
+
+Simple <a href="http://api.jquery.com/jQuery.ajax/">JQuery ajax</a> call example:<br/>
+<table>
+    <tr>
+        <td>request:</td>
+        <td>$urlUtilities.buildStandard( $testUrl, $!request.ServerPort)</td>
+    </tr>
+    <tr>
+        <td>response:</td>
+        <td><div id="response"></div></td>
+    </tr>
+</table>
+
+<script>
+
+    $.ajax(
+    {url: "$testUrl",
+        dataType: "json",
+        success: function(data) {
+            $("#response").append(data.hello).append(", session: $session.Id");
+        }
+    });
+
+</script>
