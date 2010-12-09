@@ -1,4 +1,7 @@
 JPublish 4 change log:
+[2010-12-09]
+  - added a module to support REST-like Path Actions. A demo web app is also provided.
+
 [2010-09-23]
   - added #haml/Sass template rendering
 
