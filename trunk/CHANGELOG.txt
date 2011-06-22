@@ -1,4 +1,8 @@
 JPublish 4 change log:
+[2011.06.22]
+  - RESTPATHACTIONS demo cleanup and module improvements, see restpathactions module's own
+  changelog for details.
+
 [2010-12-09]
   - added a module to support REST-like Path Actions. A demo web app is also provided.
 
