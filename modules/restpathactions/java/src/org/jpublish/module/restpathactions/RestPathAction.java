@@ -27,6 +27,7 @@ import org.jpublish.action.Action;
 import org.jpublish.util.FileCopyUtils;
 import org.jpublish.util.PathUtilities;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.ByteArrayInputStream;
@@ -54,6 +55,7 @@ public class RestPathAction implements Action {
     public void execute(JPublishContext context, Configuration configuration) throws Exception {
         String method = context.getRequest().getMethod();
         String pathInfo = GENERIC_PATH_INFO;
+        boolean resourceNotFound = true;
 
         try {
             pathInfo = context.getRequest().getPathInfo();
@@ -67,6 +69,8 @@ public class RestPathAction implements Action {
                 final UriTemplateMatcher matcher = rm.matcher();
 
                 if (matcher.matches(path)) {
+                    resourceNotFound = false;
+
                     if (module.isDebug()) {
                         log.info(matcher.toString());
                     }
@@ -128,6 +132,14 @@ public class RestPathAction implements Action {
 
                     break;
                 }
+            }
+
+            if (resourceNotFound) {
+                if (module.isDebug()) {
+                    log.info(String.format("%s not found;", pathInfo));
+                }
+
+                context.getResponse().setStatus(HttpServletResponse.SC_NOT_FOUND);
             }
 
         } finally {

@@ -1,2 +1,7 @@
+2011.06.22
+- cleaned up the demo app html code to explicitly use jQuery instead of '$'; was generating a Velocity error
+- the RPA module will return a 404 if there are no matching routes (Thank you for catching it, Alejandro)
+- typo in the ANT build, incorrectly generating 'respathactions' instead of 'restpathactions', sorry for that
+
 2010.11.26
 - initial version
