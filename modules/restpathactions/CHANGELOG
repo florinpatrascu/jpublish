@@ -1,3 +1,14 @@
+2011.08.07
+- the RestPathActions module allows the user to optionally define request method(s) that
+  can be used for route matching. Example:
+
+  <routes>
+      <route path="search/{query}/page/{pageNo}" method="GET|POST" action="Search.bsh" page="search/index.html"/>
+  ....
+
+  In the example above the Search.bsh action will be executed for the matching path ony if the
+  request method is GET or POST.
+
 2011.06.22
 - cleaned up the demo app html code to explicitly use jQuery instead of '$'; was generating a Velocity error
 - the RPA module will return a 404 if there are no matching routes (Thank you for catching it, Alejandro)

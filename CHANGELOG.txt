@@ -1,6 +1,11 @@
 JPublish 4 change log:
+
+[2011.08.07]
+  - the RestPathActions module allows the user to optionally define request method(s) that
+  can be used for route matching.
+
 [2011.06.22]
-  - RESTPATHACTIONS demo cleanup and module improvements, see restpathactions module's own
+  - RESTPATHACTIONS demo cleanup and module improvements, see RestPathActions module's own
   changelog for details.
 
 [2010-12-09]

@@ -67,7 +67,9 @@ public class RestPathActionModel {
     }
 
     public void setMethods(String methods) {
-        this.methods = methods;
+        if (methods != null) {
+            this.methods = methods.toUpperCase();
+        }
     }
 
     public Configuration getConfiguration() {
