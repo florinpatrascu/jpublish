@@ -53,7 +53,7 @@ public class RestPathAction implements Action {
     }
 
     public void execute(JPublishContext context, Configuration configuration) throws Exception {
-        String method = context.getRequest().getMethod();
+        String method = context.getRequest().getMethod(); // no need .toUpperCase() it
         String pathInfo = GENERIC_PATH_INFO;
         boolean resourceNotFound = true;
 
@@ -67,8 +67,9 @@ public class RestPathAction implements Action {
 
             for (RestPathActionModel rm : module.getRestModels()) {
                 final UriTemplateMatcher matcher = rm.matcher();
+                boolean methodMatchesToo = rm.getMethods() != null && rm.getMethods().contains(method);
 
-                if (matcher.matches(path)) {
+                if (matcher.matches(path) && methodMatchesToo) {
                     resourceNotFound = false;
 
                     if (module.isDebug()) {
