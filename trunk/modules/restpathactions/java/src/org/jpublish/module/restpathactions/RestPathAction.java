@@ -27,7 +27,6 @@ import org.jpublish.action.Action;
 import org.jpublish.util.FileCopyUtils;
 import org.jpublish.util.PathUtilities;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.ByteArrayInputStream;
@@ -92,7 +91,7 @@ public class RestPathAction implements Action {
                     String content = null;
 
                     final String pagePath = rm.getPage();
-                    String viewType = null;
+                    String viewType = rm.getContentType();
 
                     if (pagePath != null) {
                         RepositoryWrapper repository = (RepositoryWrapper) context.get(module.getDefaultRepository());
@@ -200,7 +199,7 @@ public class RestPathAction implements Action {
 
     private String getMimeTypeWithCharset(String mimeType, String charSet) {
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append(mimeType).append("; charset=").append(charSet);
         return buffer.toString();
     }

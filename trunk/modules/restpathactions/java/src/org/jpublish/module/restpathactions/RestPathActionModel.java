@@ -30,6 +30,7 @@ public class RestPathActionModel {
     private String action;
     private String page;
     private String methods;
+    private String contentType;
     private Configuration configuration;
     private UriTemplateProcessor templateProcessor;
 
@@ -80,11 +81,20 @@ public class RestPathActionModel {
         this.configuration = configuration;
     }
 
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
     @Override
     public String toString() {
         return "path='" + path + '\'' +
-                ", action='" + action + '\'' +
-                ", page='" + page + '\'' +
+                (action != null ? ", action='" + action + '\'' : "")+
+                (contentType != null ? ", content-type='" + contentType + '\'' : "" )+
+                (page != null ? ", page='" + page + '\'': "" )+
                 ", methods='" + methods + '\'';
     }
 }

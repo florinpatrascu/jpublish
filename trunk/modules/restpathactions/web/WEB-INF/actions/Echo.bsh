@@ -1,0 +1,3 @@
+import org.jpublish.module.restpathactions.*;
+
+context.put( RestPathActionsModule.RESPONSE, "{\"echo\": \""+context.get( "echo")+"\"}");
