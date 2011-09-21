@@ -122,6 +122,7 @@ public class RestPathActionsModule implements JPublishModule {
                     restModel.setAction(routeConfiguration.getAttribute("action"));
                     restModel.setPage(routeConfiguration.getAttribute("page"));
                     restModel.setMethods(routeConfiguration.getAttribute("method", "GET"));
+                    restModel.setContentType(routeConfiguration.getAttribute("content-type"));
                     restModel.setConfiguration(routeConfiguration);
 
                     restModels.add(restModel);

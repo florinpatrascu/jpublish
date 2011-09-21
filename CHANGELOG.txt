@@ -1,8 +1,9 @@
 JPublish 4 change log:
 
-[2011.08.07]
-  - the RestPathActions module allows the user to optionally define request method(s) that
-  can be used for route matching.
+[2011-09-21]
+  - RPAModule; added support for declaring the response content-type when a route is defined, example:
+    <route path="echo/{echo}" action="Echo.bsh" content-type="json"/>
+  see: the 'content-type' attribute above and the related web app example in modules/restpathactions/web
 
 [2011.06.22]
   - RESTPATHACTIONS demo cleanup and module improvements, see RestPathActions module's own
