@@ -75,7 +75,7 @@ public class RestPathAction implements Action {
                         log.info(matcher.toString());
                     }
 
-                    MultivaluedMap<String, String> multivaluedMap = matcher.getVariables(true);
+                    MultivaluedMap<String, String> multivaluedMap = matcher.getVariables(false);
 
                     for (Map.Entry<String, List<String>> entry : multivaluedMap.entrySet()) {
                         if (entry.getValue() != null) {
